@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy – Institut de Natation de Montréal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628; --navy-mid: #122040;
+    --ocean: #0066cc; --aqua: #00b4d8; --aqua-light: #90e0ef;
+    --foam: #caf0f8; --sand: #f8f4ef; --gold: #e8a020; --white: #ffffff;
+    --text-dark: #0a1628; --text-mid: #3a4a5a; --text-light: #6a7a8a;
+    --shadow: 0 4px 24px rgba(0,102,204,0.12);
+    --shadow-lg: 0 12px 48px rgba(10,22,40,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--white); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,22,40,0.97); backdrop-filter: blur(16px); padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: white; font-family: 'Playfair Display', serif; }
+  .nav-logo-text { color: white; font-size: 17px; font-weight: 600; line-height: 1.2; }
+  .nav-logo-sub { color: var(--aqua-light); font-size: 11px; font-weight: 400; letter-spacing: 0.5px; display: block; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: white; }
+  .nav-links a.jobs-link { color: var(--gold); font-weight: 700; }
+  .nav-cta { background: var(--aqua); color: var(--navy); padding: 10px 22px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; white-space: nowrap; }
+  .nav-cta:hover { background: white; transform: translateY(-1px); }
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; }
+  @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } }
+
+  /* HERO */
+  .hero { min-height: 44vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 72px 80px 60px; background: var(--navy); position: relative; overflow: hidden; }
+  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .hero > *:not(#hero-canvas) { position: relative; z-index: 1; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,180,216,0.15); border: 1px solid rgba(0,180,216,0.3); color: var(--aqua); padding: 8px 16px; border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--aqua); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(40px, 6vw, 76px); color: white; line-height: 1.05; letter-spacing: -2px; max-width: 700px; margin-bottom: 16px; }
+  .hero h1 em { font-style: normal; color: var(--aqua); }
+  .hero-meta { color: rgba(255,255,255,0.45); font-size: 14px; }
+  @media (max-width: 768px) { .hero { padding: 72px 24px 48px; } }
+
+  /* LAYOUT */
+  .page-wrap { display: grid; grid-template-columns: 240px 1fr; gap: 0; max-width: 1100px; margin: 0 auto; padding: 60px 80px 100px; }
+  @media (max-width: 960px) { .page-wrap { grid-template-columns: 1fr; padding: 40px 24px 60px; } }
+
+  /* SIDEBAR TOC */
+  .toc { position: sticky; top: 96px; align-self: start; padding-right: 48px; }
+  @media (max-width: 960px) { .toc { display: none; } }
+  .toc-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); margin-bottom: 16px; }
+  .toc a { display: block; padding: 7px 0 7px 12px; font-size: 13px; font-weight: 500; color: var(--text-mid); text-decoration: none; border-left: 2px solid transparent; transition: all 0.2s; line-height: 1.4; margin-bottom: 2px; }
+  .toc a:hover { color: var(--ocean); border-left-color: var(--aqua); }
+  .toc a.active { color: var(--ocean); border-left-color: var(--ocean); font-weight: 700; }
+
+  /* CONTENT */
+  .policy-content { min-width: 0; }
+  .policy-section { margin-bottom: 56px; scroll-margin-top: 100px; }
+  .policy-section h2 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--navy); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--sand); display: flex; align-items: center; gap: 12px; }
+  .policy-section h3 { font-size: 16px; font-weight: 700; color: var(--navy); margin: 20px 0 10px; }
+  .policy-section p { font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 14px; }
+  .policy-section p:last-child { margin-bottom: 0; }
+  .policy-section ul { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 10px 0 14px; }
+  .policy-section ul li { font-size: 15px; color: var(--text-mid); line-height: 1.65; display: flex; align-items: flex-start; gap: 10px; }
+  .policy-section ul li::before { content: '→'; color: var(--ocean); font-weight: 700; flex-shrink: 0; font-size: 13px; margin-top: 2px; }
+  .policy-block { background: var(--sand); border-radius: 16px; padding: 28px 32px; margin: 20px 0; border: 1px solid rgba(0,102,204,0.07); }
+  .policy-block.info { background: var(--foam); border-left: 4px solid var(--aqua); border-radius: 0 16px 16px 0; }
+  .policy-block p { font-size: 14px; color: var(--text-mid); line-height: 1.75; margin-bottom: 10px; }
+  .policy-block p:last-child { margin-bottom: 0; }
+  .policy-block strong { color: var(--navy); }
+
+  /* CONTACT STRIP */
+  .contact-strip { background: var(--navy); border-radius: 20px; padding: 36px 40px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-top: 48px; }
+  .contact-strip p { color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.6; }
+  .contact-strip p strong { color: white; }
+  .btn-aqua { background: var(--aqua); color: var(--navy); padding: 12px 28px; border-radius: 50px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.2s; white-space: nowrap; }
+  .btn-aqua:hover { background: white; transform: translateY(-2px); }
+
+  /* CTA */
+  .cta-banner { background: linear-gradient(135deg, var(--navy), var(--navy-mid)); padding: 72px 80px; margin: 0 40px 80px; border-radius: 32px; text-align: center; position: relative; overflow: hidden; }
+  .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(0,180,216,0.1), transparent 70%); }
+  .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: 40px; color: white; margin-bottom: 14px; position: relative; z-index: 1; }
+  .cta-banner p { color: rgba(255,255,255,0.6); font-size: 17px; margin-bottom: 32px; position: relative; z-index: 1; }
+  .cta-banner-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .btn-primary { background: var(--aqua); color: var(--navy); padding: 15px 34px; border-radius: 50px; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.25s; }
+  .btn-primary:hover { background: white; transform: translateY(-2px); }
+  .btn-outline { border: 1.5px solid rgba(255,255,255,0.3); color: white; padding: 15px 34px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; transition: all 0.25s; }
+  .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+  @media (max-width: 768px) { .cta-banner { padding: 48px 24px; margin: 0 16px 60px; } .cta-banner h2 { font-size: 30px; } }
+
+  /* FOOTER */
+  footer { background: #060e1c; padding: 60px 80px 32px; }
+  @media (max-width: 768px) { footer { padding: 48px 24px 24px; } }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { color: rgba(255,255,255,0.45); font-size: 14px; line-height: 1.7; margin: 16px 0 20px; max-width: 280px; }
+  .footer-social { display: flex; gap: 12px; }
+  .footer-social a { width: 36px; height: 36px; background: rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; font-weight: 700; transition: all 0.2s; }
+  .footer-social a:hover { background: var(--aqua); color: var(--navy); }
+  .footer-col h4 { color: white; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--aqua); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.3); font-size: 13px; flex-wrap: wrap; gap: 8px; }
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .hero .hero-badge{animation:fadeUp 0.6s ease forwards}
+  .hero h1{animation:fadeUp 0.7s 0.1s ease both}
+  .hero .hero-meta{animation:fadeUp 0.7s 0.2s ease both}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">M</div>
+    <div class="nav-logo-text">MIS<span class="nav-logo-sub">Institut de Natation de Montréal</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="programs.html">Programs</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Locations</a>
+    <a href="jobs.html" class="jobs-link">🏊 We're Hiring</a>
+    <a href="faq.html">FAQ</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <div style="display:flex;gap:12px;">
+      <a href="https://www.facebook.com/SwimMontreal" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">FB</a>
+      <a href="https://www.instagram.com/swimmontreal/" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">IG</a>
+    </div>
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="nav-cta">Register Now</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-badge">🔒 Legal</div>
+  <h1>Privacy <em>Policy</em></h1>
+  <div class="hero-meta">Institut de Natation de Montréal Inc. · Last updated: September 22, 2023</div>
+</section>
+
+<!-- CONTENT -->
+<div class="page-wrap">
+
+  <!-- TOC -->
+  <aside class="toc">
+    <div class="toc-label">On this page</div>
+    <a href="#commitment" class="active">Our Commitment</a>
+    <a href="#collecting">Collecting Information</a>
+    <a href="#sharing">Sharing Information</a>
+    <a href="#service-providers">Service Providers</a>
+    <a href="#cross-provincial">Cross-Provincial</a>
+    <a href="#retention">Retention</a>
+    <a href="#your-rights">Your Rights</a>
+    <a href="#cookies">Cookies</a>
+    <a href="#contact-privacy">Contact Us</a>
+  </aside>
+
+  <!-- POLICY CONTENT -->
+  <div class="policy-content">
+
+    <div class="policy-block info">
+      <p>This Privacy Policy describes how <strong>Institut de Natation de Montréal Inc. ("MIS")</strong> collects, uses, and protects your personal information. By using our services or website, you agree to the practices described in this Policy.</p>
+    </div>
+
+    <!-- 1. COMMITMENT -->
+    <div class="policy-section" id="commitment">
+      <h2>🤝 Our Commitment to Your Privacy</h2>
+      <h3>Why do we have a privacy policy?</h3>
+      <p>We require your personal information to carry out some of our business processes within the scope of our mission. Because your satisfaction in the way we protect your personal information is important to us, we have adopted this Privacy Policy (the "Policy") to describe how we protect your personal information.</p>
+      <p>The Policy is one of the cornerstones of our privacy protection program. The objective of the program is to ensure that MIS meets its legal obligations under the <em>Act respecting Access to documents held by public bodies and the Protection of personal information</em> (the "Access Act").</p>
+      <p>The Policy sets out MIS's commitments concerning the protection of your privacy and aims to establish and maintain your confidence in our privacy practices. In the interests of transparency, we are making this Policy available to the public.</p>
+      <h3>How do we protect your privacy?</h3>
+      <p>MIS has established a comprehensive privacy protection program based on the privacy protection principles set out in this Policy. We have appointed a team of experts to design and manage MIS's privacy protection program and to advise the entire organization about privacy protection.</p>
+      <p>We have created a committee to ensure that the necessary protection measures are taken for every project where personal information is handled. This committee includes the persons in charge of access to documents and protection of personal information, the person responsible for document management, and the person responsible for information security. We have also taken steps to sensitize members of the MIS team to their respective roles in the protection of your privacy.</p>
+    </div>
+
+    <!-- 2. COLLECTING -->
+    <div class="policy-section" id="collecting">
+      <h2>📋 Collecting Information</h2>
+      <h3>How do we collect your personal information?</h3>
+      <p>In most cases we collect your personal information directly from you:</p>
+      <ul>
+        <li>When you contact customer services</li>
+        <li>When you use your Client Space or our website</li>
+        <li>As part of your registration or enrolment in our programs</li>
+        <li>When you participate in surveys or promotional activities</li>
+      </ul>
+      <h3>What personal information do we collect?</h3>
+      <p>The personal information we collect may include:</p>
+      <ul>
+        <li>Your name, address, email address, and phone number</li>
+        <li>Payment and billing information</li>
+        <li>Information about the swimmers in your family (name, age, skill level)</li>
+        <li>Health or medical information relevant to safe swim instruction (only where voluntarily provided)</li>
+        <li>Communications you send to us</li>
+      </ul>
+      <h3>Why do we collect your personal information?</h3>
+      <p>MIS collects personal information for the following purposes:</p>
+      <ul>
+        <li>To register you and your family members for swimming programs</li>
+        <li>To process payments and manage your account</li>
+        <li>To communicate with you about lessons, schedules, and updates</li>
+        <li>To improve our programs and services</li>
+        <li>To comply with legal and regulatory obligations</li>
+      </ul>
+    </div>
+
+    <!-- 3. SHARING -->
+    <div class="policy-section" id="sharing">
+      <h2>🔗 Sharing Your Information</h2>
+      <p>MIS does not sell your personal information. We may share your personal information only in the following circumstances:</p>
+      <ul>
+        <li>With <strong>service providers</strong> who perform services on our behalf (subject to strict contractual obligations)</li>
+        <li>With <strong>collection agencies</strong> in the event of unpaid balances</li>
+        <li>With <strong>external legal counsel</strong> as necessary</li>
+        <li>With <strong>regulatory authorities, ministries, public bodies and government agencies</strong> who request it based on powers granted by law, or when this information is necessary for the application of an act in Québec</li>
+        <li>With <strong>police departments</strong>, if the information is necessary for an investigation they are conducting or if the information is the subject of a search warrant or production order</li>
+        <li>With a <strong>court</strong> that orders us to provide the information</li>
+      </ul>
+    </div>
+
+    <!-- 4. SERVICE PROVIDERS -->
+    <div class="policy-section" id="service-providers">
+      <h2>🏢 Service Providers</h2>
+      <h3>How can you ensure that our service providers are properly protecting your personal information?</h3>
+      <p>In cases where we share your personal information with service providers so they can perform the necessary services, we require them, by written contracts, to commit to protecting your information through measures that are as strict as our own.</p>
+      <p>Among other things, we ensure that our suppliers use your personal information solely to provide the services required.</p>
+    </div>
+
+    <!-- 5. CROSS-PROVINCIAL -->
+    <div class="policy-section" id="cross-provincial">
+      <h2>🌎 Cross-Provincial Data Sharing</h2>
+      <p>Your personal information may be processed or stored in other Canadian provinces or territories in the course of delivering our services. We take steps to ensure that your personal information receives equivalent protection wherever it is held.</p>
+      <p>MIS does not transfer personal information outside of Canada without your consent, except where required by law.</p>
+    </div>
+
+    <!-- 6. RETENTION -->
+    <div class="policy-section" id="retention">
+      <h2>🗂️ Retention of Information</h2>
+      <p>We retain your personal information only for as long as necessary to fulfil the purposes for which it was collected, including to satisfy any legal, accounting, or reporting requirements.</p>
+      <p>When your personal information is no longer required, it is securely destroyed or anonymised in accordance with our records retention policies and applicable law.</p>
+    </div>
+
+    <!-- 7. YOUR RIGHTS -->
+    <div class="policy-section" id="your-rights">
+      <h2>✅ Your Rights</h2>
+      <p>Under Québec's privacy legislation, you have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> the personal information we hold about you</li>
+        <li><strong>Correct</strong> any inaccurate or incomplete information</li>
+        <li><strong>Request deletion</strong> of your personal information, subject to legal obligations</li>
+        <li><strong>Withdraw consent</strong> to the collection or use of your personal information, where applicable</li>
+        <li><strong>Lodge a complaint</strong> with the Commission d'accès à l'information du Québec if you believe your privacy rights have been violated</li>
+      </ul>
+      <div class="policy-block">
+        <p>To exercise any of these rights, please contact us in writing at <strong>info@swim-montreal.com</strong> or by calling <strong>(514) 294-8259</strong>. We will respond to all requests within a reasonable timeframe.</p>
+      </div>
+    </div>
+
+    <!-- 8. COOKIES -->
+    <div class="policy-section" id="cookies">
+      <h2>🍪 Cookies & Website Data</h2>
+      <p>Our website uses cookies and similar tracking technologies to improve your browsing experience, analyse site traffic, and understand how visitors use our site.</p>
+      <h3>What are cookies?</h3>
+      <p>Cookies are small text files stored on your device when you visit a website. They help us remember your preferences and understand how you interact with our site.</p>
+      <h3>Types of cookies we use</h3>
+      <ul>
+        <li><strong>Essential cookies:</strong> Required for the website to function correctly. These cannot be disabled.</li>
+        <li><strong>Analytics cookies:</strong> Help us understand how visitors interact with our website so we can improve it.</li>
+        <li><strong>Preference cookies:</strong> Remember your settings and preferences for future visits.</li>
+      </ul>
+      <p>You can control or disable cookies through your browser settings. Please note that disabling cookies may affect the functionality of certain parts of our website.</p>
+    </div>
+
+    <!-- 9. CONTACT -->
+    <div class="policy-section" id="contact-privacy">
+      <h2>📬 Contact Us About Privacy</h2>
+      <p>If you have any questions, concerns, or complaints about this Privacy Policy or our privacy practices, please contact us:</p>
+      <div class="policy-block">
+        <p><strong>Institut de Natation de Montréal Inc.</strong></p>
+        <p>Email: <a href="mailto:info@swim-montreal.com" style="color:var(--ocean);font-weight:600;">info@swim-montreal.com</a></p>
+        <p>Phone: <a href="tel:5142948259" style="color:var(--ocean);font-weight:600;">(514) 294-8259</a></p>
+        <p style="margin-top:12px;">We are committed to resolving all privacy-related concerns promptly and fairly. If you are not satisfied with our response, you may contact the <strong>Commission d'accès à l'information du Québec</strong>.</p>
+      </div>
+    </div>
+
+    <div class="contact-strip">
+      <p><strong>Questions about this policy?</strong><br>Our team is happy to clarify anything — just reach out.</p>
+      <a href="contact.html" class="btn-aqua">Contact Us →</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Ready to dive in?</h2>
+  <p>Spring 2026 registration is now open. Spots fill fast — secure yours today.</p>
+  <div class="cta-banner-btns">
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="btn-primary">Register Now →</a>
+    <a href="programs.html" class="btn-outline">Explore Programs</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--aqua),var(--ocean));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:white;font-family:'Playfair Display',serif;">M</div>
+        <span style="color:white;font-weight:700;font-size:16px;">MIS | Swim Montréal</span>
+      </div>
+      <p>Delivering flexible and effective swimming experiences to families throughout Montréal. Québec's #1 swim school.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/SwimMontreal" target="_blank">f</a>
+        <a href="https://www.instagram.com/swimmontreal/" target="_blank">ig</a>
+        <a href="mailto:info@swim-montreal.com">✉</a>
+        <a href="tel:(514)294-8259">☎</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <a href="programs.html#confidence">Confidence (Tots)</a>
+      <a href="programs.html#independence">Independence</a>
+      <a href="programs.html#strong">Strong Swimmer</a>
+      <a href="programs.html#life">Swim for Life</a>
+      <a href="lifeguard.html">Private Lifeguard</a>
+    </div>
+    <div class="footer-col">
+      <h4>School</h4>
+      <a href="about.html">About MIS</a>
+      <a href="meet-the-team.html">Meet the Team</a>
+      <a href="jobs.html">Jobs — We're Hiring!</a>
+      <a href="news.html">Latest News</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="faq.html">FAQ</a>
+      <a href="policies.html">Policies</a>
+      <a href="contact.html">Locations & Contact</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="https://swim-montreal.com/fr" target="_blank">Français 🇫🇷</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Institut de Natation de Montréal Inc. All rights reserved.</span>
+    <span>♻ Green hosted</span>
+  </div>
+</footer>
+
+<script>
+  /* ACTIVE TOC on scroll */
+  window.addEventListener('scroll', () => {
+    let current = '';
+    document.querySelectorAll('.policy-section[id]').forEach(el => {
+      if (window.scrollY >= el.offsetTop - 120) current = el.id;
+    });
+    document.querySelectorAll('.toc a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }, { passive: true });
+
+  /* HAMBURGER */
+  const hamburger = document.querySelector('.hamburger');
+  const navLinksEl = document.querySelector('.nav-links');
+  let navOpen = false;
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      navOpen = !navOpen;
+      navLinksEl.style.cssText = navOpen ? 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(10,22,40,0.98);padding:20px 40px;gap:16px;z-index:999;' : '';
+    });
+  }
+
+  /* CANVAS */
+  function initWater(id, cfg) {
+    const canvas = document.getElementById(id); if (!canvas) return;
+    const ctx = canvas.getContext('2d'); let W, H, t = 0, raf;
+    function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+    resize(); window.addEventListener('resize', resize);
+    const bubbles = Array.from({length: cfg.bubbles}, () => ({ x: Math.random(), y: Math.random(), r: 1.5 + Math.random()*5, speed: 0.0004 + Math.random()*0.0006, wobble: Math.random()*Math.PI*2, wobbleSpeed: 0.015 + Math.random()*0.02, alpha: 0.06 + Math.random()*0.12 }));
+    const rays = Array.from({length: cfg.rays}, (_, i) => ({ xFrac: 0.05 + i*(0.88/cfg.rays), width: 18 + Math.random()*40, speed: 0.0003 + Math.random()*0.0003, phase: Math.random()*Math.PI*2 }));
+    function drawWave(l, T) {
+      const baseY = H*l.yFrac, amp = H*l.amp; ctx.beginPath();
+      for (let x = 0; x <= W; x += 3) { const y = baseY + Math.sin((x/W)*Math.PI*2*l.freq + T*l.speed)*amp + Math.sin((x/W)*Math.PI*3.7*l.freq + T*l.speed*1.3)*amp*0.4; x === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y); }
+      ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fillStyle = l.color; ctx.fill();
+    }
+    function draw(ts) {
+      t = ts*0.001; ctx.clearRect(0,0,W,H);
+      const bg = ctx.createLinearGradient(0,0,0,H); bg.addColorStop(0,'#071220'); bg.addColorStop(0.45,'#0a1a35'); bg.addColorStop(0.75,'#0d2a55'); bg.addColorStop(1,'#082040'); ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+      rays.forEach(ray => { const x = W*ray.xFrac + Math.sin(t*ray.speed*2*Math.PI+ray.phase)*W*.03; const grad = ctx.createLinearGradient(x,0,x+ray.width*.5,H*.85); grad.addColorStop(0,'rgba(100,200,255,0)'); grad.addColorStop(.1,'rgba(100,200,255,.06)'); grad.addColorStop(1,'rgba(100,200,255,0)'); ctx.save(); ctx.beginPath(); ctx.moveTo(x-ray.width*.3,0); ctx.lineTo(x+ray.width,0); ctx.lineTo(x+ray.width*1.6,H); ctx.lineTo(x-ray.width*.9,H); ctx.closePath(); ctx.fillStyle = grad; ctx.globalAlpha = .6 + Math.sin(t*ray.speed*Math.PI*4+ray.phase)*.4; ctx.fill(); ctx.restore(); });
+      cfg.waves.forEach(l => drawWave(l,t));
+      bubbles.forEach(b => { b.y -= b.speed; b.wobble += b.wobbleSpeed; if (b.y < -.02) { b.y = 1.05; b.x = Math.random(); } const bx = b.x*W + Math.sin(b.wobble)*18, by = b.y*H; ctx.beginPath(); ctx.arc(bx,by,b.r,0,Math.PI*2); ctx.strokeStyle = `rgba(150,230,255,${b.alpha})`; ctx.lineWidth = .8; ctx.stroke(); ctx.beginPath(); ctx.arc(bx-b.r*.3,by-b.r*.3,b.r*.25,0,Math.PI*2); ctx.fillStyle = `rgba(255,255,255,${b.alpha*1.2})`; ctx.fill(); });
+      raf = requestAnimationFrame(draw);
+    }
+    raf = requestAnimationFrame(draw);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) cancelAnimationFrame(raf); else raf = requestAnimationFrame(draw); });
+  }
+  initWater('hero-canvas', { bubbles: 35, rays: 5, waves: [ {amp:.040,freq:1.7,speed:.38,color:'rgba(0,120,200,0.18)',yFrac:.52}, {amp:.032,freq:2.3,speed:.26,color:'rgba(0,180,220,0.14)',yFrac:.58}, {amp:.050,freq:1.2,speed:.18,color:'rgba(10,50,120,0.22)',yFrac:.46}, {amp:.025,freq:3.1,speed:.50,color:'rgba(0,200,255,0.09)',yFrac:.63} ] });
+</script>
+</body>
+</html>

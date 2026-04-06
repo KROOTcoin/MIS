@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About – Institut de Natation de Montréal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628; --navy-mid: #122040;
+    --ocean: #0066cc; --aqua: #00b4d8; --aqua-light: #90e0ef;
+    --foam: #caf0f8; --sand: #f8f4ef; --gold: #e8a020; --white: #ffffff;
+    --text-dark: #0a1628; --text-mid: #3a4a5a; --text-light: #6a7a8a;
+    --shadow: 0 4px 24px rgba(0,102,204,0.12);
+    --shadow-lg: 0 12px 48px rgba(10,22,40,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--white); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,22,40,0.97); backdrop-filter: blur(16px); padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: white; font-family: 'Playfair Display', serif; }
+  .nav-logo-text { color: white; font-size: 17px; font-weight: 600; letter-spacing: -0.3px; line-height: 1.2; }
+  .nav-logo-sub { color: var(--aqua-light); font-size: 11px; font-weight: 400; letter-spacing: 0.5px; display: block; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: white; }
+  .nav-links a.active { color: white; }
+  .nav-links a.jobs-link { color: var(--gold); font-weight: 700; }
+  .nav-cta { background: var(--aqua); color: var(--navy); padding: 10px 22px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; white-space: nowrap; }
+  .nav-cta:hover { background: white; transform: translateY(-1px); }
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; }
+  @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } }
+
+  /* HERO */
+  .about-hero { min-height: 56vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 72px 80px 64px; background: var(--navy); position: relative; overflow: hidden; }
+  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .about-hero > *:not(#hero-canvas) { position: relative; z-index: 1; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,180,216,0.15); border: 1px solid rgba(0,180,216,0.3); color: var(--aqua); padding: 8px 16px; border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--aqua); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+  .about-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 6vw, 80px); color: white; line-height: 1.05; letter-spacing: -2px; max-width: 700px; margin-bottom: 20px; }
+  .about-hero h1 em { font-style: normal; color: var(--aqua); }
+  .about-hero .hero-sub { color: rgba(255,255,255,0.65); font-size: 18px; max-width: 560px; line-height: 1.7; }
+  @media (max-width: 768px) { .about-hero { padding: 72px 24px 48px; } }
+
+  /* SHARED */
+  section { padding: 100px 80px; }
+  @media (max-width: 768px) { section { padding: 60px 24px; } }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ocean); margin-bottom: 16px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: -1px; color: var(--navy); margin-bottom: 24px; }
+  .section-sub { font-size: 17px; color: var(--text-mid); line-height: 1.7; max-width: 600px; }
+
+  /* WHAT MAKES US DIFFERENT */
+  #different { background: var(--sand); }
+  .different-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 60px; }
+  @media (max-width: 900px) { .different-grid { grid-template-columns: 1fr; } }
+  .diff-card { background: white; border-radius: 24px; padding: 44px 36px; border: 1px solid rgba(0,102,204,0.07); transition: all 0.3s; position: relative; overflow: hidden; }
+  .diff-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--aqua), var(--ocean)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .diff-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .diff-card:hover::before { transform: scaleX(1); }
+  .diff-icon { font-size: 48px; margin-bottom: 24px; }
+  .diff-card h3 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+  .diff-card p { font-size: 15px; color: var(--text-mid); line-height: 1.7; }
+
+  /* STORY */
+  #story { background: white; }
+  .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  @media (max-width: 900px) { .story-grid { grid-template-columns: 1fr; } }
+  .story-content p { font-size: 16px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px; }
+  .story-visual { background: var(--navy); border-radius: 28px; padding: 48px; position: relative; overflow: hidden; }
+  .story-visual::after { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle, rgba(0,180,216,0.2), transparent 70%); }
+  .story-stat { position: relative; z-index: 1; margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .story-stat:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .story-stat-num { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 700; color: white; line-height: 1; }
+  .story-stat-num em { font-style: normal; color: var(--aqua); }
+  .story-stat-label { font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 8px; line-height: 1.4; }
+
+  /* TIMELINE */
+  #timeline { background: var(--navy); }
+  #timeline .section-label { color: var(--aqua); }
+  #timeline .section-title { color: white; }
+  #timeline .section-sub { color: rgba(255,255,255,0.6); }
+  .timeline { display: flex; flex-direction: column; gap: 0; margin-top: 60px; max-width: 780px; }
+  .tl-item { display: flex; gap: 28px; padding-bottom: 44px; position: relative; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 56px; }
+  .tl-dot { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--aqua), var(--ocean)); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .tl-line { width: 2px; flex: 1; background: linear-gradient(to bottom, rgba(0,180,216,0.4), transparent); margin-top: 8px; }
+  .tl-item:last-child .tl-line { display: none; }
+  .tl-body { padding-top: 10px; }
+  .tl-year { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--aqua); text-transform: uppercase; margin-bottom: 8px; }
+  .tl-body h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: white; margin-bottom: 10px; }
+  .tl-body p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+  /* VALUES */
+  #values { background: var(--sand); }
+  .values-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 56px; }
+  @media (max-width: 768px) { .values-grid { grid-template-columns: 1fr; } }
+  .value-card { background: white; border-radius: 20px; padding: 36px 32px; display: flex; gap: 20px; border: 1px solid rgba(0,102,204,0.07); transition: all 0.3s; }
+  .value-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .value-icon { width: 52px; height: 52px; min-width: 52px; border-radius: 14px; background: linear-gradient(135deg, var(--foam), #d0eeff); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+  .value-body h4 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .value-body p { font-size: 14px; color: var(--text-mid); line-height: 1.65; }
+
+  /* REVIEWS */
+  #reviews { background: var(--navy); }
+  #reviews .section-label { color: var(--aqua); }
+  #reviews .section-title { color: white; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  @media (max-width: 900px) { .reviews-grid { grid-template-columns: 1fr; } }
+  .review-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 32px; }
+  .review-stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+  .review-text { color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+  .review-author { display: flex; align-items: center; gap: 12px; }
+  .review-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--aqua), var(--ocean)); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; }
+  .review-name { font-weight: 600; color: white; font-size: 14px; }
+  .review-role { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+  /* CTA */
+  .cta-banner { background: linear-gradient(135deg, var(--navy), var(--navy-mid)); padding: 80px; margin: 0 40px 80px; border-radius: 32px; text-align: center; position: relative; overflow: hidden; }
+  .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(0,180,216,0.12), transparent 70%); }
+  .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: 44px; color: white; margin-bottom: 16px; position: relative; z-index: 1; }
+  .cta-banner p { color: rgba(255,255,255,0.65); font-size: 18px; margin-bottom: 36px; position: relative; z-index: 1; }
+  .cta-banner-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .btn-primary { background: var(--aqua); color: var(--navy); padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-primary:hover { background: white; transform: translateY(-2px); }
+  .btn-outline { border: 1.5px solid rgba(255,255,255,0.3); color: white; padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; transition: all 0.25s; }
+  .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+  @media (max-width: 768px) { .cta-banner { padding: 48px 24px; margin: 0 16px 60px; } .cta-banner h2 { font-size: 32px; } }
+
+  /* FOOTER */
+  footer { background: #060e1c; padding: 60px 80px 32px; }
+  @media (max-width: 768px) { footer { padding: 48px 24px 24px; } }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { color: rgba(255,255,255,0.45); font-size: 14px; line-height: 1.7; margin: 16px 0 20px; max-width: 280px; }
+  .footer-social { display: flex; gap: 12px; }
+  .footer-social a { width: 36px; height: 36px; background: rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; font-weight: 700; transition: all 0.2s; }
+  .footer-social a:hover { background: var(--aqua); color: var(--navy); }
+  .footer-col h4 { color: white; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--aqua); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.3); font-size: 13px; flex-wrap: wrap; gap: 8px; }
+
+  /* CHATBOT */
+  #chat-bubble { position: fixed; bottom: 28px; right: 28px; z-index: 9999; }
+  .chat-toggle { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border: none; cursor: pointer; box-shadow: 0 8px 32px rgba(0,102,204,0.4); display: flex; align-items: center; justify-content: center; transition: all 0.3s; position: relative; }
+  .chat-toggle:hover { transform: scale(1.1); }
+  .chat-toggle svg { width: 28px; height: 28px; fill: white; }
+  .chat-pulse { position: absolute; top: -2px; right: -2px; width: 18px; height: 18px; background: var(--gold); border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; color: var(--navy); }
+  .chat-window { position: absolute; bottom: 80px; right: 0; width: 380px; height: 500px; background: white; border-radius: 24px; box-shadow: 0 24px 80px rgba(10,22,40,0.25); display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,102,204,0.1); transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+  .chat-header { background: var(--navy); padding: 20px 24px; display: flex; align-items: center; gap: 12px; }
+  .chat-header-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--aqua), var(--ocean)); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .chat-header-info { flex: 1; }
+  .chat-header-name { color: white; font-weight: 700; font-size: 15px; }
+  .chat-header-status { color: var(--aqua); font-size: 12px; display: flex; align-items: center; gap: 5px; }
+  .chat-header-status::before { content: ''; width: 6px; height: 6px; background: #22c55e; border-radius: 50%; }
+  .chat-close { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.5); font-size: 20px; }
+  .chat-close:hover { color: white; }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .chat-msg { display: flex; gap: 10px; align-items: flex-end; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .chat-msg-avatar { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--aqua), var(--ocean)); display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; font-weight: 700; }
+  .chat-bubble-msg { max-width: 72%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.55; }
+  .chat-msg.bot .chat-bubble-msg { background: var(--sand); color: var(--text-dark); border-bottom-left-radius: 4px; }
+  .chat-msg.user .chat-bubble-msg { background: var(--ocean); color: white; border-bottom-right-radius: 4px; }
+  .chat-input-area { padding: 16px; border-top: 1px solid rgba(0,0,0,0.06); display: flex; gap: 10px; align-items: flex-end; }
+  .chat-input-area textarea { flex: 1; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 14px; padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; resize: none; height: 44px; outline: none; transition: border-color 0.2s; }
+  .chat-input-area textarea:focus { border-color: var(--ocean); }
+  .chat-send { width: 44px; height: 44px; border-radius: 12px; background: var(--ocean); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .chat-send:hover { background: var(--aqua); }
+  .chat-send svg { width: 18px; height: 18px; fill: white; }
+  .chat-typing { display: flex; gap: 4px; align-items: center; }
+  .chat-typing span { width: 7px; height: 7px; background: var(--text-light); border-radius: 50%; animation: bounce 1.2s infinite; }
+  .chat-typing span:nth-child(2){animation-delay:0.2s} .chat-typing span:nth-child(3){animation-delay:0.4s}
+  @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .about-hero .hero-badge{animation:fadeUp 0.6s ease forwards}
+  .about-hero h1{animation:fadeUp 0.7s 0.1s ease both}
+  .about-hero .hero-sub{animation:fadeUp 0.7s 0.2s ease both}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">M</div>
+    <div class="nav-logo-text">MIS<span class="nav-logo-sub">Institut de Natation de Montréal</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="programs.html">Programs</a>
+    <a href="about.html" class="active">About</a>
+    <a href="index.html#locations">Locations</a>
+    <a href="jobs.html" class="jobs-link">🏊 We're Hiring</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <div style="display:flex;gap:12px;">
+      <a href="https://www.facebook.com/SwimMontreal" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">FB</a>
+      <a href="https://www.instagram.com/swimmontreal/" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">IG</a>
+    </div>
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="nav-cta">Register Now</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="about-hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-badge">🌊 Québec's #1 Swim School</div>
+  <h1>More Than a Swim<br>School — a <em>Mission</em></h1>
+  <p class="hero-sub">Institut de Natation de Montréal was built on one belief: that swimming is a life skill every person deserves, taught the right way, at every age and stage.</p>
+</section>
+
+<!-- WHAT MAKES US DIFFERENT -->
+<section id="different">
+  <div style="text-align:center;margin-bottom:0;">
+    <div class="section-label" style="justify-content:center;display:flex;">What Sets Us Apart</div>
+    <h2 class="section-title" style="text-align:center;">What makes us different</h2>
+    <p class="section-sub" style="margin:0 auto;text-align:center;">Three pillars that define every lesson, every swimmer, every season.</p>
+  </div>
+  <div class="different-grid">
+    <div class="diff-card">
+      <div class="diff-icon">🎓</div>
+      <h3>The #MISway Method</h3>
+      <p>Our proprietary teaching approach introduces all swimming skills from the earliest age, developing each at the swimmer's own pace. Swimmers are never held back by a single weakness — we build on strengths and create genuine momentum. Individual skill evaluations replace blunt level groupings.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">👥</div>
+      <h3>Small Groups, Big Results</h3>
+      <p>We keep our groups small by design. More personal attention means faster progress, higher safety standards, and a better experience for every swimmer. Our instructors know each child by name — and by their unique strengths and development goals.</p>
+    </div>
+    <div class="diff-card">
+      <div class="diff-icon">📍</div>
+      <h3>25+ Pools. Your Neighbourhood.</h3>
+      <p>With over 25 pool locations across Montréal and the surrounding region — in hotels, community centres, and private facilities — there's almost certainly a MIS pool near you. We brought the school to the community, not the other way around.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OUR STORY -->
+<section id="story">
+  <div class="story-grid">
+    <div class="story-content">
+      <div class="section-label">Our Story</div>
+      <h2 class="section-title">Built in Montréal,<br>for Montréal</h2>
+      <p>Institut de Natation de Montréal was founded with a straightforward ambition: to build the most effective, accessible, and community-rooted swim school Québec had ever seen.</p>
+      <p>What started as a small operation in a handful of Montréal pools has grown into a network spanning 25+ locations, hundreds of certified instructors, and thousands of swimmers who have found their confidence, independence, and love of water through the #MISway.</p>
+      <p>We're not a franchise. We're not a recreation department checkbox. We're a team of swimmers and educators who believe that learning to swim — really learning, with technique, confidence, and joy — is one of the most valuable gifts a child or adult can receive.</p>
+      <p>Every season, every lesson, every report card is a step toward that mission.</p>
+      <a href="meet-the-team.html" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;color:var(--ocean);font-weight:700;font-size:15px;text-decoration:none;">Meet our team →</a>
+    </div>
+    <div class="story-visual">
+      <div class="story-stat">
+        <div class="story-stat-num"><em>25+</em></div>
+        <div class="story-stat-label">Pool locations across Montréal and the surrounding region</div>
+      </div>
+      <div class="story-stat">
+        <div class="story-stat-num"><em>100s</em></div>
+        <div class="story-stat-label">Of certified swim instructors in our community</div>
+      </div>
+      <div class="story-stat">
+        <div class="story-stat-num"><em>★4.9</em></div>
+        <div class="story-stat-label">Average parent satisfaction rating across all programs</div>
+      </div>
+      <div class="story-stat" style="border-bottom:none;padding-bottom:0;margin-bottom:0;">
+        <div class="story-stat-num"><em>4</em></div>
+        <div class="story-stat-label">Swim journeys — babies to adults, every stage of life</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-label">Our Evolution</div>
+  <h2 class="section-title" style="color:white;">How we got here</h2>
+  <p class="section-sub">From a single pool to Québec's #1 swim school — here's our journey.</p>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot">🌱</div><div class="tl-line"></div></div>
+      <div class="tl-body">
+        <div class="tl-year">The Beginning</div>
+        <h3>MIS is founded in Montréal</h3>
+        <p>Institut de Natation de Montréal launches with a small team, a handful of pool partnerships, and a bold vision: to teach swimming the right way — with individual attention, real technique, and no swimmers left behind.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot">🏊</div><div class="tl-line"></div></div>
+      <div class="tl-body">
+        <div class="tl-year">Early Growth</div>
+        <h3>The #MISway curriculum is formalised</h3>
+        <p>Our proprietary teaching method is codified — introducing all skills early, evaluating individually, and building on each swimmer's strengths. Faster progression becomes the hallmark result families talk about.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot">📍</div><div class="tl-line"></div></div>
+      <div class="tl-body">
+        <div class="tl-year">Expansion</div>
+        <h3>10+ pools across Montréal</h3>
+        <p>Strategic partnerships with hotels, community centres, and private facilities allow MIS to reach more neighbourhoods. The model proves: swimming instruction should come to the community, not ask families to travel far.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot">⭐</div><div class="tl-line"></div></div>
+      <div class="tl-body">
+        <div class="tl-year">Recognition</div>
+        <h3>Québec's #1 swim school</h3>
+        <p>Word of mouth, 5-star reviews, and consistent results cement MIS as the most trusted swim school in the region. Thousands of families across Montréal now trust us with their children's swimming education every season.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot">🚀</div></div>
+      <div class="tl-body">
+        <div class="tl-year">Today · Spring 2026</div>
+        <h3>25+ pools. Spring registration open.</h3>
+        <p>MIS continues to grow — in locations, in instructors, and in the number of families whose lives are changed by learning to love the water. Spring 2026 registration is now open. We'd love to have you join us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section id="values">
+  <div class="section-label">What We Believe</div>
+  <h2 class="section-title">Our values</h2>
+  <p class="section-sub">Every decision we make — from how we hire to how we teach — comes back to these principles.</p>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon">🚀</div>
+      <div class="value-body"><h4>Advance at every stage</h4><p>No swimmer should be held back. The #MISway is designed to keep every person moving forward — regardless of age, starting point, or pace.</p></div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🎯</div>
+      <div class="value-body"><h4>Strength-first teaching</h4><p>We identify and build on what every swimmer does well. Confidence comes from success — and success breeds the motivation to tackle what's hard.</p></div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">📊</div>
+      <div class="value-body"><h4>Radical transparency</h4><p>Every swimmer gets a detailed written report at the end of every session. Parents always know exactly where their child is and what comes next.</p></div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🌍</div>
+      <div class="value-body"><h4>Community first</h4><p>We plant pools in neighbourhoods — not the other way around. Being accessible, visible, and trusted in the communities we serve is central to everything we do.</p></div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🤝</div>
+      <div class="value-body"><h4>People over programmes</h4><p>Behind every swimmer is an instructor who knows them. We invest deeply in our instructors so they can invest deeply in every person they teach.</p></div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">💙</div>
+      <div class="value-body"><h4>Swimming for life</h4><p>This isn't just a recreational activity. Swimming is a safety skill, a life skill, and a gift. We take that responsibility seriously at every level of our school.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div style="text-align:center;">
+    <div class="section-label" style="display:flex;justify-content:center;">What Families Say</div>
+    <h2 class="section-title" style="color:white;text-align:center;">Life is cool in the pool</h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"I never learned to swim as a child. After just a few sessions with Adam, I finally felt safe in the water. Absolutely life-changing."</p>
+      <div class="review-author"><div class="review-avatar">L</div><div><div class="review-name">Lucy</div><div class="review-role">Adult Lessons</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"The progress my kids made in one session was equal to two full years at another school. The instructors are exceptional."</p>
+      <div class="review-author"><div class="review-avatar">B</div><div><div class="review-name">Barbara</div><div class="review-role">Mother to 2 MIS Swimmers</div></div></div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Spring registration was seamless, pool locations are everywhere. My daughter went from terrified to doing laps. Thank you MIS!"</p>
+      <div class="review-author"><div class="review-avatar">S</div><div><div class="review-name">Sophie</div><div class="review-role">Parent of 6-year-old</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Ready to join the MIS family?</h2>
+  <p>Spring 2026 registration is now open. Spots fill fast — secure yours today.</p>
+  <div class="cta-banner-btns">
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="btn-primary">Register Now →</a>
+    <a href="programs.html" class="btn-outline">Explore Programs</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--aqua),var(--ocean));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:white;font-family:'Playfair Display',serif;">M</div>
+        <span style="color:white;font-weight:700;font-size:16px;">MIS | Swim Montréal</span>
+      </div>
+      <p>Delivering flexible and effective swimming experiences to families throughout Montréal. Québec's #1 swim school.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/SwimMontreal" target="_blank">f</a>
+        <a href="https://www.instagram.com/swimmontreal/" target="_blank">ig</a>
+        <a href="mailto:info@swim-montreal.com">✉</a>
+        <a href="tel:(514)294-8259">☎</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <a href="programs.html#confidence">Confidence (Tots)</a>
+      <a href="programs.html#independence">Independence</a>
+      <a href="programs.html#strong">Strong Swimmer</a>
+      <a href="programs.html#life">Swim for Life</a>
+      <a href="lifeguard.html">Private Lifeguard</a>
+      <a href="programs.html#lifeguard">Private Lifeguard</a>
+    </div>
+    <div class="footer-col">
+      <h4>School</h4>
+      <a href="about.html">About MIS</a>
+      <a href="meet-the-team.html">Meet the Team</a>
+      <a href="jobs.html">Jobs — We're Hiring!</a>
+      <a href="news.html" target="_blank">Latest News</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="faq.html">FAQ</a>
+      <a href="policies.html">Policies</a>
+      <a href="contact.html">Locations & Contact</a>
+      <a href="https://swim-montreal.com/blog/privacy-policy/" target="_blank">Privacy Policy</a>
+      <a href="https://swim-montreal.com/fr" target="_blank">Français 🇫🇷</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Institut de Natation de Montréal Inc. All rights reserved.</span>
+    <span>♻ Green hosted</span>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<div id="chat-bubble">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-avatar">🏊</div>
+      <div class="chat-header-info">
+        <div class="chat-header-name">MIS Assistant</div>
+        <div class="chat-header-status">Online now</div>
+      </div>
+      <button class="chat-close" onclick="toggleChat()">×</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        <div class="chat-msg-avatar">🏊</div>
+        <div><div class="chat-bubble-msg">👋 Hi! Want to know more about MIS? I can help with our story, programs, registration, and more.</div></div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea id="chatInput" placeholder="Ask about MIS..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="chat-send" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+    </div>
+  </div>
+  <button class="chat-toggle" onclick="toggleChat()">
+    <div class="chat-pulse">?</div>
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+  </button>
+</div>
+
+<script>
+  /* HAMBURGER */
+  const hamburger = document.querySelector('.hamburger');
+  const navLinksEl = document.querySelector('.nav-links');
+  let navOpen = false;
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      navOpen = !navOpen;
+      navLinksEl.style.cssText = navOpen ? 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(10,22,40,0.98);padding:20px 40px;gap:16px;z-index:999;' : '';
+    });
+  }
+
+  /* CHATBOT */
+  const chatWindow = document.getElementById('chatWindow');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  let isOpen = false, conversationHistory = [];
+  const MIS_CONTEXT = `You are the MIS Assistant for Institut de Natation de Montréal (Swim Montreal), Quebec's #1 swim school. Phone: (514) 294-8259 | Email: info@swim-montreal.com | Register: https://appus.sportimea.com/portal/swim-montreal. Programs: Confidence (3-30mo), Independence (2+), Strong Swimmer (6+), Swim for Life (12+). 25+ pools across Montréal. Spring 2026 NOW OPEN. Be warm and concise. Answer in English or French.`;
+  function toggleChat() { isOpen = !isOpen; chatWindow.classList.toggle('open', isOpen); if (isOpen) chatInput.focus(); }
+  function addMessage(text, sender) {
+    const msg = document.createElement('div'); msg.className = `chat-msg ${sender}`;
+    const av = document.createElement('div'); av.className = 'chat-msg-avatar'; av.textContent = sender === 'bot' ? '🏊' : 'You';
+    if (sender === 'user') av.style.cssText = 'background:linear-gradient(135deg,#0066cc,#00b4d8);font-size:11px;';
+    const b = document.createElement('div'); b.className = 'chat-bubble-msg'; b.textContent = text;
+    msg.appendChild(av); msg.appendChild(b); chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  function addTyping() {
+    const msg = document.createElement('div'); msg.className = 'chat-msg bot'; msg.id = 'typing-indicator';
+    const av = document.createElement('div'); av.className = 'chat-msg-avatar'; av.textContent = '🏊';
+    const b = document.createElement('div'); b.className = 'chat-bubble-msg'; b.innerHTML = '<div class="chat-typing"><span></span><span></span><span></span></div>';
+    msg.appendChild(av); msg.appendChild(b); chatMessages.appendChild(msg); chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  function removeTyping() { const t = document.getElementById('typing-indicator'); if (t) t.remove(); }
+  async function sendMessage(text) {
+    const userText = text || chatInput.value.trim(); if (!userText) return;
+    chatInput.value = ''; addMessage(userText, 'user');
+    conversationHistory.push({ role: 'user', content: userText }); addTyping();
+    try {
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: conversationHistory, system: MIS_CONTEXT }) });
+      if (!r.ok) throw new Error('unavailable');
+      const d = await r.json(); const reply = d.reply || "Please call us at (514) 294-8259!";
+      removeTyping(); addMessage(reply, 'bot'); conversationHistory.push({ role: 'assistant', content: reply });
+    } catch { removeTyping(); addMessage("Connection issue — call (514) 294-8259 or email info@swim-montreal.com.", 'bot'); }
+  }
+  function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+  function autoResize(el) { el.style.height = '44px'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
+
+  /* CANVAS */
+  function initWater(id, cfg) {
+    const canvas = document.getElementById(id); if (!canvas) return;
+    const ctx = canvas.getContext('2d'); let W, H, t = 0, raf;
+    function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+    resize(); window.addEventListener('resize', resize);
+    const bubbles = Array.from({length: cfg.bubbles}, () => ({ x: Math.random(), y: Math.random(), r: 1.5 + Math.random()*5, speed: 0.0004 + Math.random()*0.0006, wobble: Math.random()*Math.PI*2, wobbleSpeed: 0.015 + Math.random()*0.02, alpha: 0.06 + Math.random()*0.12 }));
+    const rays = Array.from({length: cfg.rays}, (_, i) => ({ xFrac: 0.05 + i*(0.88/cfg.rays), width: 18 + Math.random()*40, speed: 0.0003 + Math.random()*0.0003, phase: Math.random()*Math.PI*2 }));
+    function drawWave(l, T) {
+      const baseY = H*l.yFrac, amp = H*l.amp; ctx.beginPath();
+      for (let x = 0; x <= W; x += 3) { const y = baseY + Math.sin((x/W)*Math.PI*2*l.freq + T*l.speed)*amp + Math.sin((x/W)*Math.PI*3.7*l.freq + T*l.speed*1.3)*amp*0.4; x === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y); }
+      ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fillStyle = l.color; ctx.fill();
+    }
+    function draw(ts) {
+      t = ts*0.001; ctx.clearRect(0,0,W,H);
+      const bg = ctx.createLinearGradient(0,0,0,H); bg.addColorStop(0,'#071220'); bg.addColorStop(0.45,'#0a1a35'); bg.addColorStop(0.75,'#0d2a55'); bg.addColorStop(1,'#082040'); ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+      const glow = ctx.createRadialGradient(W*.8,H*.15,0,W*.8,H*.15,W*.55); glow.addColorStop(0,'rgba(0,100,200,0.18)'); glow.addColorStop(1,'transparent'); ctx.fillStyle = glow; ctx.fillRect(0,0,W,H);
+      rays.forEach(ray => { const x = W*ray.xFrac + Math.sin(t*ray.speed*2*Math.PI+ray.phase)*W*.03; const grad = ctx.createLinearGradient(x,0,x+ray.width*.5,H*.85); grad.addColorStop(0,'rgba(100,200,255,0)'); grad.addColorStop(.1,'rgba(100,200,255,.06)'); grad.addColorStop(1,'rgba(100,200,255,0)'); ctx.save(); ctx.beginPath(); ctx.moveTo(x-ray.width*.3,0); ctx.lineTo(x+ray.width,0); ctx.lineTo(x+ray.width*1.6,H); ctx.lineTo(x-ray.width*.9,H); ctx.closePath(); ctx.fillStyle = grad; ctx.globalAlpha = .6 + Math.sin(t*ray.speed*Math.PI*4+ray.phase)*.4; ctx.fill(); ctx.restore(); });
+      cfg.waves.forEach(l => drawWave(l,t));
+      bubbles.forEach(b => { b.y -= b.speed; b.wobble += b.wobbleSpeed; if (b.y < -.02) { b.y = 1.05; b.x = Math.random(); } const bx = b.x*W + Math.sin(b.wobble)*18, by = b.y*H; ctx.beginPath(); ctx.arc(bx,by,b.r,0,Math.PI*2); ctx.strokeStyle = `rgba(150,230,255,${b.alpha})`; ctx.lineWidth = .8; ctx.stroke(); ctx.beginPath(); ctx.arc(bx-b.r*.3,by-b.r*.3,b.r*.25,0,Math.PI*2); ctx.fillStyle = `rgba(255,255,255,${b.alpha*1.2})`; ctx.fill(); });
+      raf = requestAnimationFrame(draw);
+    }
+    raf = requestAnimationFrame(draw);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) cancelAnimationFrame(raf); else raf = requestAnimationFrame(draw); });
+  }
+  initWater('hero-canvas', { bubbles: 40, rays: 6, waves: [ {amp:.040,freq:1.7,speed:.38,color:'rgba(0,120,200,0.18)',yFrac:.52}, {amp:.032,freq:2.3,speed:.26,color:'rgba(0,180,220,0.14)',yFrac:.58}, {amp:.050,freq:1.2,speed:.18,color:'rgba(10,50,120,0.22)',yFrac:.46}, {amp:.025,freq:3.1,speed:.50,color:'rgba(0,200,255,0.09)',yFrac:.63} ] });
+</script>
+</body>
+</html>

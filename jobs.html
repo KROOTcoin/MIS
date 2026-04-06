@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jobs – Institut de Natation de Montréal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628; --navy-mid: #122040;
+    --ocean: #0066cc; --aqua: #00b4d8; --aqua-light: #90e0ef;
+    --foam: #caf0f8; --sand: #f8f4ef; --gold: #e8a020; --white: #ffffff;
+    --text-dark: #0a1628; --text-mid: #3a4a5a; --text-light: #6a7a8a;
+    --shadow: 0 4px 24px rgba(0,102,204,0.12);
+    --shadow-lg: 0 12px 48px rgba(10,22,40,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--white); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(10,22,40,0.97); backdrop-filter: blur(16px);
+    padding: 0 40px; height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-icon {
+    width: 40px; height: 40px; background: linear-gradient(135deg, var(--aqua), var(--ocean));
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 900; color: white; font-family: 'Playfair Display', serif;
+  }
+  .nav-logo-text { color: white; font-size: 17px; font-weight: 600; line-height: 1.2; }
+  .nav-logo-sub { color: var(--aqua-light); font-size: 11px; font-weight: 400; display: block; }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: white; }
+  .nav-links a.active { color: var(--aqua); }
+  .nav-cta {
+    background: var(--aqua); color: var(--navy); padding: 10px 22px;
+    border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover { background: white; transform: translateY(-1px); }
+  @media (max-width: 900px) { .nav-links { display: none; } }
+
+  /* HERO */
+  .hero {
+    height: 60vh; min-height: 420px;
+    display: flex; flex-direction: column;
+    justify-content: flex-end; align-items: flex-start;
+    padding: 72px 80px 64px;
+    background: var(--navy); position: relative; overflow: hidden;
+  }
+  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .hero > *:not(#hero-canvas) { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(232,160,32,0.18); border: 1px solid rgba(232,160,32,0.4);
+    color: var(--gold); padding: 8px 16px; border-radius: 50px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6vw, 76px); color: white;
+    line-height: 1.05; letter-spacing: -2px; max-width: 700px; margin-bottom: 20px;
+  }
+  .hero h1 em { font-style: normal; color: var(--aqua); }
+  .hero-sub { color: rgba(255,255,255,0.65); font-size: 18px; max-width: 520px; line-height: 1.7; margin-bottom: 36px; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: var(--navy);
+    padding: 15px 34px; border-radius: 50px;
+    font-size: 15px; font-weight: 700; text-decoration: none;
+    transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: white; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,160,32,0.3); }
+  .btn-outline {
+    border: 1.5px solid rgba(255,255,255,0.3); color: white;
+    padding: 15px 34px; border-radius: 50px; font-size: 15px; font-weight: 500;
+    text-decoration: none; transition: all 0.25s;
+  }
+  .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+  @media (max-width: 768px) { .hero { padding: 72px 24px 48px; min-height: 380px; } }
+
+  /* PERKS BAR */
+  .perks-bar {
+    background: var(--ocean); padding: 20px 80px;
+    display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+  }
+  .perks-bar::-webkit-scrollbar { display: none; }
+  .perk {
+    display: flex; align-items: center; gap: 10px; white-space: nowrap;
+    padding: 0 32px; border-right: 1px solid rgba(255,255,255,0.2);
+    color: white; font-size: 14px; font-weight: 500;
+  }
+  .perk:first-child { padding-left: 0; }
+  .perk:last-child { border-right: none; }
+  .perk-icon { font-size: 18px; }
+  @media (max-width: 768px) { .perks-bar { padding: 16px 24px; } }
+
+  /* SECTIONS */
+  section { padding: 90px 80px; }
+  @media (max-width: 768px) { section { padding: 60px 24px; } }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--ocean); margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4vw, 50px); font-weight: 700;
+    line-height: 1.1; letter-spacing: -1px; color: var(--navy); margin-bottom: 20px;
+  }
+  .section-sub { font-size: 17px; color: var(--text-mid); line-height: 1.7; max-width: 560px; }
+
+  /* WHY JOIN */
+  #why { background: var(--sand); }
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  @media (max-width: 900px) { .why-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .why-grid { grid-template-columns: 1fr; } }
+  .why-card {
+    background: white; border-radius: 20px; padding: 36px 28px;
+    border: 1px solid rgba(0,102,204,0.07); transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .why-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--aqua), var(--ocean));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .why-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+  .why-card:hover::before { transform: scaleX(1); }
+  .why-icon { font-size: 38px; margin-bottom: 18px; }
+  .why-card h3 { font-size: 19px; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+  .why-card p { font-size: 14px; color: var(--text-mid); line-height: 1.65; }
+
+  /* MISWAY */
+  #misway { background: white; }
+  .misway-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 56px; }
+  @media (max-width: 900px) { .misway-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .misway-block { background: var(--sand); border-radius: 20px; padding: 36px; }
+  .misway-block h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .misway-block h3 span { font-size: 22px; }
+  .misway-block p { font-size: 15px; color: var(--text-mid); line-height: 1.7; }
+  .misway-block ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .misway-block ul li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 15px; color: var(--text-mid); line-height: 1.5;
+  }
+  .misway-block ul li::before { content: '✓'; color: var(--ocean); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+  .misway-visual {
+    background: var(--navy); border-radius: 24px; padding: 44px;
+    position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 28px;
+  }
+  .misway-visual::after {
+    content: ''; position: absolute; bottom: -60px; right: -60px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,180,216,0.15), transparent 70%);
+  }
+  .misway-stat { position: relative; z-index: 1; }
+  .misway-stat-num { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: white; line-height: 1; }
+  .misway-stat-num em { font-style: normal; color: var(--aqua); }
+  .misway-stat-label { font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 6px; }
+  .misway-divider { height: 1px; background: rgba(255,255,255,0.1); position: relative; z-index: 1; }
+  .misway-quote {
+    position: relative; z-index: 1;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: rgba(255,255,255,0.8); font-style: italic; line-height: 1.6;
+  }
+
+  /* ROLE */
+  #role { background: var(--sand); }
+  .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 56px; }
+  @media (max-width: 768px) { .role-grid { grid-template-columns: 1fr; } }
+  .role-card {
+    background: white; border-radius: 20px; padding: 36px 32px;
+    border: 1px solid rgba(0,102,204,0.07);
+  }
+  .role-card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .role-card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--foam), #d0eeff);
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .role-card h3 { font-size: 19px; font-weight: 700; color: var(--navy); }
+  .role-card ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .role-card ul li {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 15px; color: var(--text-mid); line-height: 1.5;
+  }
+  .role-card ul li::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--aqua); flex-shrink: 0; margin-top: 6px;
+  }
+
+  /* POOLS MAP STRIP */
+  .pools-strip {
+    background: var(--navy); padding: 60px 80px;
+    display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap;
+  }
+  @media (max-width: 768px) { .pools-strip { padding: 48px 24px; } }
+  .pools-strip-text h2 {
+    font-family: 'Playfair Display', serif; font-size: 36px; color: white; margin-bottom: 12px;
+  }
+  .pools-strip-text p { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 400px; line-height: 1.6; }
+  .pools-count {
+    text-align: center; flex-shrink: 0;
+  }
+  .pools-count-num { font-family: 'Playfair Display', serif; font-size: 80px; font-weight: 700; color: var(--aqua); line-height: 1; }
+  .pools-count-label { font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 6px; }
+  .pools-list {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px;
+  }
+  .pool-pill {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.75); padding: 7px 16px; border-radius: 50px; font-size: 13px;
+  }
+
+  /* APPLY */
+  #apply { background: white; }
+  .apply-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  @media (max-width: 900px) { .apply-grid { grid-template-columns: 1fr; } }
+  .apply-steps { display: flex; flex-direction: column; gap: 0; margin-top: 40px; }
+  .apply-step { display: flex; gap: 20px; position: relative; padding-bottom: 36px; }
+  .apply-step:last-child { padding-bottom: 0; }
+  .apply-step-left { display: flex; flex-direction: column; align-items: center; }
+  .apply-step-num {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--aqua), var(--ocean));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; color: white; flex-shrink: 0;
+  }
+  .apply-step-line {
+    width: 2px; flex: 1; background: linear-gradient(to bottom, rgba(0,180,216,0.3), transparent);
+    margin-top: 8px;
+  }
+  .apply-step:last-child .apply-step-line { display: none; }
+  .apply-step-body { padding-top: 8px; }
+  .apply-step-body h4 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .apply-step-body p { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+  .apply-cta {
+    background: var(--sand); border-radius: 28px; padding: 48px; text-align: center;
+  }
+  .apply-cta h3 {
+    font-family: 'Playfair Display', serif; font-size: 30px;
+    color: var(--navy); margin-bottom: 14px;
+  }
+  .apply-cta p { font-size: 15px; color: var(--text-mid); margin-bottom: 32px; line-height: 1.7; }
+  .apply-cta-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--navy); color: white; padding: 18px 40px;
+    border-radius: 50px; font-size: 16px; font-weight: 700; text-decoration: none;
+    transition: all 0.25s; margin-bottom: 16px; width: 100%; justify-content: center;
+  }
+  .apply-cta-btn:hover { background: var(--ocean); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .apply-cta-btn.gold { background: var(--gold); color: var(--navy); }
+  .apply-cta-btn.gold:hover { background: #d4911a; }
+  .apply-cta-note { font-size: 13px; color: var(--text-light); }
+
+  /* TESTIMONIAL STRIP */
+  .testimonial-strip { background: var(--ocean); padding: 72px 80px; }
+  @media (max-width: 768px) { .testimonial-strip { padding: 48px 24px; } }
+  .testimonial-strip h2 {
+    font-family: 'Playfair Display', serif; font-size: 38px; color: white;
+    text-align: center; margin-bottom: 48px;
+  }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr; } }
+  .t-card {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 18px; padding: 28px;
+  }
+  .t-quote { color: rgba(255,255,255,0.9); font-size: 15px; line-height: 1.7; font-style: italic; margin-bottom: 20px; }
+  .t-author { display: flex; align-items: center; gap: 10px; }
+  .t-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: white;
+  }
+  .t-name { font-weight: 700; color: white; font-size: 14px; }
+  .t-role { font-size: 12px; color: rgba(255,255,255,0.55); }
+
+  /* FAQ */
+  #faq { background: var(--sand); }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; }
+  @media (max-width: 768px) { .faq-grid { grid-template-columns: 1fr; } }
+  .faq-item {
+    background: white; border-radius: 16px; border: 1px solid rgba(0,102,204,0.07);
+    overflow: hidden;
+  }
+  .faq-q {
+    width: 100%; text-align: left; padding: 22px 24px;
+    background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-size: 15px; font-weight: 600; color: var(--navy);
+    font-family: 'DM Sans', sans-serif; transition: background 0.2s;
+  }
+  .faq-q:hover { background: var(--sand); }
+  .faq-arrow { font-size: 18px; transition: transform 0.3s; color: var(--ocean); flex-shrink: 0; }
+  .faq-item.open .faq-arrow { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+    padding: 0 24px; font-size: 14px; color: var(--text-mid); line-height: 1.7;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 22px; }
+
+  /* FOOTER */
+  footer { background: #060e1c; padding: 52px 80px 28px; }
+  @media (max-width: 768px) { footer { padding: 40px 24px 24px; } }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { color: rgba(255,255,255,0.45); font-size: 14px; line-height: 1.7; margin: 14px 0 18px; max-width: 270px; }
+  .footer-social { display: flex; gap: 10px; }
+  .footer-social a {
+    width: 34px; height: 34px; background: rgba(255,255,255,0.08); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.5); text-decoration: none; font-size: 12px; font-weight: 700; transition: all 0.2s;
+  }
+  .footer-social a:hover { background: var(--aqua); color: var(--navy); }
+  .footer-col h4 { color: white; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 16px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 14px; margin-bottom: 9px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--aqua); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px;
+    display: flex; justify-content: space-between; align-items: center;
+    color: rgba(255,255,255,0.3); font-size: 13px; flex-wrap: wrap; gap: 8px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+  .hero-badge{animation:fadeUp 0.5s ease both}
+  .hero h1{animation:fadeUp 0.6s 0.1s ease both}
+  .hero-sub{animation:fadeUp 0.6s 0.2s ease both}
+  .hero-btns{animation:fadeUp 0.6s 0.3s ease both}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">M</div>
+    <div class="nav-logo-text">MIS<span class="nav-logo-sub">Institut de Natation de Montréal</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#programs">Programs</a>
+    <a href="index.html#why">About</a>
+    <a href="index.html#locations">Locations</a>
+    <a href="jobs.html" class="active">Jobs</a>
+    <a href="https://swim-montreal.com/contact" target="_blank">Contact</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <div style="display:flex;gap:12px;">
+      <a href="https://www.facebook.com/SwimMontreal" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">FB</a>
+      <a href="https://www.instagram.com/swimmontreal/" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">IG</a>
+    </div>
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="nav-cta">Register Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-badge">🏊 We're Hiring</div>
+  <h1>Teach. <em>Inspire.</em> Make Waves.</h1>
+  <p class="hero-sub">Join Montréal's premier swim school. Flexible hours, competitive pay, and the satisfaction of helping people love the water for life.</p>
+  <div class="hero-btns">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc98lykZIs_spkQonK_5a2fchJCSCS81XGmynaLGdFF8J937w/viewform" target="_blank" class="btn-primary">Apply Now →</a>
+    <a href="#role" class="btn-outline">See What the Role Involves</a>
+  </div>
+</section>
+
+<!-- PERKS BAR -->
+<div class="perks-bar">
+  <div class="perk"><span class="perk-icon">💰</span> Competitive Pay</div>
+  <div class="perk"><span class="perk-icon">🕐</span> Flexible Scheduling</div>
+  <div class="perk"><span class="perk-icon">📍</span> 25+ Pool Locations</div>
+  <div class="perk"><span class="perk-icon">🎓</span> Paid Training & Onboarding</div>
+  <div class="perk"><span class="perk-icon">🌱</span> Career Growth</div>
+  <div class="perk"><span class="perk-icon">🤝</span> Supportive Team</div>
+</div>
+
+<!-- WHY JOIN -->
+<section id="why">
+  <div class="section-label">Why MIS?</div>
+  <h2 class="section-title">More than a job — a mission</h2>
+  <p class="section-sub">Every lesson you teach makes a lasting difference. Here's what makes teaching at MIS unlike anywhere else.</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🏆</div>
+      <h3>Québec's #1 Swim School</h3>
+      <p>Join the most respected swim school in Montréal. Our reputation means you work for a brand families already trust and recommend to their friends.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📅</div>
+      <h3>Schedule That Works for You</h3>
+      <p>Morning, evening, weekends — you set your availability. Perfect for students, parents, and anyone looking for meaningful flexible work.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🎯</div>
+      <h3>Signature Teaching Method</h3>
+      <p>You'll be trained in the #MISway — a proven, skill-based approach that produces faster results and more confident swimmers than traditional methods.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🌍</div>
+      <h3>Teach in Your Community</h3>
+      <p>With 25+ pools across Montréal, there's almost certainly a location near you. Be a positive presence right in your own neighbourhood.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📈</div>
+      <h3>Grow With Us</h3>
+      <p>Many of our best administrators and coordinators started as instructors. There's real room to build a career here, not just a side gig.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🛠️</div>
+      <h3>Tools & Admin Support</h3>
+      <p>We handle scheduling, billing, and client communications. You focus on teaching — our digital tools and admin team handle the rest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MISWAY SECTION -->
+<section id="misway">
+  <div class="section-label">Our Approach</div>
+  <h2 class="section-title">The #MISway — your teaching toolkit</h2>
+  <p class="section-sub">You won't just be following a script. You'll master a curriculum built to get real results for every swimmer you coach.</p>
+  <div class="misway-grid">
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="misway-block">
+        <h3><span>📖</span> The Approach</h3>
+        <p>MIS introduces all swimming skills at a young age, developing each at the swimmer's own pace. Skills are evaluated independently — not by levels — so every child builds on their strengths while addressing weaknesses in a truly tailored curriculum.</p>
+      </div>
+      <div class="misway-block">
+        <h3><span>✅</span> Instructor Benefits</h3>
+        <ul>
+          <li>Swimmers advance faster — you see real progress every session</li>
+          <li>No swimmer is held back by one weakness, making your job more rewarding</li>
+          <li>Clear evaluation tools so you always know what to work on</li>
+          <li>Advanced swimmers can be recommended for the MIS Swim Team</li>
+        </ul>
+      </div>
+      <div class="misway-block">
+        <h3><span>📊</span> Evaluations</h3>
+        <p>At the end of every session, each swimmer gets a detailed report card completed by their coach. This transparency builds parent trust and keeps your work visible and valued.</p>
+      </div>
+    </div>
+    <div class="misway-visual">
+      <div class="misway-stat">
+        <div class="misway-stat-num"><em>25+</em></div>
+        <div class="misway-stat-label">Pools across Montréal to work from</div>
+      </div>
+      <div class="misway-divider"></div>
+      <div class="misway-stat">
+        <div class="misway-stat-num"><em>100s</em></div>
+        <div class="misway-stat-label">Of qualified instructors in our community</div>
+      </div>
+      <div class="misway-divider"></div>
+      <div class="misway-stat">
+        <div class="misway-stat-num"><em>★4.9</em></div>
+        <div class="mismy-stat-label" style="font-size:14px;color:rgba(255,255,255,0.5);margin-top:6px;">Average parent satisfaction rating</div>
+      </div>
+      <div class="misway-divider"></div>
+      <div class="misway-quote">"The #MISway changed how I think about teaching. Every swimmer makes progress — and you can see it."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLE -->
+<section id="role">
+  <div class="section-label">The Position</div>
+  <h2 class="section-title">Is it you we're looking for?</h2>
+  <p class="section-sub">Here's exactly what the swim instructor role looks like day-to-day — and what we do to set you up for success.</p>
+  <div class="role-grid">
+    <div class="role-card">
+      <div class="role-card-header">
+        <div class="role-card-icon">🏊</div>
+        <h3>What You'll Do</h3>
+      </div>
+      <ul>
+        <li>Deliver high-quality swimming lessons to children and adults using the #MISway curriculum</li>
+        <li>Manage and communicate with clients before and after lessons</li>
+        <li>Schedule and coordinate make-up lessons as needed</li>
+        <li>Respond to swimmer questions and concerns with professionalism and warmth</li>
+        <li>Complete detailed report cards at the end of each session</li>
+        <li>Represent MIS values with energy, patience and enthusiasm</li>
+      </ul>
+    </div>
+    <div class="role-card">
+      <div class="role-card-header">
+        <div class="role-card-icon">🚀</div>
+        <h3>How We Set You Up</h3>
+      </div>
+      <ul>
+        <li>Personalized onboarding and training in the #MISway teaching approach</li>
+        <li>Ongoing support from a qualified and responsive administrative team</li>
+        <li>Digital scheduling and management tools so logistics stay simple</li>
+        <li>Promotional resources to help build your roster of swimmers</li>
+        <li>Regular feedback and check-ins to help you grow as an instructor</li>
+        <li>A community of experienced peers you can learn from</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:28px;background:white;border-radius:20px;padding:32px 36px;border:1px solid rgba(0,102,204,0.08);display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+    <div style="font-size:28px;">📋</div>
+    <div style="flex:1;">
+      <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px;">Qualifications</div>
+      <div style="font-size:14px;color:var(--text-mid);line-height:1.6;">A valid lifeguard or swim instructor certification is required (NLS, RLSS, or equivalent). We welcome applications from candidates at all experience levels — if you have a passion for swimming and people, we want to hear from you.</div>
+    </div>
+  </div>
+</section>
+
+<!-- POOLS STRIP -->
+<div class="pools-strip">
+  <div class="pools-strip-text">
+    <h2>Work in your neighbourhood</h2>
+    <p>With pools all across the island of Montréal and the surrounding communities, you can almost certainly work close to home.</p>
+    <div class="pools-list">
+      <span class="pool-pill">Côte-Saint-Luc</span>
+      <span class="pool-pill">Westmount</span>
+      <span class="pool-pill">NDG</span>
+      <span class="pool-pill">Downtown</span>
+      <span class="pool-pill">Plateau</span>
+      <span class="pool-pill">Rosemont</span>
+      <span class="pool-pill">Laval</span>
+      <span class="pool-pill">South Shore</span>
+      <span class="pool-pill">+ more</span>
+    </div>
+  </div>
+  <div class="pools-count">
+    <div class="pools-count-num">25+</div>
+    <div class="pools-count-label">Pool locations across Montréal</div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonial-strip">
+  <h2>Hear from our instructors</h2>
+  <div class="testimonials-grid">
+    <div class="t-card">
+      <p class="t-quote">"I started as a part-time instructor during university and now I run operations for three pools. MIS genuinely invests in people."</p>
+      <div class="t-author">
+        <div class="t-avatar">JL</div>
+        <div><div class="t-name">Julie L.</div><div class="t-role">Pool Coordinator, 4 years at MIS</div></div>
+      </div>
+    </div>
+    <div class="t-card">
+      <p class="t-quote">"The #MISway approach actually works. Parents see progress and thank you every week — it makes the job incredibly rewarding."</p>
+      <div class="t-author">
+        <div class="t-avatar">MT</div>
+        <div><div class="t-name">Marc T.</div><div class="t-role">Senior Instructor, 2 years at MIS</div></div>
+      </div>
+    </div>
+    <div class="t-card">
+      <p class="t-quote">"The flexibility is real. I teach evenings and weekends around my full-time job. The admin team handles everything — I just show up and teach."</p>
+      <div class="t-author">
+        <div class="t-avatar">AS</div>
+        <div><div class="t-name">Aisha S.</div><div class="t-role">Part-time Instructor, 1 year at MIS</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APPLY -->
+<section id="apply">
+  <div class="apply-grid">
+    <div>
+      <div class="section-label">How to Apply</div>
+      <h2 class="section-title">3 steps to joining our team</h2>
+      <div class="apply-steps">
+        <div class="apply-step">
+          <div class="apply-step-left">
+            <div class="apply-step-num">1</div>
+            <div class="apply-step-line"></div>
+          </div>
+          <div class="apply-step-body">
+            <h4>Fill out the application form</h4>
+            <p>Takes about 5 minutes. Tell us about your certifications, availability, and which pools you'd like to work at.</p>
+          </div>
+        </div>
+        <div class="apply-step">
+          <div class="apply-step-left">
+            <div class="apply-step-num">2</div>
+            <div class="apply-step-line"></div>
+          </div>
+          <div class="apply-step-body">
+            <h4>We'll be in touch for an interview</h4>
+            <p>Our team reviews every application and reaches out to promising candidates within a few business days.</p>
+          </div>
+        </div>
+        <div class="apply-step">
+          <div class="apply-step-left">
+            <div class="apply-step-num">3</div>
+            <div class="apply-step-line"></div>
+          </div>
+          <div class="apply-step-body">
+            <h4>Onboarding & your first lesson</h4>
+            <p>Complete your personalized #MISway training and get matched with your first swimmers. Welcome to the team!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="apply-cta">
+      <div style="font-size:48px;margin-bottom:16px;">🏊</div>
+      <h3>Ready to answer the call?</h3>
+      <p>We're always looking for outstanding, qualified instructors. If you're passionate about swimming and people, we want you on our team.</p>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc98lykZIs_spkQonK_5a2fchJCSCS81XGmynaLGdFF8J937w/viewform" target="_blank" class="apply-cta-btn gold">Apply Now →</a>
+      <a href="mailto:info@swim-montreal.com" class="apply-cta-btn">Email Us Instead</a>
+      <div class="apply-cta-note">Questions? Call us at <strong>(514) 294-8259</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-label">FAQ</div>
+  <h2 class="section-title">Questions about working at MIS?</h2>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Do I need a certification to apply? <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">Yes — a valid lifeguard or swim instructor certification is required (NLS, RLSS, or equivalent). If you're in the process of getting certified, feel free to reach out and we can discuss your timeline.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How many hours can I work per week? <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">It's completely flexible. Some instructors work 4–6 hours a week, others 20+. You submit your availability and we match you with swimmers accordingly. There's no minimum hour requirement.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Which pools can I work at? <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">We operate at 25+ pools across Montréal and surrounding areas. During onboarding, you'll let us know which locations work best for you and we'll match you accordingly.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is training provided? <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">Yes. Every new instructor goes through personalized onboarding in the #MISway teaching approach. You'll be fully prepared before your first lesson with a swimmer.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Can I teach adults as well as children? <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">Absolutely. MIS teaches swimmers of all ages — from babies to seniors. During your application you can indicate your preferences and experience level with different age groups.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How quickly will I hear back after applying? <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">We review applications continuously and aim to respond within 3–5 business days. If you haven't heard back within a week, feel free to follow up at <a href="mailto:info@swim-montreal.com" style="color:var(--ocean);">info@swim-montreal.com</a>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--aqua),var(--ocean));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:white;font-family:'Playfair Display',serif;">M</div>
+        <span style="color:white;font-weight:700;font-size:16px;">MIS | Swim Montréal</span>
+      </div>
+      <p>Delivering flexible and effective swimming experiences to families throughout Montréal. Québec's #1 swim school.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/SwimMontreal" target="_blank">f</a>
+        <a href="https://www.instagram.com/swimmontreal/" target="_blank">ig</a>
+        <a href="mailto:info@swim-montreal.com">✉</a>
+        <a href="tel:(514)294-8259">☎</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <a href="programs.html#confidence">Confidence (Tots)</a>
+      <a href="programs.html#independence">Independence</a>
+      <a href="programs.html#strong">Strong Swimmer</a>
+      <a href="programs.html#life">Swim for Life</a>
+      <a href="lifeguard.html">Private Lifeguard</a>
+    </div>
+    <div class="footer-col">
+      <h4>School</h4>
+      <a href="about.html">About MIS</a>
+      <a href="meet-the-team.html">Meet the Team</a>
+      <a href="jobs.html">Jobs — We're Hiring!</a>
+      <a href="news.html">Latest News</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="faq.html">FAQ</a>
+      <a href="policies.html">Policies</a>
+      <a href="contact.html">Locations & Contact</a>
+      <a href="https://swim-montreal.com/blog/privacy-policy/" target="_blank">Privacy Policy</a>
+      <a href="https://swim-montreal.com/fr" target="_blank">Français 🇫🇷</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Institut de Natation de Montréal Inc. All rights reserved.</span>
+    <span>♻ Green hosted</span>
+  </div>
+</footer>
+
+<script>
+  /* FAQ toggle */
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* HERO CANVAS — same water animation as homepage */
+  (function() {
+    const canvas = document.getElementById('hero-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, t = 0, raf;
+    function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const bubbles = Array.from({length: 35}, () => ({
+      x: Math.random(), y: Math.random(),
+      r: 1.5 + Math.random() * 4, speed: 0.0004 + Math.random() * 0.0005,
+      wobble: Math.random() * Math.PI * 2, wobbleSpeed: 0.015 + Math.random() * 0.02,
+      alpha: 0.06 + Math.random() * 0.10,
+    }));
+
+    const rays = Array.from({length: 6}, (_, i) => ({
+      xFrac: 0.05 + i * 0.17, width: 20 + Math.random() * 40,
+      speed: 0.0003 + Math.random() * 0.0003, phase: Math.random() * Math.PI * 2,
+    }));
+
+    const waveLayers = [
+      { amp: 0.06, freq: 1.7, speed: 0.41, color: 'rgba(0,120,200,0.22)', yFrac: 0.55 },
+      { amp: 0.05, freq: 2.3, speed: 0.28, color: 'rgba(0,180,220,0.16)', yFrac: 0.62 },
+      { amp: 0.07, freq: 1.2, speed: 0.19, color: 'rgba(10,50,120,0.25)', yFrac: 0.48 },
+      { amp: 0.04, freq: 3.1, speed: 0.52, color: 'rgba(0,200,255,0.10)', yFrac: 0.68 },
+      { amp: 0.03, freq: 4.0, speed: 0.65, color: 'rgba(180,240,255,0.07)', yFrac: 0.76 },
+    ];
+
+    function drawWave(layer, T) {
+      const baseY = H * layer.yFrac, amp = H * layer.amp;
+      ctx.beginPath();
+      for (let x = 0; x <= W; x += 3) {
+        const y = baseY
+          + Math.sin((x/W)*Math.PI*2*layer.freq + T*layer.speed) * amp
+          + Math.sin((x/W)*Math.PI*3.7*layer.freq + T*layer.speed*1.3) * amp * 0.4;
+        x === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+      }
+      ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath();
+      ctx.fillStyle = layer.color; ctx.fill();
+    }
+
+    function draw(ts) {
+      t = ts * 0.001;
+      ctx.clearRect(0,0,W,H);
+      const bg = ctx.createLinearGradient(0,0,0,H);
+      bg.addColorStop(0,'#071220'); bg.addColorStop(0.5,'#0a1a35'); bg.addColorStop(1,'#0d2a55');
+      ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+      const glow = ctx.createRadialGradient(W*0.75,H*0.2,0,W*0.75,H*0.2,W*0.5);
+      glow.addColorStop(0,'rgba(0,100,200,0.2)'); glow.addColorStop(1,'transparent');
+      ctx.fillStyle = glow; ctx.fillRect(0,0,W,H);
+
+      rays.forEach(ray => {
+        const x = W*ray.xFrac + Math.sin(t*ray.speed*2*Math.PI+ray.phase)*W*0.03;
+        const grad = ctx.createLinearGradient(x,0,x+ray.width*0.5,H);
+        grad.addColorStop(0,'rgba(100,200,255,0.0)');
+        grad.addColorStop(0.15,'rgba(100,200,255,0.07)');
+        grad.addColorStop(1,'rgba(100,200,255,0.0)');
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x-ray.width*0.3,0); ctx.lineTo(x+ray.width,0);
+        ctx.lineTo(x+ray.width*1.6,H); ctx.lineTo(x-ray.width*0.9,H);
+        ctx.closePath(); ctx.fillStyle = grad;
+        ctx.globalAlpha = 0.6 + Math.sin(t*ray.speed*Math.PI*4+ray.phase)*0.4;
+        ctx.fill(); ctx.restore();
+      });
+
+      waveLayers.forEach(l => drawWave(l, t));
+
+      bubbles.forEach(b => {
+        b.y -= b.speed; b.wobble += b.wobbleSpeed;
+        if (b.y < -0.02) { b.y = 1.05; b.x = Math.random(); }
+        const bx = b.x*W + Math.sin(b.wobble)*16, by = b.y*H;
+        ctx.beginPath(); ctx.arc(bx,by,b.r,0,Math.PI*2);
+        ctx.strokeStyle = `rgba(150,230,255,${b.alpha})`; ctx.lineW
+
+  /* HAMBURGER MENU */
+  const hamburger = document.querySelector('.hamburger');
+  const navLinksEl = document.querySelector('.nav-links');
+  let navOpen = false;
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      navOpen = !navOpen;
+      navLinksEl.style.cssText = navOpen
+        ? 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(10,22,40,0.98);padding:20px 40px;gap:16px;z-index:999;'
+        : '';
+    });
+  }
+</script>
+</body>
+</html>

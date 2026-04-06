@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Private Lifeguard Hire – Institut de Natation de Montréal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628; --navy-mid: #122040;
+    --ocean: #0066cc; --aqua: #00b4d8; --aqua-light: #90e0ef;
+    --foam: #caf0f8; --sand: #f8f4ef; --gold: #e8a020; --white: #ffffff;
+    --red: #cc2200; --text-dark: #0a1628; --text-mid: #3a4a5a; --text-light: #6a7a8a;
+    --shadow: 0 4px 24px rgba(0,102,204,0.12); --shadow-lg: 0 12px 48px rgba(10,22,40,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--white); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,22,40,0.97); backdrop-filter: blur(16px); padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: white; font-family: 'Playfair Display', serif; }
+  .nav-logo-text { color: white; font-size: 17px; font-weight: 600; line-height: 1.2; }
+  .nav-logo-sub { color: var(--aqua-light); font-size: 11px; font-weight: 400; letter-spacing: 0.5px; display: block; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: white; }
+  .nav-links a.jobs-link { color: var(--gold); font-weight: 700; }
+  .nav-cta { background: var(--aqua); color: var(--navy); padding: 10px 22px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; white-space: nowrap; }
+  .nav-cta:hover { background: white; transform: translateY(-1px); }
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; }
+  @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 72px 80px 80px; background: var(--navy); position: relative; overflow: hidden; }
+  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .hero > *:not(#hero-canvas) { position: relative; z-index: 1; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(232,160,32,0.18); border: 1px solid rgba(232,160,32,0.4); color: var(--gold); padding: 8px 16px; border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(48px, 7vw, 96px); color: white; line-height: 1.0; letter-spacing: -3px; max-width: 800px; margin-bottom: 24px; }
+  .hero h1 em { font-style: normal; color: var(--aqua); }
+  .hero-sub { color: rgba(255,255,255,0.65); font-size: 20px; max-width: 560px; line-height: 1.7; margin-bottom: 40px; }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 64px; }
+  .btn-gold { background: var(--gold); color: var(--navy); padding: 18px 40px; border-radius: 50px; font-size: 16px; font-weight: 700; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-gold:hover { background: white; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,160,32,0.4); }
+  .btn-outline { border: 1.5px solid rgba(255,255,255,0.3); color: white; padding: 18px 40px; border-radius: 50px; font-size: 16px; font-weight: 500; text-decoration: none; transition: all 0.25s; }
+  .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+  .hero-pills { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-pill { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 10px 18px; border-radius: 50px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.8); }
+  @media (max-width: 768px) { .hero { padding: 72px 24px 60px; min-height: auto; } }
+
+  /* SHARED */
+  section { padding: 100px 80px; }
+  @media (max-width: 768px) { section { padding: 60px 24px; } }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--ocean); margin-bottom: 16px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 700; line-height: 1.1; letter-spacing: -1px; color: var(--navy); margin-bottom: 24px; }
+  .section-sub { font-size: 17px; color: var(--text-mid); line-height: 1.7; max-width: 600px; }
+  .btn-primary { background: var(--ocean); color: white; padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-primary:hover { background: var(--aqua); color: var(--navy); transform: translateY(-2px); }
+
+  /* PEACE OF MIND — 3 pillars */
+  #pillars { background: var(--sand); }
+  .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+  @media (max-width: 900px) { .pillars-grid { grid-template-columns: 1fr; } }
+  .pillar-card { background: white; border-radius: 24px; padding: 44px 36px; border: 1px solid rgba(0,102,204,0.07); transition: all 0.3s; position: relative; overflow: hidden; }
+  .pillar-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; transition: background 0.3s; }
+  .pillar-card:nth-child(1)::before { background: linear-gradient(90deg, var(--aqua), var(--ocean)); }
+  .pillar-card:nth-child(2)::before { background: linear-gradient(90deg, var(--red), #e84040); }
+  .pillar-card:nth-child(3)::before { background: linear-gradient(90deg, var(--gold), #f5c842); }
+  .pillar-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .pillar-icon { font-size: 52px; margin-bottom: 24px; }
+  .pillar-card h3 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+  .pillar-card p { font-size: 15px; color: var(--text-mid); line-height: 1.7; }
+
+  /* WHAT WE DO */
+  #what-we-do { background: white; }
+  .what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  @media (max-width: 900px) { .what-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .what-content p { font-size: 16px; color: var(--text-mid); line-height: 1.8; margin-bottom: 20px; }
+  .duty-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin: 24px 0; }
+  .duty-list li { display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: var(--text-mid); line-height: 1.5; }
+  .duty-list li::before { content: '✓'; width: 26px; height: 26px; min-width: 26px; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 12px; margin-top: 1px; }
+  .events-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .event-tag { background: var(--sand); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--navy); border: 1px solid rgba(0,102,204,0.07); transition: all 0.2s; }
+  .event-tag:hover { border-color: var(--aqua); background: var(--foam); }
+
+  /* WHAT TO EXPECT */
+  #expect { background: var(--navy); }
+  #expect .section-label { color: var(--aqua); }
+  #expect .section-title { color: white; }
+  #expect .section-sub { color: rgba(255,255,255,0.6); }
+  .timeline-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 56px; align-items: start; }
+  @media (max-width: 900px) { .timeline-wrap { grid-template-columns: 1fr; } }
+  .timeline-block h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--aqua); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid rgba(0,180,216,0.2); }
+  .timeline-item { display: flex; gap: 16px; margin-bottom: 20px; }
+  .t-num { width: 32px; height: 32px; min-width: 32px; border-radius: 50%; background: rgba(0,180,216,0.15); border: 1px solid rgba(0,180,216,0.3); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--aqua); flex-shrink: 0; }
+  .t-text { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.65; padding-top: 4px; }
+
+  /* MIS ADVANTAGE */
+  #advantage { background: var(--sand); }
+  .advantage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 0; }
+  @media (max-width: 900px) { .advantage-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .advantage-visual { background: var(--navy); border-radius: 28px; padding: 52px; position: relative; overflow: hidden; }
+  .advantage-visual::after { content: ''; position: absolute; bottom: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(0,180,216,0.15), transparent 70%); }
+  .adv-stat { position: relative; z-index: 1; margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .adv-stat:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .adv-stat-num { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 700; color: white; line-height: 1; }
+  .adv-stat-num em { font-style: normal; color: var(--aqua); }
+  .adv-stat-label { font-size: 14px; color: rgba(255,255,255,0.5); margin-top: 8px; line-height: 1.4; }
+  .advantage-points { display: flex; flex-direction: column; gap: 20px; }
+  .adv-point { display: flex; gap: 16px; }
+  .adv-point-icon { width: 48px; height: 48px; min-width: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--foam), #d0eeff); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .adv-point-body h4 { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .adv-point-body p { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+
+  /* BOOK */
+  #book { background: white; }
+  .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  @media (max-width: 900px) { .book-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .book-steps { display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
+  .book-step { display: flex; gap: 20px; padding-bottom: 36px; }
+  .book-step:last-child { padding-bottom: 0; }
+  .step-left { display: flex; flex-direction: column; align-items: center; }
+  .step-num { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), #f5b800); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; color: var(--navy); flex-shrink: 0; }
+  .step-line { width: 2px; flex: 1; background: linear-gradient(to bottom, rgba(232,160,32,0.4), transparent); margin-top: 8px; }
+  .book-step:last-child .step-line { display: none; }
+  .step-body { padding-top: 8px; }
+  .step-body h4 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .step-body p { font-size: 14px; color: var(--text-mid); line-height: 1.65; }
+  .book-cta { background: var(--sand); border-radius: 28px; padding: 48px; text-align: center; }
+  .book-cta-icon { font-size: 56px; margin-bottom: 20px; }
+  .book-cta h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--navy); margin-bottom: 12px; }
+  .book-cta p { font-size: 15px; color: var(--text-mid); margin-bottom: 28px; line-height: 1.7; }
+  .book-cta .btn-gold { width: 100%; justify-content: center; margin-bottom: 12px; font-size: 16px; }
+  .book-cta-note { font-size: 13px; color: var(--text-light); }
+  .book-cta-contact { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .book-contact-link { display: flex; align-items: center; gap: 10px; color: var(--ocean); font-size: 14px; font-weight: 600; text-decoration: none; justify-content: center; transition: color 0.2s; }
+  .book-contact-link:hover { color: var(--navy); }
+
+  /* CTA BANNER */
+  .cta-banner { background: linear-gradient(135deg, #8a1010, #cc2200); padding: 80px; margin: 0 40px 80px; border-radius: 32px; text-align: center; position: relative; overflow: hidden; }
+  .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.08), transparent 70%); }
+  .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: 44px; color: white; margin-bottom: 16px; position: relative; z-index: 1; }
+  .cta-banner p { color: rgba(255,255,255,0.75); font-size: 18px; margin-bottom: 36px; position: relative; z-index: 1; }
+  .cta-banner-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .btn-white { background: white; color: var(--red); padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.25s; }
+  .btn-white:hover { background: var(--navy); color: white; transform: translateY(-2px); }
+  .btn-outline-white { border: 1.5px solid rgba(255,255,255,0.5); color: white; padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; transition: all 0.25s; }
+  .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.1); }
+  @media (max-width: 768px) { .cta-banner { padding: 48px 24px; margin: 0 16px 60px; } .cta-banner h2 { font-size: 32px; } }
+
+  /* FOOTER */
+  footer { background: #060e1c; padding: 60px 80px 32px; }
+  @media (max-width: 768px) { footer { padding: 48px 24px 24px; } }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { color: rgba(255,255,255,0.45); font-size: 14px; line-height: 1.7; margin: 16px 0 20px; max-width: 280px; }
+  .footer-social { display: flex; gap: 12px; }
+  .footer-social a { width: 36px; height: 36px; background: rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; font-weight: 700; transition: all 0.2s; }
+  .footer-social a:hover { background: var(--aqua); color: var(--navy); }
+  .footer-col h4 { color: white; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--aqua); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.3); font-size: 13px; flex-wrap: wrap; gap: 8px; }
+
+  /* CHATBOT */
+  #chat-bubble { position: fixed; bottom: 28px; right: 28px; z-index: 9999; }
+  .chat-toggle { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border: none; cursor: pointer; box-shadow: 0 8px 32px rgba(0,102,204,0.4); display: flex; align-items: center; justify-content: center; transition: all 0.3s; position: relative; }
+  .chat-toggle:hover { transform: scale(1.1); }
+  .chat-toggle svg { width: 28px; height: 28px; fill: white; }
+  .chat-pulse { position: absolute; top: -2px; right: -2px; width: 18px; height: 18px; background: var(--gold); border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; color: var(--navy); }
+  .chat-window { position: absolute; bottom: 80px; right: 0; width: 380px; height: 500px; background: white; border-radius: 24px; box-shadow: 0 24px 80px rgba(10,22,40,0.25); display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,102,204,0.1); transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+  .chat-header { background: var(--navy); padding: 20px 24px; display: flex; align-items: center; gap: 12px; }
+  .chat-header-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--aqua), var(--ocean)); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .chat-header-info { flex: 1; }
+  .chat-header-name { color: white; font-weight: 700; font-size: 15px; }
+  .chat-header-status { color: var(--aqua); font-size: 12px; display: flex; align-items: center; gap: 5px; }
+  .chat-header-status::before { content: ''; width: 6px; height: 6px; background: #22c55e; border-radius: 50%; }
+  .chat-close { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.5); font-size: 20px; }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .chat-msg { display: flex; gap: 10px; align-items: flex-end; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .chat-msg-avatar { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--aqua), var(--ocean)); display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; font-weight: 700; }
+  .chat-bubble-msg { max-width: 72%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.55; }
+  .chat-msg.bot .chat-bubble-msg { background: var(--sand); color: var(--text-dark); border-bottom-left-radius: 4px; }
+  .chat-msg.user .chat-bubble-msg { background: var(--ocean); color: white; border-bottom-right-radius: 4px; }
+  .chat-input-area { padding: 16px; border-top: 1px solid rgba(0,0,0,0.06); display: flex; gap: 10px; }
+  .chat-input-area textarea { flex: 1; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 14px; padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; resize: none; height: 44px; outline: none; transition: border-color 0.2s; }
+  .chat-input-area textarea:focus { border-color: var(--ocean); }
+  .chat-send { width: 44px; height: 44px; border-radius: 12px; background: var(--ocean); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .chat-send svg { width: 18px; height: 18px; fill: white; }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .hero .hero-badge{animation:fadeUp 0.6s ease forwards}
+  .hero h1{animation:fadeUp 0.7s 0.1s ease both}
+  .hero .hero-sub{animation:fadeUp 0.7s 0.2s ease both}
+  .hero .hero-btns{animation:fadeUp 0.7s 0.3s ease both}
+  .hero .hero-pills{animation:fadeUp 0.7s 0.4s ease both}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">M</div>
+    <div class="nav-logo-text">MIS<span class="nav-logo-sub">Institut de Natation de Montréal</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="programs.html">Programs</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Locations</a>
+    <a href="jobs.html" class="jobs-link">🏊 We're Hiring</a>
+    <a href="faq.html">FAQ</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <div style="display:flex;gap:12px;">
+      <a href="https://www.facebook.com/SwimMontreal" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">FB</a>
+      <a href="https://www.instagram.com/swimmontreal/" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">IG</a>
+    </div>
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="nav-cta">Book a Lifeguard</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO — full height, gold accent -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-badge">🛟 At-Home Lifeguard Services</div>
+  <h1>Your Event.<br>Our <em>Lifeguard.</em><br>Total Peace of Mind.</h1>
+  <p class="hero-sub">Planning a pool party, BBQ, or family gathering? MIS provides certified, insured private lifeguards for any event across Montréal — so you can host with confidence.</p>
+  <div class="hero-btns">
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="btn-gold">Book a Lifeguard →</a>
+    <a href="#what-we-do" class="btn-outline">See What's Included ↓</a>
+  </div>
+  <div class="hero-pills">
+    <div class="hero-pill">🛡️ Fully certified & insured</div>
+    <div class="hero-pill">📍 All Montréal locations</div>
+    <div class="hero-pill">🏖️ Any event, any pool size</div>
+    <div class="hero-pill">📋 Visual safety inspection included</div>
+  </div>
+</section>
+
+<!-- 3 PILLARS -->
+<section id="pillars">
+  <div style="text-align:center;margin-bottom:0;">
+    <div class="section-label" style="display:flex;justify-content:center;">Why MIS Lifeguard?</div>
+    <h2 class="section-title" style="text-align:center;">Three reasons families choose us</h2>
+  </div>
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <div class="pillar-icon">🧘</div>
+      <h3>Peace of Mind</h3>
+      <p>All of our lifeguards are trained, certified, and fully insured. We handle the pool safety so you can focus entirely on your guests — knowing every swimmer is in safe hands.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon">🛟</div>
+      <h3>Safety is #1</h3>
+      <p>We make sure your pool area is safe and secure before anyone gets in the water. From hazard identification to rule enforcement — your lifeguard is always alert, always watching.</p>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-icon">💎</div>
+      <h3>Best Value</h3>
+      <p>We worry about the pool and water safety so you can focus on relaxing and fun. No compromise between hosting a great event and keeping everyone safe. You get both.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE DO -->
+<section id="what-we-do">
+  <div class="what-grid">
+    <div class="what-content">
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Your lifeguard handles everything pool-side</h2>
+      <p>You're a host, not a lifeguard. Our certified MIS lifeguards take full responsibility for the pool area so you can be present with your guests — relaxed, confident, and in the moment.</p>
+      <p>Your lifeguard will:</p>
+      <ul class="duty-list">
+        <li>Identify hazards and enforce pool rules kindly but firmly</li>
+        <li>Constantly scan the water and surrounding pool area</li>
+        <li>Take preventative action before problems escalate</li>
+        <li>Be ready to jump to the rescue at any moment</li>
+        <li>Work with you to flag any areas needing extra attention</li>
+        <li>Arrive early, dressed and fully prepared to begin</li>
+      </ul>
+    </div>
+    <div>
+      <div class="section-label">Perfect For</div>
+      <h2 class="section-title" style="font-size:clamp(24px,3vw,38px);">Any gathering where<br>water is involved</h2>
+      <div class="events-grid">
+        <div class="event-tag">🍖 BBQ & Pool Party</div>
+        <div class="event-tag">👨‍👩‍👧‍👦 Family Gathering</div>
+        <div class="event-tag">🎂 Birthday Party</div>
+        <div class="event-tag">🏫 School Events</div>
+        <div class="event-tag">👥 Reunion</div>
+        <div class="event-tag">🏨 Hotel Pool Events</div>
+        <div class="event-tag">🏡 Home Pool</div>
+        <div class="event-tag">🎉 Any Occasion</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT TO EXPECT -->
+<section id="expect">
+  <div class="section-label">The MIS Process</div>
+  <h2 class="section-title">What to expect on the day</h2>
+  <p class="section-sub">Here's exactly what happens from the moment your lifeguard arrives to the last swimmer leaving the pool.</p>
+  <div class="timeline-wrap">
+    <div class="timeline-block">
+      <h3>Before the Event</h3>
+      <div class="timeline-item">
+        <div class="t-num">1</div>
+        <div class="t-text">Your lifeguard arrives early and performs a <strong style="color:white;">visual inspection of the pool</strong> to identify any hazards and ensure the area is safe before anyone enters the water.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-num">2</div>
+        <div class="t-text">They arrive <strong style="color:white;">dressed and ready to go</strong> — no delays, no setup time. Just immediate, professional pool-side presence.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-num">3</div>
+        <div class="t-text">They'll walk through any <strong style="color:white;">pool-specific rules or concerns</strong> with you as host, so everyone is aligned before the fun begins.</div>
+      </div>
+    </div>
+    <div class="timeline-block">
+      <h3>During the Event</h3>
+      <div class="timeline-item">
+        <div class="t-num">4</div>
+        <div class="t-text"><strong style="color:white;">Constant scanning</strong> of the water and surrounding pool area — your lifeguard never takes their eyes off the swimmers.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-num">5</div>
+        <div class="t-text">Hazard identification and <strong style="color:white;">preventative action</strong> — our lifeguards are trained to spot and address risks before they become incidents.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-num">6</div>
+        <div class="t-text">Pool rules are <strong style="color:white;">enforced kindly but firmly</strong> — your lifeguard is approachable and friendly, not intimidating. Safety with a smile.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MIS ADVANTAGE -->
+<section id="advantage">
+  <div class="advantage-grid">
+    <div class="advantage-visual">
+      <div class="adv-stat">
+        <div class="adv-stat-num"><em>100%</em></div>
+        <div class="adv-stat-label">Certified & insured lifeguards — every booking, no exceptions</div>
+      </div>
+      <div class="adv-stat">
+        <div class="adv-stat-num"><em>25+</em></div>
+        <div class="adv-stat-label">Pool locations across Montréal we know and work with</div>
+      </div>
+      <div class="adv-stat">
+        <div class="adv-stat-num"><em>★4.9</em></div>
+        <div class="adv-stat-label">Average client satisfaction rating across all MIS services</div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">The MIS Advantage</div>
+      <h2 class="section-title">You're a host.<br>We're the experts.</h2>
+      <p class="section-sub" style="margin-bottom:40px;">When you hire a MIS lifeguard, you're not just getting someone to watch the pool — you're hiring a pool safety expert with full training, certification, and the backing of Québec's #1 swim school.</p>
+      <div class="advantage-points">
+        <div class="adv-point">
+          <div class="adv-point-icon">🛡️</div>
+          <div class="adv-point-body">
+            <h4>Fully certified & insured</h4>
+            <p>Every MIS lifeguard holds a valid NLS or equivalent certification and is fully insured. You have complete peace of mind, covered from every angle.</p>
+          </div>
+        </div>
+        <div class="adv-point">
+          <div class="adv-point-icon">🎓</div>
+          <div class="adv-point-body">
+            <h4>Trained the #MISway</h4>
+            <p>Our lifeguards are trained using the same high standards as our swim instructors — attentive, prepared, and proactive rather than reactive.</p>
+          </div>
+        </div>
+        <div class="adv-point">
+          <div class="adv-point-icon">📍</div>
+          <div class="adv-point-body">
+            <h4>All of Montréal covered</h4>
+            <p>We serve home pools, hotel pools, community pools, and private event venues across the island of Montréal and surrounding areas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section id="book">
+  <div class="book-grid">
+    <div>
+      <div class="section-label">How to Book</div>
+      <h2 class="section-title">Three easy steps<br>to a safer event</h2>
+      <div class="book-steps">
+        <div class="book-step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-body"><h4>Register your event</h4><p>Use our registration link to submit your event details — date, time, location, and expected number of swimmers. Takes less than 5 minutes.</p></div>
+        </div>
+        <div class="book-step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-body"><h4>We confirm & match your lifeguard</h4><p>Our team will confirm your booking and match you with a certified lifeguard for your event. We'll be in touch within one business day.</p></div>
+        </div>
+        <div class="book-step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body"><h4>Enjoy your event — safely</h4><p>Your lifeguard arrives early, inspects the pool, and takes care of everything pool-side. You focus on being a great host.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="book-cta">
+      <div class="book-cta-icon">🛟</div>
+      <h3>Ready to book?</h3>
+      <p>Click the button below to register your event and secure a certified MIS lifeguard. We cover all of Montréal and surrounding areas.</p>
+      <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="btn-gold">Book a Lifeguard Now →</a>
+      <p class="book-cta-note">Questions before booking? Reach us directly:</p>
+      <div class="book-cta-contact">
+        <a href="mailto:info@swim-montreal.com" class="book-contact-link">✉ info@swim-montreal.com</a>
+        <a href="tel:5142948259" class="book-contact-link">📞 (514) 294-8259</a>
+        <a href="https://wa.me/15142948259" target="_blank" class="book-contact-link">💬 WhatsApp us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Don't leave safety to chance</h2>
+  <p>Every pool event is an opportunity — to have fun, make memories, and keep everyone safe. Let MIS handle the safety so you can focus on the fun.</p>
+  <div class="cta-banner-btns">
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="btn-white">Book a Lifeguard →</a>
+    <a href="contact.html" class="btn-outline-white">Contact Us</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--aqua),var(--ocean));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:white;font-family:'Playfair Display',serif;">M</div>
+        <span style="color:white;font-weight:700;font-size:16px;">MIS | Swim Montréal</span>
+      </div>
+      <p>Delivering flexible and effective swimming experiences to families throughout Montréal. Québec's #1 swim school.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/SwimMontreal" target="_blank">f</a>
+        <a href="https://www.instagram.com/swimmontreal/" target="_blank">ig</a>
+        <a href="mailto:info@swim-montreal.com">✉</a>
+        <a href="tel:(514)294-8259">☎</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <a href="programs.html#confidence">Confidence (Tots)</a>
+      <a href="programs.html#independence">Independence</a>
+      <a href="programs.html#strong">Strong Swimmer</a>
+      <a href="programs.html#life">Swim for Life</a>
+      <a href="lifeguard.html">Private Lifeguard</a>
+    </div>
+    <div class="footer-col">
+      <h4>School</h4>
+      <a href="about.html">About MIS</a>
+      <a href="meet-the-team.html">Meet the Team</a>
+      <a href="jobs.html">Jobs — We're Hiring!</a>
+      <a href="news.html">Latest News</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="faq.html">FAQ</a>
+      <a href="policies.html">Policies</a>
+      <a href="contact.html">Locations & Contact</a>
+      <a href="https://swim-montreal.com/blog/privacy-policy/" target="_blank">Privacy Policy</a>
+      <a href="https://swim-montreal.com/fr" target="_blank">Français 🇫🇷</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Institut de Natation de Montréal Inc. All rights reserved.</span>
+    <span>♻ Green hosted</span>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<div id="chat-bubble">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-avatar">🛟</div>
+      <div class="chat-header-info">
+        <div class="chat-header-name">MIS Assistant</div>
+        <div class="chat-header-status">Online now</div>
+      </div>
+      <button class="chat-close" onclick="toggleChat()">×</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        <div class="chat-msg-avatar">🛟</div>
+        <div><div class="chat-bubble-msg">👋 Planning a pool event? I can answer questions about our lifeguard service and help you get booked.</div></div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea id="chatInput" placeholder="Ask about lifeguard hire…" rows="1" onkeydown="handleKey(event)"></textarea>
+      <button class="chat-send" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+    </div>
+  </div>
+  <button class="chat-toggle" onclick="toggleChat()">
+    <div class="chat-pulse">?</div>
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+  </button>
+</div>
+
+<script>
+  /* HAMBURGER */
+  const hamburger = document.querySelector('.hamburger');
+  const navLinksEl = document.querySelector('.nav-links');
+  let navOpen = false;
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      navOpen = !navOpen;
+      navLinksEl.style.cssText = navOpen ? 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(10,22,40,0.98);padding:20px 40px;gap:16px;z-index:999;' : '';
+    });
+  }
+
+  /* CHATBOT */
+  const chatWindow = document.getElementById('chatWindow');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  let isOpen = false, conversationHistory = [];
+  const MIS_CONTEXT = `You are the MIS Assistant for Institut de Natation de Montréal. Phone: (514) 294-8259 | Email: info@swim-montreal.com. Private lifeguard hire: certified, insured guards for any pool event across Montréal — BBQs, parties, family events. Book via registration link. Be warm and concise. Answer in English or French.`;
+  function toggleChat() { isOpen = !isOpen; chatWindow.classList.toggle('open', isOpen); if (isOpen) chatInput.focus(); }
+  function addMessage(text, sender) {
+    const msg = document.createElement('div'); msg.className = `chat-msg ${sender}`;
+    const av = document.createElement('div'); av.className = 'chat-msg-avatar'; av.textContent = sender === 'bot' ? '🛟' : 'You';
+    if (sender === 'user') av.style.cssText = 'background:linear-gradient(135deg,#0066cc,#00b4d8);font-size:11px;';
+    const b = document.createElement('div'); b.className = 'chat-bubble-msg'; b.textContent = text;
+    msg.appendChild(av); msg.appendChild(b); chatMessages.appendChild(msg); chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  async function sendMessage(text) {
+    const userText = text || chatInput.value.trim(); if (!userText) return;
+    chatInput.value = ''; addMessage(userText, 'user');
+    conversationHistory.push({ role: 'user', content: userText });
+    try {
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: conversationHistory, system: MIS_CONTEXT }) });
+      const d = await r.json(); const reply = d.reply || "Please call (514) 294-8259!";
+      addMessage(reply, 'bot'); conversationHistory.push({ role: 'assistant', content: reply });
+    } catch { addMessage("Call (514) 294-8259 or email info@swim-montreal.com.", 'bot'); }
+  }
+  function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+
+  /* CANVAS */
+  function initWater(id, cfg) {
+    const canvas = document.getElementById(id); if (!canvas) return;
+    const ctx = canvas.getContext('2d'); let W, H, t = 0, raf;
+    function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+    resize(); window.addEventListener('resize', resize);
+    const bubbles = Array.from({length: cfg.bubbles}, () => ({ x: Math.random(), y: Math.random(), r: 1.5 + Math.random()*5, speed: 0.0004 + Math.random()*0.0006, wobble: Math.random()*Math.PI*2, wobbleSpeed: 0.015 + Math.random()*0.02, alpha: 0.06 + Math.random()*0.12 }));
+    const rays = Array.from({length: cfg.rays}, (_, i) => ({ xFrac: 0.05 + i*(0.88/cfg.rays), width: 18 + Math.random()*40, speed: 0.0003 + Math.random()*0.0003, phase: Math.random()*Math.PI*2 }));
+    function drawWave(l, T) {
+      const baseY = H*l.yFrac, amp = H*l.amp; ctx.beginPath();
+      for (let x = 0; x <= W; x += 3) { const y = baseY + Math.sin((x/W)*Math.PI*2*l.freq + T*l.speed)*amp + Math.sin((x/W)*Math.PI*3.7*l.freq + T*l.speed*1.3)*amp*0.4; x === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y); }
+      ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fillStyle = l.color; ctx.fill();
+    }
+    function draw(ts) {
+      t = ts*0.001; ctx.clearRect(0,0,W,H);
+      const bg = ctx.createLinearGradient(0,0,0,H); bg.addColorStop(0,'#071220'); bg.addColorStop(0.45,'#0a1a35'); bg.addColorStop(0.75,'#0d2a55'); bg.addColorStop(1,'#082040'); ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+      rays.forEach(ray => { const x = W*ray.xFrac + Math.sin(t*ray.speed*2*Math.PI+ray.phase)*W*.03; const grad = ctx.createLinearGradient(x,0,x+ray.width*.5,H*.85); grad.addColorStop(0,'rgba(100,200,255,0)'); grad.addColorStop(.1,'rgba(100,200,255,.06)'); grad.addColorStop(1,'rgba(100,200,255,0)'); ctx.save(); ctx.beginPath(); ctx.moveTo(x-ray.width*.3,0); ctx.lineTo(x+ray.width,0); ctx.lineTo(x+ray.width*1.6,H); ctx.lineTo(x-ray.width*.9,H); ctx.closePath(); ctx.fillStyle = grad; ctx.globalAlpha = .6 + Math.sin(t*ray.speed*Math.PI*4+ray.phase)*.4; ctx.fill(); ctx.restore(); });
+      cfg.waves.forEach(l => drawWave(l,t));
+      bubbles.forEach(b => { b.y -= b.speed; b.wobble += b.wobbleSpeed; if (b.y < -.02) { b.y = 1.05; b.x = Math.random(); } const bx = b.x*W + Math.sin(b.wobble)*18, by = b.y*H; ctx.beginPath(); ctx.arc(bx,by,b.r,0,Math.PI*2); ctx.strokeStyle = `rgba(150,230,255,${b.alpha})`; ctx.lineWidth = .8; ctx.stroke(); ctx.beginPath(); ctx.arc(bx-b.r*.3,by-b.r*.3,b.r*.25,0,Math.PI*2); ctx.fillStyle = `rgba(255,255,255,${b.alpha*1.2})`; ctx.fill(); });
+      raf = requestAnimationFrame(draw);
+    }
+    raf = requestAnimationFrame(draw);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) cancelAnimationFrame(raf); else raf = requestAnimationFrame(draw); });
+  }
+  initWater('hero-canvas', { bubbles: 55, rays: 8, waves: [
+    {amp:.042,freq:1.7,speed:.41,color:'rgba(0,120,200,0.18)',yFrac:.52},
+    {amp:.035,freq:2.3,speed:.28,color:'rgba(0,180,220,0.14)',yFrac:.58},
+    {amp:.055,freq:1.2,speed:.19,color:'rgba(10,50,120,0.22)',yFrac:.45},
+    {amp:.028,freq:3.1,speed:.52,color:'rgba(0,200,255,0.09)',yFrac:.62},
+    {amp:.020,freq:4.0,speed:.65,color:'rgba(180,240,255,0.07)',yFrac:.68},
+  ]});
+</script>
+</body>
+</html>

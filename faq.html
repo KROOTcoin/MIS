@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ – Institut de Natation de Montréal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628; --navy-mid: #122040;
+    --ocean: #0066cc; --aqua: #00b4d8; --aqua-light: #90e0ef;
+    --foam: #caf0f8; --sand: #f8f4ef; --gold: #e8a020; --white: #ffffff;
+    --text-dark: #0a1628; --text-mid: #3a4a5a; --text-light: #6a7a8a;
+    --shadow: 0 4px 24px rgba(0,102,204,0.12);
+    --shadow-lg: 0 12px 48px rgba(10,22,40,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--white); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,22,40,0.97); backdrop-filter: blur(16px); padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: white; font-family: 'Playfair Display', serif; }
+  .nav-logo-text { color: white; font-size: 17px; font-weight: 600; line-height: 1.2; }
+  .nav-logo-sub { color: var(--aqua-light); font-size: 11px; font-weight: 400; letter-spacing: 0.5px; display: block; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: white; }
+  .nav-links a.jobs-link { color: var(--gold); font-weight: 700; }
+  .nav-cta { background: var(--aqua); color: var(--navy); padding: 10px 22px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; white-space: nowrap; }
+  .nav-cta:hover { background: white; transform: translateY(-1px); }
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; }
+  @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } }
+
+  /* HERO */
+  .hero { min-height: 50vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 72px 80px 64px; background: var(--navy); position: relative; overflow: hidden; }
+  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .hero > *:not(#hero-canvas) { position: relative; z-index: 1; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,180,216,0.15); border: 1px solid rgba(0,180,216,0.3); color: var(--aqua); padding: 8px 16px; border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--aqua); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 6vw, 80px); color: white; line-height: 1.05; letter-spacing: -2px; max-width: 700px; margin-bottom: 20px; }
+  .hero h1 em { font-style: normal; color: var(--aqua); }
+  .hero-sub { color: rgba(255,255,255,0.65); font-size: 18px; max-width: 560px; line-height: 1.7; }
+  @media (max-width: 768px) { .hero { padding: 72px 24px 48px; } }
+
+  /* SEARCH BAR */
+  .faq-search-bar { background: var(--sand); padding: 32px 80px; border-bottom: 1px solid rgba(0,102,204,0.08); position: sticky; top: 72px; z-index: 100; }
+  @media (max-width: 768px) { .faq-search-bar { padding: 20px 24px; } }
+  .search-wrap { max-width: 600px; position: relative; }
+  .search-wrap input { width: 100%; padding: 14px 20px 14px 50px; border: 1.5px solid rgba(0,102,204,0.15); border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 15px; background: white; outline: none; transition: border-color 0.2s; color: var(--text-dark); }
+  .search-wrap input:focus { border-color: var(--ocean); }
+  .search-wrap::before { content: '🔍'; position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 16px; }
+  .search-count { font-size: 13px; color: var(--text-light); margin-top: 10px; }
+
+  /* CATEGORY TABS */
+  .category-tabs { background: white; border-bottom: 1px solid rgba(0,102,204,0.08); padding: 0 80px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+  .category-tabs::-webkit-scrollbar { display: none; }
+  @media (max-width: 768px) { .category-tabs { padding: 0 16px; } }
+  .cat-tab { padding: 18px 24px; font-size: 14px; font-weight: 600; color: var(--text-mid); border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; transition: all 0.2s; background: none; border-top: none; border-left: none; border-right: none; font-family: 'DM Sans', sans-serif; }
+  .cat-tab:hover { color: var(--ocean); }
+  .cat-tab.active { color: var(--ocean); border-bottom-color: var(--ocean); }
+
+  /* FAQ MAIN */
+  #faq-main { padding: 80px 80px 60px; max-width: 900px; margin: 0 auto; }
+  @media (max-width: 768px) { #faq-main { padding: 48px 24px 40px; } }
+
+  .faq-category { margin-bottom: 64px; }
+  .faq-category-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--navy); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--sand); display: flex; align-items: center; gap: 12px; }
+
+  .faq-item { border-radius: 16px; margin-bottom: 12px; overflow: hidden; border: 1px solid rgba(0,102,204,0.08); transition: box-shadow 0.2s; }
+  .faq-item:hover { box-shadow: var(--shadow); }
+  .faq-item.hidden { display: none; }
+  .faq-q { width: 100%; text-align: left; padding: 22px 28px; background: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-size: 16px; font-weight: 600; color: var(--navy); font-family: 'DM Sans', sans-serif; transition: background 0.2s; line-height: 1.4; }
+  .faq-q:hover { background: var(--sand); }
+  .faq-item.open .faq-q { background: var(--navy); color: white; }
+  .faq-icon { width: 32px; height: 32px; min-width: 32px; border-radius: 50%; background: var(--foam); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 300; color: var(--ocean); transition: all 0.3s; flex-shrink: 0; }
+  .faq-item.open .faq-icon { background: rgba(255,255,255,0.15); color: white; transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.45s ease, padding 0.3s ease; background: white; padding: 0 28px; font-size: 15px; color: var(--text-mid); line-height: 1.8; }
+  .faq-item.open .faq-a { max-height: 600px; padding: 20px 28px 28px; }
+  .faq-a p { margin-bottom: 12px; }
+  .faq-a p:last-child { margin-bottom: 0; }
+  .faq-a ul { padding-left: 20px; margin: 8px 0; display: flex; flex-direction: column; gap: 6px; }
+  .faq-a li { font-size: 15px; color: var(--text-mid); line-height: 1.6; }
+  .faq-a a { color: var(--ocean); font-weight: 600; text-decoration: none; }
+  .faq-a a:hover { text-decoration: underline; }
+
+  .no-results { text-align: center; padding: 80px 24px; color: var(--text-light); display: none; }
+  .no-results span { font-size: 48px; display: block; margin-bottom: 16px; }
+
+  /* STILL HAVE QUESTIONS */
+  .still-questions { background: var(--sand); margin: 0 80px 80px; border-radius: 28px; padding: 60px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  @media (max-width: 900px) { .still-questions { margin: 0 24px 60px; padding: 40px 28px; grid-template-columns: 1fr; } }
+  .contact-option { background: white; border-radius: 20px; padding: 32px 28px; border: 1px solid rgba(0,102,204,0.08); text-align: center; transition: all 0.3s; text-decoration: none; display: block; }
+  .contact-option:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--aqua); }
+  .contact-option-icon { font-size: 36px; margin-bottom: 14px; }
+  .contact-option h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .contact-option p { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+  .contact-option .contact-value { font-size: 14px; font-weight: 600; color: var(--ocean); margin-top: 10px; }
+
+  /* CTA */
+  .cta-banner { background: linear-gradient(135deg, var(--navy), var(--navy-mid)); padding: 80px; margin: 0 40px 80px; border-radius: 32px; text-align: center; position: relative; overflow: hidden; }
+  .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(0,180,216,0.12), transparent 70%); }
+  .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: 44px; color: white; margin-bottom: 16px; position: relative; z-index: 1; }
+  .cta-banner p { color: rgba(255,255,255,0.65); font-size: 18px; margin-bottom: 36px; position: relative; z-index: 1; }
+  .cta-banner-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .btn-primary { background: var(--aqua); color: var(--navy); padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-primary:hover { background: white; transform: translateY(-2px); }
+  .btn-outline { border: 1.5px solid rgba(255,255,255,0.3); color: white; padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; transition: all 0.25s; }
+  .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+  @media (max-width: 768px) { .cta-banner { padding: 48px 24px; margin: 0 16px 60px; } .cta-banner h2 { font-size: 32px; } }
+
+  /* FOOTER */
+  footer { background: #060e1c; padding: 60px 80px 32px; }
+  @media (max-width: 768px) { footer { padding: 48px 24px 24px; } }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { color: rgba(255,255,255,0.45); font-size: 14px; line-height: 1.7; margin: 16px 0 20px; max-width: 280px; }
+  .footer-social { display: flex; gap: 12px; }
+  .footer-social a { width: 36px; height: 36px; background: rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; font-weight: 700; transition: all 0.2s; }
+  .footer-social a:hover { background: var(--aqua); color: var(--navy); }
+  .footer-col h4 { color: white; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--aqua); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.3); font-size: 13px; flex-wrap: wrap; gap: 8px; }
+
+  /* CHATBOT */
+  #chat-bubble { position: fixed; bottom: 28px; right: 28px; z-index: 9999; }
+  .chat-toggle { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border: none; cursor: pointer; box-shadow: 0 8px 32px rgba(0,102,204,0.4); display: flex; align-items: center; justify-content: center; transition: all 0.3s; position: relative; }
+  .chat-toggle:hover { transform: scale(1.1); }
+  .chat-toggle svg { width: 28px; height: 28px; fill: white; }
+  .chat-pulse { position: absolute; top: -2px; right: -2px; width: 18px; height: 18px; background: var(--gold); border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; color: var(--navy); }
+  .chat-window { position: absolute; bottom: 80px; right: 0; width: 380px; height: 500px; background: white; border-radius: 24px; box-shadow: 0 24px 80px rgba(10,22,40,0.25); display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,102,204,0.1); transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+  .chat-header { background: var(--navy); padding: 20px 24px; display: flex; align-items: center; gap: 12px; }
+  .chat-header-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--aqua), var(--ocean)); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .chat-header-info { flex: 1; }
+  .chat-header-name { color: white; font-weight: 700; font-size: 15px; }
+  .chat-header-status { color: var(--aqua); font-size: 12px; display: flex; align-items: center; gap: 5px; }
+  .chat-header-status::before { content: ''; width: 6px; height: 6px; background: #22c55e; border-radius: 50%; }
+  .chat-close { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.5); font-size: 20px; }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .chat-msg { display: flex; gap: 10px; align-items: flex-end; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .chat-msg-avatar { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--aqua), var(--ocean)); display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; font-weight: 700; }
+  .chat-bubble-msg { max-width: 72%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.55; }
+  .chat-msg.bot .chat-bubble-msg { background: var(--sand); color: var(--text-dark); border-bottom-left-radius: 4px; }
+  .chat-msg.user .chat-bubble-msg { background: var(--ocean); color: white; border-bottom-right-radius: 4px; }
+  .chat-input-area { padding: 16px; border-top: 1px solid rgba(0,0,0,0.06); display: flex; gap: 10px; }
+  .chat-input-area textarea { flex: 1; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 14px; padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; resize: none; height: 44px; outline: none; transition: border-color 0.2s; }
+  .chat-input-area textarea:focus { border-color: var(--ocean); }
+  .chat-send { width: 44px; height: 44px; border-radius: 12px; background: var(--ocean); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .chat-send svg { width: 18px; height: 18px; fill: white; }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .hero .hero-badge{animation:fadeUp 0.6s ease forwards}
+  .hero h1{animation:fadeUp 0.7s 0.1s ease both}
+  .hero .hero-sub{animation:fadeUp 0.7s 0.2s ease both}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">M</div>
+    <div class="nav-logo-text">MIS<span class="nav-logo-sub">Institut de Natation de Montréal</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="programs.html">Programs</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Locations</a>
+    <a href="jobs.html" class="jobs-link">🏊 We're Hiring</a>
+    <a href="faq.html" class="active">FAQ</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <div style="display:flex;gap:12px;">
+      <a href="https://www.facebook.com/SwimMontreal" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">FB</a>
+      <a href="https://www.instagram.com/swimmontreal/" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">IG</a>
+    </div>
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="nav-cta">Register Now</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-badge">❓ Self-Support</div>
+  <h1>Frequently Asked<br><em>Questions</em></h1>
+  <p class="hero-sub">Everything you need to know about MIS programs, registration, lessons, and policies — all in one place.</p>
+</section>
+
+<!-- SEARCH -->
+<div class="faq-search-bar">
+  <div class="search-wrap">
+    <input type="text" id="faqSearch" placeholder="Search questions…" oninput="searchFaq()">
+  </div>
+  <div class="search-count" id="searchCount"></div>
+</div>
+
+<!-- CATEGORY TABS -->
+<div class="category-tabs">
+  <button class="cat-tab active" onclick="setCategory('all', this)">All Questions</button>
+  <button class="cat-tab" onclick="setCategory('registration', this)">Registration</button>
+  <button class="cat-tab" onclick="setCategory('lessons', this)">Lessons & Classes</button>
+  <button class="cat-tab" onclick="setCategory('policies', this)">Policies & Credits</button>
+  <button class="cat-tab" onclick="setCategory('pools', this)">Pools & Locations</button>
+  <button class="cat-tab" onclick="setCategory('athome', this)">At-Home Lessons</button>
+</div>
+
+<!-- FAQ CONTENT -->
+<div id="faq-main">
+
+  <!-- REGISTRATION -->
+  <div class="faq-category" data-cat="registration">
+    <div class="faq-category-title">📋 Registration</div>
+
+    <div class="faq-item" data-cat="registration" data-q="when can i register registration ongoing year">
+      <button class="faq-q" onclick="toggleFaq(this)">When can I register? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>Registration is ongoing throughout the year, however it is subject to program availability.</p>
+        <p>MIS offers 4 terms per year — Fall, Winter, Spring, and Summer. Registration start dates are posted at the top of our programs page. Current term dates:</p>
+        <ul>
+          <li><strong>Fall Term:</strong> September to December (15–16 weeks) — register from August</li>
+          <li><strong>Winter Term:</strong> January to March (9–10 weeks) — register from December</li>
+          <li><strong>Spring Term:</strong> March to June (15–16 weeks) — register from February</li>
+          <li><strong>Summer Term:</strong> June to August (9–10 weeks) — register from May</li>
+        </ul>
+        <p>Spring 2026 registration is currently <strong>open now</strong>. <a href="https://appus.sportimea.com/portal/swim-montreal" target="_blank">Register here →</a></p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="registration" data-q="what level program register how do i know">
+      <button class="faq-q" onclick="toggleFaq(this)">How do I know what level or program to register for? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>Our programs are designed to be accessible for all ages and abilities. Here's a quick guide:</p>
+        <ul>
+          <li><strong>Confidence (ages 3–30 months):</strong> Parent-and-baby classes. Parent gets in the pool.</li>
+          <li><strong>Independence (ages 2+):</strong> Solo lessons for children new to swimming without a parent.</li>
+          <li><strong>Strong Swimmer (ages 5+):</strong> Technique and endurance — all four strokes.</li>
+          <li><strong>Swim for Life (ages 12+):</strong> Teens and adults at any level, including complete beginners.</li>
+        </ul>
+        <p>If you're still unsure, <a href="contact.html">contact us</a> and we'll help you find the right fit based on your child's age, experience, and comfort in the water.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LESSONS & CLASSES -->
+  <div class="faq-category" data-cat="lessons">
+    <div class="faq-category-title">🏊 Lessons & Classes</div>
+
+    <div class="faq-item" data-cat="lessons" data-q="parents required pool in the water confidence">
+      <button class="faq-q" onclick="toggleFaq(this)">Are parents required to go in the pool? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>Parents are required to participate from within the pool for our <strong>Confidence level programs</strong>, which include:</p>
+        <ul>
+          <li>Parent & Baby</li>
+          <li>Parent & Tot</li>
+        </ul>
+        <p>Once swimmers start our Independence level programs — private swimming lessons and group swimming lessons — parents are <strong>no longer required or encouraged</strong> to be in the pool. You're welcome to watch from the poolside.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="lessons" data-q="instructor at pool where is my instructor late">
+      <button class="faq-q" onclick="toggleFaq(this)">I'm at the pool — where is my instructor? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>If your instructor hasn't arrived within 10 minutes of your scheduled lesson start time, please contact them directly via their contact details provided during registration.</p>
+        <p>If you cannot reach your instructor, please contact our admin team at <a href="mailto:info@swim-montreal.com">info@swim-montreal.com</a> or call <a href="tel:5142948259">(514) 294-8259</a> and we'll resolve the situation immediately.</p>
+        <p>Please do not wait more than 15 minutes without making contact — we want to make sure every lesson happens as scheduled.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="lessons" data-q="contact instructor how reach communicate message">
+      <button class="faq-q" onclick="toggleFaq(this)">How can I contact my instructor? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>Your instructor's contact details are shared with you during the registration and onboarding process. You can reach them directly for scheduling questions, make-up lesson requests, or lesson-specific queries.</p>
+        <p>For general enquiries, registration changes, or anything administrative, please contact our team at <a href="mailto:info@swim-montreal.com">info@swim-montreal.com</a> or call <a href="tel:5142948259">(514) 294-8259</a>.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="lessons" data-q="miss class missed lesson absence absent">
+      <button class="faq-q" onclick="toggleFaq(this)">What happens if I need to miss a class? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>If you need to miss a lesson, please contact your instructor as early as possible to let them know.</p>
+        <p>Depending on the notice given and the circumstances, a make-up lesson may be arranged or a credit issued in accordance with our cancellation policy. Please review our full <a href="policies.html">Policies page</a> for details on what qualifies for a credit.</p>
+        <p>Credits are applied to your account and can be used toward future lessons.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- POLICIES & CREDITS -->
+  <div class="faq-category" data-cat="policies">
+    <div class="faq-category-title">📄 Policies & Credits</div>
+
+    <div class="faq-item" data-cat="policies" data-q="when will i get credits credit cancelled lesson">
+      <button class="faq-q" onclick="toggleFaq(this)">When will I get my credit(s)? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>Credits for eligible cancelled swimming lessons are calculated and applied to your account within a reasonable timeframe following the cancellation.</p>
+        <p>Credits are issued based on the applicable cancellation policy at the time of the cancellation. Please review our <a href="policies.html">Policies page</a> for the full breakdown of what qualifies for a credit and under what conditions.</p>
+        <p>If you believe you are owed a credit that hasn't been applied, please contact us at <a href="mailto:info@swim-montreal.com">info@swim-montreal.com</a>.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="policies" data-q="how do i use lesson credits apply redeem">
+      <button class="faq-q" onclick="toggleFaq(this)">How do I use my lesson credits? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>Lesson credits are applied to your MIS account and can be used toward future lesson bookings or renewals.</p>
+        <p>When registering for your next session or booking a make-up lesson, your instructor or our admin team can apply available credits to your balance. Please contact us if you need assistance applying your credits.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="policies" data-q="cancellation policy cancel refund">
+      <button class="faq-q" onclick="toggleFaq(this)">What is the cancellation policy? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>Our cancellation policy outlines the conditions under which lessons may be cancelled and what compensation (credit or make-up lesson) applies. Key points:</p>
+        <ul>
+          <li>Cancellations with sufficient advance notice may qualify for a credit or make-up lesson.</li>
+          <li>Last-minute cancellations without adequate notice may result in a forfeited lesson.</li>
+          <li>Instructor-initiated cancellations will always result in a credit or make-up lesson.</li>
+        </ul>
+        <p>Please visit our full <a href="policies.html">Policies page</a> for complete details, including specific notice periods and special circumstances.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- POOLS & LOCATIONS -->
+  <div class="faq-category" data-cat="pools">
+    <div class="faq-category-title">📍 Pools & Locations</div>
+
+    <div class="faq-item" data-cat="pools" data-q="water temperature pool warm how hot degrees">
+      <button class="faq-q" onclick="toggleFaq(this)">What is the water temperature at your pool partner locations? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>Our partner pools maintain a water temperature between <strong>80°F and 85°F (27°C–29°C)</strong>.</p>
+        <p>This range provides a comfortable environment for swimmers of all ages while supporting effective learning and technique development. This is particularly well-suited for our youngest swimmers in the Confidence programs.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="pools" data-q="reserved exclusively swimming lessons other people public">
+      <button class="faq-q" onclick="toggleFaq(this)">Are MIS pools reserved exclusively for swimming lessons? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>This varies by location. Some of our pool partner locations have dedicated lane time or areas reserved exclusively for MIS lessons, while others may share the pool with other users or activities.</p>
+        <p>Your instructor will always ensure a safe and focused lesson environment regardless of the pool setup. If you have concerns about a specific location, please contact us and we can provide details for your pool.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- AT-HOME LESSONS -->
+  <div class="faq-category" data-cat="athome">
+    <div class="faq-category-title">🏡 At-Home Lessons</div>
+
+    <div class="faq-item" data-cat="athome" data-q="at home lessons weather bad rain canceled outdoor">
+      <button class="faq-q" onclick="toggleFaq(this)">For at-home lessons, are lessons canceled due to bad weather? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p><strong>Lessons are always on, rain or shine.</strong> The only exception is if there is thunder or lightning within 30 minutes of the start of the lesson, at which point your instructor will confirm if the lesson is cancelled.</p>
+        <p>Any lesson cancelled due to thunder or lightning will either be made up or credited to your account.</p>
+        <p>If the <em>client</em> chooses to cancel the lesson due to bad weather where there is no thunder or lightning within 30 minutes of the start of the lesson, then the lesson is considered lost and no credit is issued.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-cat="athome" data-q="at home lesson how does it work private pool house">
+      <button class="faq-q" onclick="toggleFaq(this)">How do at-home private lessons work? <span class="faq-icon">+</span></button>
+      <div class="faq-a">
+        <p>At-home lessons are available for swimmers with access to a private or apartment pool. One of our certified instructors comes directly to your location and delivers a fully personalized lesson in your own pool.</p>
+        <p>Every lesson is adapted to the individual swimmer. There is no better way to learn than in a familiar, comfortable environment with one-on-one attention.</p>
+        <p>At-home lessons are available across Montréal and surrounding areas. <a href="contact.html">Contact us</a> to arrange your first session.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="no-results" id="noResults">
+    <span>🔍</span>
+    No questions match your search. Try different keywords or <a href="contact.html" style="color:var(--ocean);font-weight:600;">contact us directly</a>.
+  </div>
+
+</div>
+
+<!-- STILL HAVE QUESTIONS -->
+<div class="still-questions">
+  <a href="mailto:info@swim-montreal.com" class="contact-option">
+    <div class="contact-option-icon">✉️</div>
+    <h3>Email Us</h3>
+    <p>Send us your question and we'll reply within one business day.</p>
+    <div class="contact-value">info@swim-montreal.com</div>
+  </a>
+  <a href="tel:5142948259" class="contact-option">
+    <div class="contact-option-icon">📞</div>
+    <h3>Call Us</h3>
+    <p>Speak to our team directly for urgent questions or booking help.</p>
+    <div class="contact-value">(514) 294-8259</div>
+  </a>
+  <a href="https://wa.me/15142948259" target="_blank" class="contact-option">
+    <div class="contact-option-icon">💬</div>
+    <h3>WhatsApp</h3>
+    <p>Message us on WhatsApp for fast, convenient replies anytime.</p>
+    <div class="contact-value">Chat on WhatsApp →</div>
+  </a>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Ready to dive in?</h2>
+  <p>Spring 2026 registration is now open. Spots fill fast — secure yours today.</p>
+  <div class="cta-banner-btns">
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="btn-primary">Register Now →</a>
+    <a href="programs.html" class="btn-outline">Explore Programs</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--aqua),var(--ocean));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:white;font-family:'Playfair Display',serif;">M</div>
+        <span style="color:white;font-weight:700;font-size:16px;">MIS | Swim Montréal</span>
+      </div>
+      <p>Delivering flexible and effective swimming experiences to families throughout Montréal. Québec's #1 swim school.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/SwimMontreal" target="_blank">f</a>
+        <a href="https://www.instagram.com/swimmontreal/" target="_blank">ig</a>
+        <a href="mailto:info@swim-montreal.com">✉</a>
+        <a href="tel:(514)294-8259">☎</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <a href="programs.html#confidence">Confidence (Tots)</a>
+      <a href="programs.html#independence">Independence</a>
+      <a href="programs.html#strong">Strong Swimmer</a>
+      <a href="programs.html#life">Swim for Life</a>
+      <a href="lifeguard.html">Private Lifeguard</a>
+      <a href="programs.html#lifeguard">Private Lifeguard</a>
+    </div>
+    <div class="footer-col">
+      <h4>School</h4>
+      <a href="about.html">About MIS</a>
+      <a href="meet-the-team.html">Meet the Team</a>
+      <a href="jobs.html">Jobs — We're Hiring!</a>
+      <a href="news.html" target="_blank">Latest News</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="faq.html">FAQ</a>
+      <a href="policies.html">Policies</a>
+      <a href="contact.html">Locations & Contact</a>
+      <a href="https://swim-montreal.com/blog/privacy-policy/" target="_blank">Privacy Policy</a>
+      <a href="https://swim-montreal.com/fr" target="_blank">Français 🇫🇷</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Institut de Natation de Montréal Inc. All rights reserved.</span>
+    <span>♻ Green hosted</span>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<div id="chat-bubble">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-avatar">🏊</div>
+      <div class="chat-header-info">
+        <div class="chat-header-name">MIS Assistant</div>
+        <div class="chat-header-status">Online now</div>
+      </div>
+      <button class="chat-close" onclick="toggleChat()">×</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        <div class="chat-msg-avatar">🏊</div>
+        <div><div class="chat-bubble-msg">👋 Can't find your answer in the FAQ? Ask me anything about MIS!</div></div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea id="chatInput" placeholder="Ask a question…" rows="1" onkeydown="handleKey(event)"></textarea>
+      <button class="chat-send" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+    </div>
+  </div>
+  <button class="chat-toggle" onclick="toggleChat()">
+    <div class="chat-pulse">?</div>
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+  </button>
+</div>
+
+<script>
+  /* FAQ TOGGLE */
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* SEARCH */
+  let activeCategory = 'all';
+
+  function searchFaq() {
+    const q = document.getElementById('faqSearch').value.toLowerCase();
+    applyFilters(q, activeCategory);
+  }
+
+  function setCategory(cat, btn) {
+    activeCategory = cat;
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    // Show/hide category sections
+    document.querySelectorAll('.faq-category').forEach(section => {
+      section.style.display = (cat === 'all' || section.dataset.cat === cat) ? '' : 'none';
+    });
+    applyFilters(document.getElementById('faqSearch').value.toLowerCase(), cat);
+  }
+
+  function applyFilters(query, cat) {
+    const items = document.querySelectorAll('.faq-item');
+    let visible = 0;
+    items.forEach(item => {
+      const text = (item.dataset.q + ' ' + item.innerText).toLowerCase();
+      const matchesSearch = !query || text.includes(query);
+      const matchesCat = cat === 'all' || item.dataset.cat === cat;
+      const show = matchesSearch && matchesCat;
+      item.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    const count = document.getElementById('searchCount');
+    const noResults = document.getElementById('noResults');
+    if (query) {
+      count.textContent = `${visible} result${visible !== 1 ? 's' : ''} for "${query}"`;
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+    } else {
+      count.textContent = '';
+      noResults.style.display = 'none';
+    }
+  }
+
+  /* HAMBURGER */
+  const hamburger = document.querySelector('.hamburger');
+  const navLinksEl = document.querySelector('.nav-links');
+  let navOpen = false;
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      navOpen = !navOpen;
+      navLinksEl.style.cssText = navOpen ? 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(10,22,40,0.98);padding:20px 40px;gap:16px;z-index:999;' : '';
+    });
+  }
+
+  /* CHATBOT */
+  const chatWindow = document.getElementById('chatWindow');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  let isOpen = false, conversationHistory = [];
+  const MIS_CONTEXT = `You are the MIS Assistant for Institut de Natation de Montréal. Phone: (514) 294-8259 | Email: info@swim-montreal.com. Programs: Confidence (3-30mo), Independence (2+), Strong Swimmer (5+), Swim for Life (12+). Spring 2026 NOW OPEN. Water temp at pools: 27-29°C. Cancellations: credit or makeup if advance notice given. Weather: lessons on rain or shine, only cancel for thunder/lightning. Be warm and concise. Answer in English or French.`;
+  function toggleChat() { isOpen = !isOpen; chatWindow.classList.toggle('open', isOpen); if (isOpen) chatInput.focus(); }
+  function addMessage(text, sender) {
+    const msg = document.createElement('div'); msg.className = `chat-msg ${sender}`;
+    const av = document.createElement('div'); av.className = 'chat-msg-avatar'; av.textContent = sender === 'bot' ? '🏊' : 'You';
+    if (sender === 'user') av.style.cssText = 'background:linear-gradient(135deg,#0066cc,#00b4d8);font-size:11px;';
+    const b = document.createElement('div'); b.className = 'chat-bubble-msg'; b.textContent = text;
+    msg.appendChild(av); msg.appendChild(b); chatMessages.appendChild(msg); chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  async function sendMessage(text) {
+    const userText = text || chatInput.value.trim(); if (!userText) return;
+    chatInput.value = ''; addMessage(userText, 'user');
+    conversationHistory.push({ role: 'user', content: userText });
+    try {
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: conversationHistory, system: MIS_CONTEXT }) });
+      const d = await r.json(); const reply = d.reply || "Please call (514) 294-8259!";
+      addMessage(reply, 'bot'); conversationHistory.push({ role: 'assistant', content: reply });
+    } catch { addMessage("Call (514) 294-8259 or email info@swim-montreal.com.", 'bot'); }
+  }
+  function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+
+  /* CANVAS */
+  function initWater(id, cfg) {
+    const canvas = document.getElementById(id); if (!canvas) return;
+    const ctx = canvas.getContext('2d'); let W, H, t = 0, raf;
+    function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+    resize(); window.addEventListener('resize', resize);
+    const bubbles = Array.from({length: cfg.bubbles}, () => ({ x: Math.random(), y: Math.random(), r: 1.5 + Math.random()*5, speed: 0.0004 + Math.random()*0.0006, wobble: Math.random()*Math.PI*2, wobbleSpeed: 0.015 + Math.random()*0.02, alpha: 0.06 + Math.random()*0.12 }));
+    const rays = Array.from({length: cfg.rays}, (_, i) => ({ xFrac: 0.05 + i*(0.88/cfg.rays), width: 18 + Math.random()*40, speed: 0.0003 + Math.random()*0.0003, phase: Math.random()*Math.PI*2 }));
+    function drawWave(l, T) {
+      const baseY = H*l.yFrac, amp = H*l.amp; ctx.beginPath();
+      for (let x = 0; x <= W; x += 3) { const y = baseY + Math.sin((x/W)*Math.PI*2*l.freq + T*l.speed)*amp + Math.sin((x/W)*Math.PI*3.7*l.freq + T*l.speed*1.3)*amp*0.4; x === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y); }
+      ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fillStyle = l.color; ctx.fill();
+    }
+    function draw(ts) {
+      t = ts*0.001; ctx.clearRect(0,0,W,H);
+      const bg = ctx.createLinearGradient(0,0,0,H); bg.addColorStop(0,'#071220'); bg.addColorStop(0.45,'#0a1a35'); bg.addColorStop(0.75,'#0d2a55'); bg.addColorStop(1,'#082040'); ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+      rays.forEach(ray => { const x = W*ray.xFrac + Math.sin(t*ray.speed*2*Math.PI+ray.phase)*W*.03; const grad = ctx.createLinearGradient(x,0,x+ray.width*.5,H*.85); grad.addColorStop(0,'rgba(100,200,255,0)'); grad.addColorStop(.1,'rgba(100,200,255,.06)'); grad.addColorStop(1,'rgba(100,200,255,0)'); ctx.save(); ctx.beginPath(); ctx.moveTo(x-ray.width*.3,0); ctx.lineTo(x+ray.width,0); ctx.lineTo(x+ray.width*1.6,H); ctx.lineTo(x-ray.width*.9,H); ctx.closePath(); ctx.fillStyle = grad; ctx.globalAlpha = .6 + Math.sin(t*ray.speed*Math.PI*4+ray.phase)*.4; ctx.fill(); ctx.restore(); });
+      cfg.waves.forEach(l => drawWave(l,t));
+      bubbles.forEach(b => { b.y -= b.speed; b.wobble += b.wobbleSpeed; if (b.y < -.02) { b.y = 1.05; b.x = Math.random(); } const bx = b.x*W + Math.sin(b.wobble)*18, by = b.y*H; ctx.beginPath(); ctx.arc(bx,by,b.r,0,Math.PI*2); ctx.strokeStyle = `rgba(150,230,255,${b.alpha})`; ctx.lineWidth = .8; ctx.stroke(); ctx.beginPath(); ctx.arc(bx-b.r*.3,by-b.r*.3,b.r*.25,0,Math.PI*2); ctx.fillStyle = `rgba(255,255,255,${b.alpha*1.2})`; ctx.fill(); });
+      raf = requestAnimationFrame(draw);
+    }
+    raf = requestAnimationFrame(draw);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) cancelAnimationFrame(raf); else raf = requestAnimationFrame(draw); });
+  }
+  initWater('hero-canvas', { bubbles: 40, rays: 6, waves: [ {amp:.040,freq:1.7,speed:.38,color:'rgba(0,120,200,0.18)',yFrac:.52}, {amp:.032,freq:2.3,speed:.26,color:'rgba(0,180,220,0.14)',yFrac:.58}, {amp:.050,freq:1.2,speed:.18,color:'rgba(10,50,120,0.22)',yFrac:.46}, {amp:.025,freq:3.1,speed:.50,color:'rgba(0,200,255,0.09)',yFrac:.63} ] });
+</script>
+</body>
+</html>

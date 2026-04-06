@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latest News – Institut de Natation de Montréal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628; --navy-mid: #122040;
+    --ocean: #0066cc; --aqua: #00b4d8; --aqua-light: #90e0ef;
+    --foam: #caf0f8; --sand: #f8f4ef; --gold: #e8a020; --white: #ffffff;
+    --text-dark: #0a1628; --text-mid: #3a4a5a; --text-light: #6a7a8a;
+    --shadow: 0 4px 24px rgba(0,102,204,0.12);
+    --shadow-lg: 0 12px 48px rgba(10,22,40,0.18);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--white); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,22,40,0.97); backdrop-filter: blur(16px); padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: white; font-family: 'Playfair Display', serif; }
+  .nav-logo-text { color: white; font-size: 17px; font-weight: 600; line-height: 1.2; }
+  .nav-logo-sub { color: var(--aqua-light); font-size: 11px; font-weight: 400; letter-spacing: 0.5px; display: block; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: white; }
+  .nav-links a.jobs-link { color: var(--gold); font-weight: 700; }
+  .nav-cta { background: var(--aqua); color: var(--navy); padding: 10px 22px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; white-space: nowrap; }
+  .nav-cta:hover { background: white; transform: translateY(-1px); }
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; }
+  @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } }
+
+  /* HERO */
+  .hero { min-height: 48vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 72px 80px 64px; background: var(--navy); position: relative; overflow: hidden; }
+  #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .hero > *:not(#hero-canvas) { position: relative; z-index: 1; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,180,216,0.15); border: 1px solid rgba(0,180,216,0.3); color: var(--aqua); padding: 8px 16px; border-radius: 50px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px; }
+  .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--aqua); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 6vw, 80px); color: white; line-height: 1.05; letter-spacing: -2px; max-width: 700px; margin-bottom: 20px; }
+  .hero h1 em { font-style: normal; color: var(--aqua); }
+  .hero-sub { color: rgba(255,255,255,0.65); font-size: 18px; max-width: 560px; line-height: 1.7; }
+  @media (max-width: 768px) { .hero { padding: 72px 24px 48px; } }
+
+  /* FILTER BAR */
+  .filter-bar { background: var(--sand); padding: 24px 80px; border-bottom: 1px solid rgba(0,102,204,0.08); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; position: sticky; top: 72px; z-index: 100; }
+  @media (max-width: 768px) { .filter-bar { padding: 16px 24px; } }
+  .filter-chip { padding: 8px 18px; border-radius: 50px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1.5px solid rgba(0,102,204,0.15); background: white; color: var(--text-mid); transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .filter-chip:hover { border-color: var(--ocean); color: var(--ocean); }
+  .filter-chip.active { background: var(--ocean); color: white; border-color: var(--ocean); }
+
+  /* NEWS GRID */
+  #news-section { padding: 80px 80px 100px; }
+  @media (max-width: 768px) { #news-section { padding: 48px 24px 60px; } }
+
+  /* FEATURED — top article */
+  .featured-article { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 24px; overflow: hidden; margin-bottom: 48px; box-shadow: var(--shadow-lg); text-decoration: none; transition: transform 0.3s; }
+  .featured-article:hover { transform: translateY(-4px); }
+  @media (max-width: 768px) { .featured-article { grid-template-columns: 1fr; } }
+  .featured-visual { background: linear-gradient(135deg, var(--navy), var(--navy-mid)); display: flex; align-items: center; justify-content: center; min-height: 320px; position: relative; overflow: hidden; }
+  .featured-visual::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 60% 40%, rgba(0,180,216,0.2), transparent 70%); }
+  .featured-emoji { font-size: 100px; position: relative; z-index: 1; filter: drop-shadow(0 8px 32px rgba(0,0,0,0.3)); }
+  .featured-body { background: white; padding: 48px 44px; display: flex; flex-direction: column; justify-content: center; }
+  .article-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ocean); margin-bottom: 12px; }
+  .featured-body h2 { font-family: 'Playfair Display', serif; font-size: clamp(22px, 3vw, 34px); font-weight: 700; color: var(--navy); line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.5px; }
+  .featured-body p { font-size: 15px; color: var(--text-mid); line-height: 1.75; margin-bottom: 24px; }
+  .article-meta { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text-light); margin-bottom: 20px; }
+  .article-meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-light); }
+  .read-more { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--ocean); transition: gap 0.2s; }
+  .featured-article:hover .read-more { gap: 12px; }
+
+  /* ARTICLE GRID */
+  .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 1100px) { .articles-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .articles-grid { grid-template-columns: 1fr; } }
+
+  .article-card { border-radius: 20px; overflow: hidden; border: 1px solid rgba(0,102,204,0.08); transition: all 0.3s; text-decoration: none; display: flex; flex-direction: column; background: white; }
+  .article-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: transparent; }
+  .article-card.hidden { display: none; }
+  .card-visual { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 64px; position: relative; overflow: hidden; }
+  .card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+  .card-tag { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ocean); margin-bottom: 10px; }
+  .card-body h3 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 10px; }
+  .card-body p { font-size: 13px; color: var(--text-mid); line-height: 1.65; flex: 1; margin-bottom: 16px; }
+  .card-meta { font-size: 12px; color: var(--text-light); display: flex; align-items: center; gap: 8px; }
+  .card-read { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--ocean); margin-top: 12px; transition: gap 0.2s; }
+  .article-card:hover .card-read { gap: 10px; }
+
+  /* NEWSLETTER */
+  .newsletter-strip { background: var(--navy); padding: 80px; margin: 0 0 0; }
+  @media (max-width: 768px) { .newsletter-strip { padding: 48px 24px; } }
+  .newsletter-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+  .newsletter-inner h2 { font-family: 'Playfair Display', serif; font-size: 36px; color: white; margin-bottom: 12px; }
+  .newsletter-inner p { color: rgba(255,255,255,0.6); font-size: 16px; line-height: 1.7; margin-bottom: 32px; }
+  .newsletter-form { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .newsletter-form input { flex: 1; min-width: 220px; padding: 14px 20px; border-radius: 50px; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: white; font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .newsletter-form input::placeholder { color: rgba(255,255,255,0.4); }
+  .newsletter-form input:focus { border-color: var(--aqua); }
+  .newsletter-form button { background: var(--aqua); color: var(--navy); padding: 14px 28px; border-radius: 50px; border: none; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .newsletter-form button:hover { background: white; transform: translateY(-2px); }
+  .newsletter-success { display: none; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); border-radius: 14px; padding: 16px 24px; color: #86efac; font-size: 14px; font-weight: 600; margin-top: 16px; }
+
+  /* CTA */
+  .cta-banner { background: linear-gradient(135deg, var(--navy-mid), var(--ocean)); padding: 80px; margin: 0; text-align: center; position: relative; overflow: hidden; }
+  .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.08), transparent 70%); }
+  .cta-banner h2 { font-family: 'Playfair Display', serif; font-size: 44px; color: white; margin-bottom: 16px; position: relative; z-index: 1; }
+  .cta-banner p { color: rgba(255,255,255,0.75); font-size: 18px; margin-bottom: 36px; position: relative; z-index: 1; }
+  .cta-banner-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+  .btn-primary { background: white; color: var(--ocean); padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.25s; }
+  .btn-primary:hover { background: var(--navy); color: white; transform: translateY(-2px); }
+  .btn-outline { border: 1.5px solid rgba(255,255,255,0.5); color: white; padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; transition: all 0.25s; }
+  .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
+  @media (max-width: 768px) { .cta-banner { padding: 48px 24px; } .cta-banner h2 { font-size: 32px; } }
+
+  /* FOOTER */
+  footer { background: #060e1c; padding: 60px 80px 32px; }
+  @media (max-width: 768px) { footer { padding: 48px 24px 24px; } }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { color: rgba(255,255,255,0.45); font-size: 14px; line-height: 1.7; margin: 16px 0 20px; max-width: 280px; }
+  .footer-social { display: flex; gap: 12px; }
+  .footer-social a { width: 36px; height: 36px; background: rgba(255,255,255,0.08); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; font-weight: 700; transition: all 0.2s; }
+  .footer-social a:hover { background: var(--aqua); color: var(--navy); }
+  .footer-col h4 { color: white; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 20px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--aqua); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.3); font-size: 13px; flex-wrap: wrap; gap: 8px; }
+
+  /* CHATBOT */
+  #chat-bubble { position: fixed; bottom: 28px; right: 28px; z-index: 9999; }
+  .chat-toggle { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border: none; cursor: pointer; box-shadow: 0 8px 32px rgba(0,102,204,0.4); display: flex; align-items: center; justify-content: center; transition: all 0.3s; position: relative; }
+  .chat-toggle:hover { transform: scale(1.1); }
+  .chat-toggle svg { width: 28px; height: 28px; fill: white; }
+  .chat-pulse { position: absolute; top: -2px; right: -2px; width: 18px; height: 18px; background: var(--gold); border-radius: 50%; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; color: var(--navy); }
+  .chat-window { position: absolute; bottom: 80px; right: 0; width: 380px; height: 500px; background: white; border-radius: 24px; box-shadow: 0 24px 80px rgba(10,22,40,0.25); display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(0,102,204,0.1); transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+  .chat-header { background: var(--navy); padding: 20px 24px; display: flex; align-items: center; gap: 12px; }
+  .chat-header-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--aqua), var(--ocean)); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .chat-header-info { flex: 1; }
+  .chat-header-name { color: white; font-weight: 700; font-size: 15px; }
+  .chat-header-status { color: var(--aqua); font-size: 12px; display: flex; align-items: center; gap: 5px; }
+  .chat-header-status::before { content: ''; width: 6px; height: 6px; background: #22c55e; border-radius: 50%; }
+  .chat-close { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.5); font-size: 20px; }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .chat-msg { display: flex; gap: 10px; align-items: flex-end; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .chat-msg-avatar { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--aqua), var(--ocean)); display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; font-weight: 700; }
+  .chat-bubble-msg { max-width: 72%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.55; }
+  .chat-msg.bot .chat-bubble-msg { background: var(--sand); color: var(--text-dark); border-bottom-left-radius: 4px; }
+  .chat-msg.user .chat-bubble-msg { background: var(--ocean); color: white; border-bottom-right-radius: 4px; }
+  .chat-input-area { padding: 16px; border-top: 1px solid rgba(0,0,0,0.06); display: flex; gap: 10px; }
+  .chat-input-area textarea { flex: 1; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 14px; padding: 10px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; resize: none; height: 44px; outline: none; transition: border-color 0.2s; }
+  .chat-input-area textarea:focus { border-color: var(--ocean); }
+  .chat-send { width: 44px; height: 44px; border-radius: 12px; background: var(--ocean); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .chat-send svg { width: 18px; height: 18px; fill: white; }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  .hero .hero-badge{animation:fadeUp 0.6s ease forwards}
+  .hero h1{animation:fadeUp 0.7s 0.1s ease both}
+  .hero .hero-sub{animation:fadeUp 0.7s 0.2s ease both}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">M</div>
+    <div class="nav-logo-text">MIS<span class="nav-logo-sub">Institut de Natation de Montréal</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="programs.html">Programs</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Locations</a>
+    <a href="jobs.html" class="jobs-link">🏊 We're Hiring</a>
+    <a href="faq.html">FAQ</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <div style="display:flex;gap:12px;">
+      <a href="https://www.facebook.com/SwimMontreal" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">FB</a>
+      <a href="https://www.instagram.com/swimmontreal/" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;">IG</a>
+    </div>
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="nav-cta">Register Now</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-badge">📰 MIS News & Updates</div>
+  <h1>Latest <em>News</em><br>from MIS</h1>
+  <p class="hero-sub">Registration dates, aquatics insights, pool safety, and updates from Québec's #1 swim school — all in one place.</p>
+</section>
+
+<!-- FILTER CHIPS -->
+<div class="filter-bar">
+  <button class="filter-chip active" onclick="filterNews('all', this)">All Posts</button>
+  <button class="filter-chip" onclick="filterNews('registration', this)">Registration</button>
+  <button class="filter-chip" onclick="filterNews('safety', this)">Water Safety</button>
+  <button class="filter-chip" onclick="filterNews('tips', this)">Tips & Guides</button>
+  <button class="filter-chip" onclick="filterNews('news', this)">School News</button>
+</div>
+
+<!-- NEWS CONTENT -->
+<section id="news-section">
+
+  <!-- FEATURED -->
+  <a class="featured-article" href="https://swim-montreal.com/blog/2025-spring-registration-dates/" target="_blank" data-tag="registration">
+    <div class="featured-visual">
+      <div class="featured-emoji">🌸</div>
+    </div>
+    <div class="featured-body">
+      <div class="article-tag">📋 Registration · February 2025</div>
+      <h2>2026 Spring Registration is Now Open!</h2>
+      <p>Spring lessons run from March through to June — 15 weeks of structured, progressive swim instruction across all 25+ MIS pool locations. Easter and Victoria Day breaks are factored in. Register now to secure your spot before sessions fill up.</p>
+      <div class="article-meta">
+        <span>Spring 2026</span>
+        <span class="article-meta-dot"></span>
+        <span>MIS Admin</span>
+        <span class="article-meta-dot"></span>
+        <span>2 min read</span>
+      </div>
+      <span class="read-more">Read the full announcement →</span>
+    </div>
+  </a>
+
+  <!-- ARTICLE GRID -->
+  <div class="articles-grid" id="articlesGrid">
+
+    <a class="article-card" href="https://swim-montreal.com/blog/the-benefits-of-intensive-swim-lessons-for-kids-over-the-holidays/" target="_blank" data-tag="tips">
+      <div class="card-visual" style="background:linear-gradient(135deg,#0a3a6a,#0066cc);">🎄</div>
+      <div class="card-body">
+        <div class="card-tag">Tips & Guides</div>
+        <h3>The Benefits of Intensive Swim Lessons for Kids Over the Holidays</h3>
+        <p>The holiday season is an opportunity to give children a head start on learning essential life skills. Intensive lessons during the break deliver accelerated progress — here's why.</p>
+        <div class="card-meta"><span>November 2024</span><span>·</span><span>4 min read</span></div>
+        <span class="card-read">Read more →</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://swim-montreal.com/blog/winter-registration-dates-2/" target="_blank" data-tag="registration">
+      <div class="card-visual" style="background:linear-gradient(135deg,#0a2a5a,#1a5a8a);">❄️</div>
+      <div class="card-body">
+        <div class="card-tag">Registration</div>
+        <h3>Winter Registration Dates!</h3>
+        <p>Keep the momentum going into the new year — it might be getting colder out, but it's always warm in the pool. The winter session runs January through March, 9–10 weeks long.</p>
+        <div class="card-meta"><span>December 2024</span><span>·</span><span>2 min read</span></div>
+        <span class="card-read">Read more →</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://swim-montreal.com/blog/radio-interview-with-mose-persico-mis-president-adam-di-fulvio/" target="_blank" data-tag="news">
+      <div class="card-visual" style="background:linear-gradient(135deg,#3a1a6a,#6a30aa);">🎙️</div>
+      <div class="card-body">
+        <div class="card-tag">School News</div>
+        <h3>Radio Interview: Mose Persico & MIS President Adam Di Fulvio</h3>
+        <p>On October 1, 2024, MIS President Adam Di Fulvio sat down with Mose Persico on 103.1 Mike FM — discussing the history of MIS, aquatics in Québec, and the future of the school.</p>
+        <div class="card-meta"><span>October 2024</span><span>·</span><span>3 min read</span></div>
+        <span class="card-read">Listen & read →</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://swim-montreal.com/blog/the-state-of-quebec-aquatics-fall-2024-edition/" target="_blank" data-tag="news">
+      <div class="card-visual" style="background:linear-gradient(135deg,#0a1628,#1a4a6a);">🏊</div>
+      <div class="card-body">
+        <div class="card-tag">School News</div>
+        <h3>The State of Quebec Aquatics – Fall 2024 Edition</h3>
+        <p>Annual insight into the state of Québec aquatics — staffing, swimmers, drownings, pool availability, and what it all means for swim education in the province.</p>
+        <div class="card-meta"><span>Fall 2024</span><span>·</span><span>8 min read</span></div>
+        <span class="card-read">Read the report →</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://swim-montreal.com/blog/successful-habits-how-to-prepare-your-child-for-a-swim-lesson/" target="_blank" data-tag="tips">
+      <div class="card-visual" style="background:linear-gradient(135deg,#2a6a3a,#3a9a50);">👶</div>
+      <div class="card-body">
+        <div class="card-tag">Tips & Guides</div>
+        <h3>Successful Habits: How to Prepare Your Child for a Swim Lesson</h3>
+        <p>A parent's guide to getting your child ready — mentally, physically, and emotionally — for their swimming lessons. Small habits make a huge difference to progress and confidence.</p>
+        <div class="card-meta"><span>2024</span><span>·</span><span>5 min read</span></div>
+        <span class="card-read">Read the guide →</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://swim-montreal.com/blog/fall-registration-dates/" target="_blank" data-tag="registration">
+      <div class="card-visual" style="background:linear-gradient(135deg,#6a3a0a,#aa6020);">🍂</div>
+      <div class="card-body">
+        <div class="card-tag">Registration</div>
+        <h3>Fall Registration Dates!</h3>
+        <p>Start the school year off with good habits — secure your spot for MIS's busiest session of the year. The fall session runs September through December, 15 weeks long.</p>
+        <div class="card-meta"><span>Summer 2024</span><span>·</span><span>2 min read</span></div>
+        <span class="card-read">Read more →</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://swim-montreal.com/blog/national-drowning-prevention-week-july-21-27/" target="_blank" data-tag="safety">
+      <div class="card-visual" style="background:linear-gradient(135deg,#6a0a0a,#aa2020);">🛟</div>
+      <div class="card-body">
+        <div class="card-tag">Water Safety</div>
+        <h3>National Drowning Prevention Week — July 21–27</h3>
+        <p>Water safety should always be at the top of parents' minds in summer months. Every year, avoidable drowning deaths occur across Canada. NDPW aims to raise awareness and save lives.</p>
+        <div class="card-meta"><span>July 2024</span><span>·</span><span>3 min read</span></div>
+        <span class="card-read">Read more →</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://swim-montreal.com/blog/backyard-pool-safety-interview-with-adam-di-fulvio-president-of-mis-2/" target="_blank" data-tag="safety">
+      <div class="card-visual" style="background:linear-gradient(135deg,#0a4a6a,#1a8a9a);">🏡</div>
+      <div class="card-body">
+        <div class="card-tag">Water Safety</div>
+        <h3>Backyard Pool Safety — Interview with Adam Di Fulvio, President of MIS</h3>
+        <p>Thanks to Joanne Vrakas and the CJAD Montreal team for this collaboration on backyard pool safety — a timely topic as drowning numbers in Québec rise heading into summer.</p>
+        <div class="card-meta"><span>Summer 2024</span><span>·</span><span>4 min read</span></div>
+        <span class="card-read">Read & listen →</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://swim-montreal.com/blog/the-worlds-largest-swim-lesson/" target="_blank" data-tag="news">
+      <div class="card-visual" style="background:linear-gradient(135deg,#0a5a3a,#1a9a60);">🌍</div>
+      <div class="card-body">
+        <div class="card-tag">School News</div>
+        <h3>The World's Largest Swim Lesson!</h3>
+        <p>MIS, in partnership with the City of Côte-Saint-Luc, participated in the World's Largest Swim Lesson — an important and record-breaking attempt to promote water safety globally.</p>
+        <div class="card-meta"><span>June 2024</span><span>·</span><span>3 min read</span></div>
+        <span class="card-read">Read more →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-strip">
+  <div class="newsletter-inner">
+    <h2>Stay in the loop</h2>
+    <p>Get registration dates, pool safety tips, and MIS news delivered directly to your inbox. No spam — just the good stuff.</p>
+    <div class="newsletter-form">
+      <input type="email" id="nlEmail" placeholder="your@email.com">
+      <button onclick="subscribeNewsletter()">Subscribe →</button>
+    </div>
+    <div class="newsletter-success" id="nlSuccess">✅ You're subscribed! Watch your inbox for the latest MIS news.</div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Ready to dive in?</h2>
+  <p>Spring 2026 registration is now open. Spots fill fast — secure yours today.</p>
+  <div class="cta-banner-btns">
+    <a href="https://appus.sportimea.com/portal/swim-montreal?location=home" target="_blank" class="btn-primary">Register Now →</a>
+    <a href="programs.html" class="btn-outline">Explore Programs</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--aqua),var(--ocean));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:white;font-family:'Playfair Display',serif;">M</div>
+        <span style="color:white;font-weight:700;font-size:16px;">MIS | Swim Montréal</span>
+      </div>
+      <p>Delivering flexible and effective swimming experiences to families throughout Montréal. Québec's #1 swim school.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/SwimMontreal" target="_blank">f</a>
+        <a href="https://www.instagram.com/swimmontreal/" target="_blank">ig</a>
+        <a href="mailto:info@swim-montreal.com">✉</a>
+        <a href="tel:(514)294-8259">☎</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <a href="programs.html#confidence">Confidence (Tots)</a>
+      <a href="programs.html#independence">Independence</a>
+      <a href="programs.html#strong">Strong Swimmer</a>
+      <a href="programs.html#life">Swim for Life</a>
+      <a href="lifeguard.html">Private Lifeguard</a>
+      <a href="programs.html#lifeguard">Private Lifeguard</a>
+    </div>
+    <div class="footer-col">
+      <h4>School</h4>
+      <a href="about.html">About MIS</a>
+      <a href="meet-the-team.html">Meet the Team</a>
+      <a href="jobs.html">Jobs — We're Hiring!</a>
+      <a href="news.html">Latest News</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="faq.html">FAQ</a>
+      <a href="policies.html">Policies</a>
+      <a href="contact.html">Locations & Contact</a>
+      <a href="https://swim-montreal.com/blog/privacy-policy/" target="_blank">Privacy Policy</a>
+      <a href="https://swim-montreal.com/fr" target="_blank">Français 🇫🇷</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Institut de Natation de Montréal Inc. All rights reserved.</span>
+    <span>♻ Green hosted</span>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<div id="chat-bubble">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-avatar">🏊</div>
+      <div class="chat-header-info">
+        <div class="chat-header-name">MIS Assistant</div>
+        <div class="chat-header-status">Online now</div>
+      </div>
+      <button class="chat-close" onclick="toggleChat()">×</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        <div class="chat-msg-avatar">🏊</div>
+        <div><div class="chat-bubble-msg">👋 Hi! Questions about registration, programs or anything MIS? I'm here to help.</div></div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea id="chatInput" placeholder="Ask anything about MIS…" rows="1" onkeydown="handleKey(event)"></textarea>
+      <button class="chat-send" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+    </div>
+  </div>
+  <button class="chat-toggle" onclick="toggleChat()">
+    <div class="chat-pulse">?</div>
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+  </button>
+</div>
+
+<script>
+  /* FILTER */
+  function filterNews(tag, btn) {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('.article-card');
+    const featured = document.querySelector('.featured-article');
+    cards.forEach(card => {
+      card.classList.toggle('hidden', tag !== 'all' && card.dataset.tag !== tag);
+    });
+    if (featured) featured.style.display = (tag === 'all' || tag === 'registration') ? '' : 'none';
+  }
+
+  /* NEWSLETTER */
+  function subscribeNewsletter() {
+    const email = document.getElementById('nlEmail').value.trim();
+    if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
+    document.getElementById('nlSuccess').style.display = 'block';
+    document.getElementById('nlEmail').style.display = 'none';
+    document.querySelector('.newsletter-form button').style.display = 'none';
+  }
+
+  /* HAMBURGER */
+  const hamburger = document.querySelector('.hamburger');
+  const navLinksEl = document.querySelector('.nav-links');
+  let navOpen = false;
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      navOpen = !navOpen;
+      navLinksEl.style.cssText = navOpen ? 'display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(10,22,40,0.98);padding:20px 40px;gap:16px;z-index:999;' : '';
+    });
+  }
+
+  /* CHATBOT */
+  const chatWindow = document.getElementById('chatWindow');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  let isOpen = false, conversationHistory = [];
+  const MIS_CONTEXT = `You are the MIS Assistant for Institut de Natation de Montréal. Phone: (514) 294-8259 | Email: info@swim-montreal.com. Spring 2026 registration NOW OPEN. Be warm and concise. Answer in English or French.`;
+  function toggleChat() { isOpen = !isOpen; chatWindow.classList.toggle('open', isOpen); if (isOpen) chatInput.focus(); }
+  function addMessage(text, sender) {
+    const msg = document.createElement('div'); msg.className = `chat-msg ${sender}`;
+    const av = document.createElement('div'); av.className = 'chat-msg-avatar'; av.textContent = sender === 'bot' ? '🏊' : 'You';
+    if (sender === 'user') av.style.cssText = 'background:linear-gradient(135deg,#0066cc,#00b4d8);font-size:11px;';
+    const b = document.createElement('div'); b.className = 'chat-bubble-msg'; b.textContent = text;
+    msg.appendChild(av); msg.appendChild(b); chatMessages.appendChild(msg); chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  async function sendMessage(text) {
+    const userText = text || chatInput.value.trim(); if (!userText) return;
+    chatInput.value = ''; addMessage(userText, 'user');
+    conversationHistory.push({ role: 'user', content: userText });
+    try {
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: conversationHistory, system: MIS_CONTEXT }) });
+      const d = await r.json(); const reply = d.reply || "Please call (514) 294-8259!";
+      addMessage(reply, 'bot'); conversationHistory.push({ role: 'assistant', content: reply });
+    } catch { addMessage("Call (514) 294-8259 or email info@swim-montreal.com.", 'bot'); }
+  }
+  function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
+
+  /* CANVAS */
+  function initWater(id, cfg) {
+    const canvas = document.getElementById(id); if (!canvas) return;
+    const ctx = canvas.getContext('2d'); let W, H, t = 0, raf;
+    function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+    resize(); window.addEventListener('resize', resize);
+    const bubbles = Array.from({length: cfg.bubbles}, () => ({ x: Math.random(), y: Math.random(), r: 1.5 + Math.random()*5, speed: 0.0004 + Math.random()*0.0006, wobble: Math.random()*Math.PI*2, wobbleSpeed: 0.015 + Math.random()*0.02, alpha: 0.06 + Math.random()*0.12 }));
+    const rays = Array.from({length: cfg.rays}, (_, i) => ({ xFrac: 0.05 + i*(0.88/cfg.rays), width: 18 + Math.random()*40, speed: 0.0003 + Math.random()*0.0003, phase: Math.random()*Math.PI*2 }));
+    function drawWave(l, T) {
+      const baseY = H*l.yFrac, amp = H*l.amp; ctx.beginPath();
+      for (let x = 0; x <= W; x += 3) { const y = baseY + Math.sin((x/W)*Math.PI*2*l.freq + T*l.speed)*amp + Math.sin((x/W)*Math.PI*3.7*l.freq + T*l.speed*1.3)*amp*0.4; x === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y); }
+      ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fillStyle = l.color; ctx.fill();
+    }
+    function draw(ts) {
+      t = ts*0.001; ctx.clearRect(0,0,W,H);
+      const bg = ctx.createLinearGradient(0,0,0,H); bg.addColorStop(0,'#071220'); bg.addColorStop(0.45,'#0a1a35'); bg.addColorStop(0.75,'#0d2a55'); bg.addColorStop(1,'#082040'); ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+      rays.forEach(ray => { const x = W*ray.xFrac + Math.sin(t*ray.speed*2*Math.PI+ray.phase)*W*.03; const grad = ctx.createLinearGradient(x,0,x+ray.width*.5,H*.85); grad.addColorStop(0,'rgba(100,200,255,0)'); grad.addColorStop(.1,'rgba(100,200,255,.06)'); grad.addColorStop(1,'rgba(100,200,255,0)'); ctx.save(); ctx.beginPath(); ctx.moveTo(x-ray.width*.3,0); ctx.lineTo(x+ray.width,0); ctx.lineTo(x+ray.width*1.6,H); ctx.lineTo(x-ray.width*.9,H); ctx.closePath(); ctx.fillStyle = grad; ctx.globalAlpha = .6 + Math.sin(t*ray.speed*Math.PI*4+ray.phase)*.4; ctx.fill(); ctx.restore(); });
+      cfg.waves.forEach(l => drawWave(l,t));
+      bubbles.forEach(b => { b.y -= b.speed; b.wobble += b.wobbleSpeed; if (b.y < -.02) { b.y = 1.05; b.x = Math.random(); } const bx = b.x*W + Math.sin(b.wobble)*18, by = b.y*H; ctx.beginPath(); ctx.arc(bx,by,b.r,0,Math.PI*2); ctx.strokeStyle = `rgba(150,230,255,${b.alpha})`; ctx.lineWidth = .8; ctx.stroke(); ctx.beginPath(); ctx.arc(bx-b.r*.3,by-b.r*.3,b.r*.25,0,Math.PI*2); ctx.fillStyle = `rgba(255,255,255,${b.alpha*1.2})`; ctx.fill(); });
+      raf = requestAnimationFrame(draw);
+    }
+    raf = requestAnimationFrame(draw);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) cancelAnimationFrame(raf); else raf = requestAnimationFrame(draw); });
+  }
+  initWater('hero-canvas', { bubbles: 40, rays: 6, waves: [ {amp:.040,freq:1.7,speed:.38,color:'rgba(0,120,200,0.18)',yFrac:.52}, {amp:.032,freq:2.3,speed:.26,color:'rgba(0,180,220,0.14)',yFrac:.58}, {amp:.050,freq:1.2,speed:.18,color:'rgba(10,50,120,0.22)',yFrac:.46}, {amp:.025,freq:3.1,speed:.50,color:'rgba(0,200,255,0.09)',yFrac:.63} ] });
+</script>
+</body>
+</html>
