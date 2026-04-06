@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABxklEQVR4nMWXZW8DMQyG/avHzAwaM5ZpzB0z0//xnNNVmuqzL53aJVK+RImfp+17vhRAGplPhDTN1AdC8h0h8YYQf0WIvSBEaUaeEdafENYeEVYfEFbuEZbvEJZoLt4iLNwgzF8jzF0hzF4izNAMHblvhOwXVgQ+fYEwdY4weYYwcRog85/w8TzCWB7dwkdPEEaOfQlX8OEjrFzgbOBDh+gWPnhAAgq8eNjAg4YIH9gnAeWTBxYrEe6dkeD9RkD52sWCJcC9/RK8b48ElN9cLWoJ9/ZK8N5dElACF1rYAu7tk+A9OySgpL1cQ4R3b5OA8qiVTUCCd22RgPKcl01AgncaAaXJsEKWgWNrErxjkwSUDscKUYcLg5vAsXUJ3r5BAkp7ZYWovaoCftrZugRvy5GA0l5ZIertqoCfdrYuwVuzJKD0dlYo7MXip52dk+AtGRIoobfbwE3g2DkJ3pwmAeWVygpZwE3g2DkJ3mQElPc5K2QBN4Fj5yR4Y4oElMsEK2QBN4Fj5yR4Q5IElJsMK2QBN4Fj5yR4fYIE/nKN0nq7FrhieF2cBFzCa2P+rdgVvKYg4ApeHfUFXMGrIr/+njmFF4YD+A9SEW1drX/aHgAAAABJRU5ErkJggg==">
+  <link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADQklEQVR4nOWbZ1MVMRSG86dRigoIqIAF7L0Clw52BbH3Xn9P3HcTQ8YRTvbd3Dsr58y83+5s8jzA3bMnizFVa+m7LbOIfLNmAflqzTzyxZo5n9nPLq1PLjPIR2umkQ/WTCHvrblR5DryzppryFtrriJvrLnic/m1y6VXLheRl9ZcQF5Ycx55bs05n2y18tOWWf7h8j/An33mcuapy+knLqrhTyGPEyWs/rI7Ev4ksmHNiY1tRGiAR44/2kKCFvjJfwnQBD+5bs3EutUNP7FmzbE1uylAI3wQoBX+6MNIgEb4IEAr/JEHVjd8EKAV/vD9QgAJL1VueHE9Bt4J4H7yKdUp+HItBn4cAshf+9TqBHy5DgM/fg8CuL/5KtVueCeAgB+DAPILr2q1E768PgM/dhcCuG97ptoF7wQQ8KMQQN7q2GoHfHldBn70jhdA3OfrVG74IKAq/CEIIJucupUTvrweAx8EEB1ejsoFX16LgT94uxBAtrdNKwo+CCB6+6YVBX/gViGAfLBpWlHwTgD3VNe0ouBHIIB8pG1aUfAjNyGAe55vWlHwwxBADjPEDRX3+WxwRZMjfoaBH16FAG6SI27INzk54HGPlwUQ8EMQQI6xkgT4MVZd+CQBDPzQSiGAnOGJG4pmeLSAqL2VBRDw+0sB3AAzSYAfYNYS4Ds88bMM/CAEkNNbcUPR9JYWELW3SQKqwg8uQwA3vU0S4EfXtQT4Dk/8LAM/AAHk6FrcUDS3pwVE7W2SgKrwA0sQwI2uZQGbhxa1BPgOT/wsA98PAeTcXtxQ3RObv3r7JAFV4fsXvQBibi8LyAePJkdcj4HfBwHkoYW4oYzwaHJkAQR8ENCks7otnurE9Rj4vQuFAPKUVtxQRnjc42UBBHwQQBxRixvKCJ8kgIHfM18IIM/nZQH54HGPlwUQ8E4A93KCuKGM8EkCGPg+CCDfzJAF5IPHPV5cj4Hvm4MA7rUUcUMZ4dMEEPC9EEC+k5MkIBM8mhxxPQa+dxYCOvhCEju6ZpscCb4HAjTD97S8AK3w3S3/pqhW+CBAK/zumUiARvggQCv8rulIgEb4IAClGv5PqYZHaYHvmtrmnydVw8e1E+ErlwL43+9+0w+BCcqHAAAAAElFTkSuQmCC">
+  <link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABxklEQVR4nMWXZW8DMQyG/avHzAwaM5ZpzB0z0//xnNNVmuqzL53aJVK+RImfp+17vhRAGplPhDTN1AdC8h0h8YYQf0WIvSBEaUaeEdafENYeEVYfEFbuEZbvEJZoLt4iLNwgzF8jzF0hzF4izNAMHblvhOwXVgQ+fYEwdY4weYYwcRog85/w8TzCWB7dwkdPEEaOfQlX8OEjrFzgbOBDh+gWPnhAAgq8eNjAg4YIH9gnAeWTBxYrEe6dkeD9RkD52sWCJcC9/RK8b48ElN9cLWoJ9/ZK8N5dElACF1rYAu7tk+A9OySgpL1cQ4R3b5OA8qiVTUCCd22RgPKcl01AgncaAaXJsEKWgWNrErxjkwSUDscKUYcLg5vAsXUJ3r5BAkp7ZYWovaoCftrZugRvy5GA0l5ZIertqoCfdrYuwVuzJKD0dlYo7MXip52dk+AtGRIoobfbwE3g2DkJ3pwmAeWVygpZwE3g2DkJ3mQElPc5K2QBN4Fj5yR4Y4oElMsEK2QBN4Fj5yR4Q5IElJsMK2QBN4Fj5yR4fYIE/nKN0nq7FrhieF2cBFzCa2P+rdgVvKYg4ApeHfUFXMGrIr/+njmFF4YD+A9SEW1drX/aHgAAAABJRU5ErkJggg==">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Institut de Natation de Montréal – Swimming & Jobs</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -51,7 +54,9 @@
     padding: 96px 80px 160px; background: var(--navy); position: relative; overflow: hidden;
   }
   #hero-canvas-home { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-  .home-hero > *:not(#hero-canvas-home) { position: relative; z-index: 1; }
+  .home-hero > *:not(#hero-canvas-home) { position: relative; z-index: 2; }
+  .hero-btns { position: relative; z-index: 10; }
+  .hero-btns a { position: relative; z-index: 10; }
   .hero-waves { position: absolute; bottom: 0; left: 0; right: 0; height: 220px; overflow: hidden; }
   .hero-waves svg { width: 100%; height: 100%; }
   .hero-circles { position: absolute; right: -100px; top: 50%; transform: translateY(-50%); width: 600px; height: 600px; pointer-events: none; }
@@ -69,7 +74,7 @@
   .btn-primary:hover { background: white; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,180,216,0.3); }
   .btn-outline { border: 1.5px solid rgba(255,255,255,0.3); color: white; padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
   .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
-  .hero-stats { display: flex; gap: 48px; position: absolute; bottom: 40px; left: 80px; right: 80px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; }
+  .hero-stats { display: flex; gap: 48px; position: absolute; bottom: 40px; left: 80px; right: 80px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; z-index: 2; pointer-events: none; }
   .hero-stat-num { font-size: 36px; font-weight: 700; color: white; font-family: 'Playfair Display', serif; }
   .hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
 
@@ -381,7 +386,7 @@
     <a href="about.html">About</a>
     <a href="#locations">Locations</a>
     <a href="jobs.html" class="jobs-link">🏊 We're Hiring</a>
-    <a href="https://swim-montreal.com/contact" target="_blank">Contact</a>
+    <a href="contact.html">Contact</a>
   </div>
   <div style="display:flex;align-items:center;gap:20px;">
     <div class="nav-social">
@@ -493,7 +498,7 @@
     <div class="location-pill"><div class="location-dot"></div>South Shore</div>
     <div class="location-pill"><div class="location-dot"></div>+ many more</div>
   </div>
-  <div style="margin-top:40px;"><a href="https://swim-montreal.com/contact" target="_blank" class="btn-primary" style="display:inline-flex;">View all locations & map →</a></div>
+  <div style="margin-top:40px;"><a href="contact.html" class="btn-primary" style="display:inline-flex;">View all locations & map →</a></div>
 </section>
 
 <section id="partners" style="padding-top:60px;padding-bottom:60px;">
@@ -707,7 +712,7 @@
       <a href="faq.html" target="_blank">FAQ</a>
       <a href="policies.html" target="_blank">Policies</a>
       <a href="contact.html" target="_blank">Locations & Contact</a>
-      <a href="https://swim-montreal.com/blog/privacy-policy/" target="_blank">Privacy Policy</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
       <a href="https://swim-montreal.com/fr" target="_blank">Français 🇫🇷</a>
     </div>
   </div>
