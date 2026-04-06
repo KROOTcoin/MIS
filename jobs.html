@@ -59,7 +59,7 @@
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    background: rgba(10,22,40,0.97); backdrop-filter: blur(16px);
+    background: rgba(10,22,40,0.97); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
     padding: 0 40px; height: 72px;
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -376,6 +376,53 @@
   .hero h1{animation:fadeUp 0.6s 0.1s ease both}
   .hero-sub{animation:fadeUp 0.6s 0.2s ease both}
   .hero-btns{animation:fadeUp 0.6s 0.3s ease both}
+
+  /* ── Safari / Cross-Browser Compatibility ── */
+  /* Flex gap fallback for Safari < 14.1 */
+  @supports not (gap: 1px) {
+    .nav-links { gap: 0; }
+    .nav-links a { margin-right: 28px; }
+    .hero-btns { gap: 0; }
+    .hero-btns a + a { margin-left: 16px; }
+    .filter-chips { gap: 0; }
+    .filter-chips > * + * { margin-left: 8px; }
+    .footer-social { gap: 0; }
+    .footer-social a + a { margin-left: 12px; }
+    .cta-banner-btns { gap: 0; }
+    .cta-banner-btns > * + * { margin-left: 16px; }
+    .hero-pills { gap: 0; }
+    .hero-pills > * + * { margin-left: 12px; }
+    .social-row { gap: 0; }
+    .social-row > * + * { margin-left: 12px; }
+    .newsletter-form { gap: 0; }
+    .newsletter-form > * + * { margin-left: 12px; }
+    .contact-details { gap: 0; }
+    .contact-details > * + * { margin-top: 20px; }
+    .book-cta-contact { gap: 0; }
+    .book-cta-contact > * + * { margin-top: 10px; }
+    .advantage-points { gap: 0; }
+    .advantage-points > * + * { margin-top: 20px; }
+    .duty-list { gap: 0; }
+    .duty-list li + li { margin-top: 12px; }
+    .join-perks { gap: 0; }
+    .join-perks > * + * { margin-top: 16px; }
+    .cred-list { gap: 0; }
+    .cred-list > * + * { margin-top: 10px; }
+    .timeline-item + .timeline-item { margin-top: 20px; }
+    .footer-grid { gap: 0; }
+    .footer-col + .footer-col { margin-left: 40px; }
+  }
+  /* -webkit-appearance for form inputs */
+  input, textarea, select, button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  select { -webkit-appearance: menulist; }
+  /* Smooth scrolling for Safari */
+  @media (prefers-reduced-motion: no-preference) {
+    html { -webkit-overflow-scrolling: touch; }
+  }
+
 </style>
 </head>
 <body>
@@ -660,37 +707,37 @@
   <h2 class="section-title">Questions about working at MIS?</h2>
   <div class="faq-grid">
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">
         Do I need a certification to apply? <span class="faq-arrow">+</span>
       </button>
       <div class="faq-a">Yes — a valid lifeguard or swim instructor certification is required (NLS, RLSS, or equivalent). If you're in the process of getting certified, feel free to reach out and we can discuss your timeline.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">
         How many hours can I work per week? <span class="faq-arrow">+</span>
       </button>
       <div class="faq-a">It's completely flexible. Some instructors work 4–6 hours a week, others 20+. You submit your availability and we match you with swimmers accordingly. There's no minimum hour requirement.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">
         Which pools can I work at? <span class="faq-arrow">+</span>
       </button>
       <div class="faq-a">We operate at 25+ pools across Montréal and surrounding areas. During onboarding, you'll let us know which locations work best for you and we'll match you accordingly.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">
         Is training provided? <span class="faq-arrow">+</span>
       </button>
       <div class="faq-a">Yes. Every new instructor goes through personalized onboarding in the #MISway teaching approach. You'll be fully prepared before your first lesson with a swimmer.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">
         Can I teach adults as well as children? <span class="faq-arrow">+</span>
       </button>
       <div class="faq-a">Absolutely. MIS teaches swimmers of all ages — from babies to seniors. During your application you can indicate your preferences and experience level with different age groups.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">
         How quickly will I hear back after applying? <span class="faq-arrow">+</span>
       </button>
       <div class="faq-a">We review applications continuously and aim to respond within 3–5 business days. If you haven't heard back within a week, feel free to follow up at <a href="mailto:info@swim-montreal.com" style="color:var(--ocean);">info@swim-montreal.com</a>.</div>
@@ -757,7 +804,7 @@
   (function() {
     const canvas = document.getElementById('hero-canvas');
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { willReadFrequently: false });
     let W, H, t = 0, raf;
     function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
     resize();

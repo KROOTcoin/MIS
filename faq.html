@@ -55,7 +55,9 @@
     }
   ]
 }
-  </script>
+    // Safari RAF fallback
+  window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(cb){ return setTimeout(cb, 1000/60); };
+</script>
 <meta charset="UTF-8">
   <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABxklEQVR4nMWXZW8DMQyG/avHzAwaM5ZpzB0z0//xnNNVmuqzL53aJVK+RImfp+17vhRAGplPhDTN1AdC8h0h8YYQf0WIvSBEaUaeEdafENYeEVYfEFbuEZbvEJZoLt4iLNwgzF8jzF0hzF4izNAMHblvhOwXVgQ+fYEwdY4weYYwcRog85/w8TzCWB7dwkdPEEaOfQlX8OEjrFzgbOBDh+gWPnhAAgq8eNjAg4YIH9gnAeWTBxYrEe6dkeD9RkD52sWCJcC9/RK8b48ElN9cLWoJ9/ZK8N5dElACF1rYAu7tk+A9OySgpL1cQ4R3b5OA8qiVTUCCd22RgPKcl01AgncaAaXJsEKWgWNrErxjkwSUDscKUYcLg5vAsXUJ3r5BAkp7ZYWovaoCftrZugRvy5GA0l5ZIertqoCfdrYuwVuzJKD0dlYo7MXip52dk+AtGRIoobfbwE3g2DkJ3pwmAeWVygpZwE3g2DkJ3mQElPc5K2QBN4Fj5yR4Y4oElMsEK2QBN4Fj5yR4Q5IElJsMK2QBN4Fj5yR4fYIE/nKN0nq7FrhieF2cBFzCa2P+rdgVvKYg4ApeHfUFXMGrIr/+njmFF4YD+A9SEW1drX/aHgAAAABJRU5ErkJggg==">
   <link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADQklEQVR4nOWbZ1MVMRSG86dRigoIqIAF7L0Clw52BbH3Xn9P3HcTQ8YRTvbd3Dsr58y83+5s8jzA3bMnizFVa+m7LbOIfLNmAflqzTzyxZo5n9nPLq1PLjPIR2umkQ/WTCHvrblR5DryzppryFtrriJvrLnic/m1y6VXLheRl9ZcQF5Ycx55bs05n2y18tOWWf7h8j/An33mcuapy+knLqrhTyGPEyWs/rI7Ev4ksmHNiY1tRGiAR44/2kKCFvjJfwnQBD+5bs3EutUNP7FmzbE1uylAI3wQoBX+6MNIgEb4IEAr/JEHVjd8EKAV/vD9QgAJL1VueHE9Bt4J4H7yKdUp+HItBn4cAshf+9TqBHy5DgM/fg8CuL/5KtVueCeAgB+DAPILr2q1E768PgM/dhcCuG97ptoF7wQQ8KMQQN7q2GoHfHldBn70jhdA3OfrVG74IKAq/CEIIJucupUTvrweAx8EEB1ejsoFX16LgT94uxBAtrdNKwo+CCB6+6YVBX/gViGAfLBpWlHwTgD3VNe0ouBHIIB8pG1aUfAjNyGAe55vWlHwwxBADjPEDRX3+WxwRZMjfoaBH16FAG6SI27INzk54HGPlwUQ8EMQQI6xkgT4MVZd+CQBDPzQSiGAnOGJG4pmeLSAqL2VBRDw+0sB3AAzSYAfYNYS4Ds88bMM/CAEkNNbcUPR9JYWELW3SQKqwg8uQwA3vU0S4EfXtQT4Dk/8LAM/AAHk6FrcUDS3pwVE7W2SgKrwA0sQwI2uZQGbhxa1BPgOT/wsA98PAeTcXtxQ3RObv3r7JAFV4fsXvQBibi8LyAePJkdcj4HfBwHkoYW4oYzwaHJkAQR8ENCks7otnurE9Rj4vQuFAPKUVtxQRnjc42UBBHwQQBxRixvKCJ8kgIHfM18IIM/nZQH54HGPlwUQ8E4A93KCuKGM8EkCGPg+CCDfzJAF5IPHPV5cj4Hvm4MA7rUUcUMZ4dMEEPC9EEC+k5MkIBM8mhxxPQa+dxYCOvhCEju6ZpscCb4HAjTD97S8AK3w3S3/pqhW+CBAK/zumUiARvggQCv8rulIgEb4IAClGv5PqYZHaYHvmtrmnydVw8e1E+ErlwL43+9+0w+BCcqHAAAAAElFTkSuQmCC">
@@ -76,7 +78,7 @@
   body { font-family: 'DM Sans', sans-serif; color: var(--text-dark); background: var(--white); overflow-x: hidden; }
 
   /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,22,40,0.97); backdrop-filter: blur(16px); padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,22,40,0.97); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
   .nav-logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--aqua), var(--ocean)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: white; font-family: 'Playfair Display', serif; }
   .nav-logo-text { color: white; font-size: 17px; font-weight: 600; line-height: 1.2; }
@@ -104,7 +106,7 @@
   @media (max-width: 768px) { .hero { padding: 72px 24px 48px; } }
 
   /* SEARCH BAR */
-  .faq-search-bar { background: var(--sand); padding: 32px 80px; border-bottom: 1px solid rgba(0,102,204,0.08); position: sticky; top: 72px; z-index: 100; }
+  .faq-search-bar { background: var(--sand); padding: 32px 80px; border-bottom: 1px solid rgba(0,102,204,0.08); position: -webkit-sticky; position: sticky; top: 72px; z-index: 100; }
   @media (max-width: 768px) { .faq-search-bar { padding: 20px 24px; } }
   .search-wrap { max-width: 600px; position: relative; }
   .search-wrap input { width: 100%; padding: 14px 20px 14px 50px; border: 1.5px solid rgba(0,102,204,0.15); border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 15px; background: white; outline: none; transition: border-color 0.2s; color: var(--text-dark); }
@@ -214,6 +216,53 @@
   .hero .hero-badge{animation:fadeUp 0.6s ease forwards}
   .hero h1{animation:fadeUp 0.7s 0.1s ease both}
   .hero .hero-sub{animation:fadeUp 0.7s 0.2s ease both}
+
+  /* ── Safari / Cross-Browser Compatibility ── */
+  /* Flex gap fallback for Safari < 14.1 */
+  @supports not (gap: 1px) {
+    .nav-links { gap: 0; }
+    .nav-links a { margin-right: 28px; }
+    .hero-btns { gap: 0; }
+    .hero-btns a + a { margin-left: 16px; }
+    .filter-chips { gap: 0; }
+    .filter-chips > * + * { margin-left: 8px; }
+    .footer-social { gap: 0; }
+    .footer-social a + a { margin-left: 12px; }
+    .cta-banner-btns { gap: 0; }
+    .cta-banner-btns > * + * { margin-left: 16px; }
+    .hero-pills { gap: 0; }
+    .hero-pills > * + * { margin-left: 12px; }
+    .social-row { gap: 0; }
+    .social-row > * + * { margin-left: 12px; }
+    .newsletter-form { gap: 0; }
+    .newsletter-form > * + * { margin-left: 12px; }
+    .contact-details { gap: 0; }
+    .contact-details > * + * { margin-top: 20px; }
+    .book-cta-contact { gap: 0; }
+    .book-cta-contact > * + * { margin-top: 10px; }
+    .advantage-points { gap: 0; }
+    .advantage-points > * + * { margin-top: 20px; }
+    .duty-list { gap: 0; }
+    .duty-list li + li { margin-top: 12px; }
+    .join-perks { gap: 0; }
+    .join-perks > * + * { margin-top: 16px; }
+    .cred-list { gap: 0; }
+    .cred-list > * + * { margin-top: 10px; }
+    .timeline-item + .timeline-item { margin-top: 20px; }
+    .footer-grid { gap: 0; }
+    .footer-col + .footer-col { margin-left: 40px; }
+  }
+  /* -webkit-appearance for form inputs */
+  input, textarea, select, button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  select { -webkit-appearance: menulist; }
+  /* Smooth scrolling for Safari */
+  @media (prefers-reduced-motion: no-preference) {
+    html { -webkit-overflow-scrolling: touch; }
+  }
+
 </style>
 </head>
 <body>
@@ -259,12 +308,12 @@
 
 <!-- CATEGORY TABS -->
 <div class="category-tabs">
-  <button class="cat-tab active" onclick="setCategory('all', this)">All Questions</button>
-  <button class="cat-tab" onclick="setCategory('registration', this)">Registration</button>
-  <button class="cat-tab" onclick="setCategory('lessons', this)">Lessons & Classes</button>
-  <button class="cat-tab" onclick="setCategory('policies', this)">Policies & Credits</button>
-  <button class="cat-tab" onclick="setCategory('pools', this)">Pools & Locations</button>
-  <button class="cat-tab" onclick="setCategory('athome', this)">At-Home Lessons</button>
+  <button type="button" class="cat-tab active" onclick="setCategory('all', this)">All Questions</button>
+  <button type="button" class="cat-tab" onclick="setCategory('registration', this)">Registration</button>
+  <button type="button" class="cat-tab" onclick="setCategory('lessons', this)">Lessons & Classes</button>
+  <button type="button" class="cat-tab" onclick="setCategory('policies', this)">Policies & Credits</button>
+  <button type="button" class="cat-tab" onclick="setCategory('pools', this)">Pools & Locations</button>
+  <button type="button" class="cat-tab" onclick="setCategory('athome', this)">At-Home Lessons</button>
 </div>
 
 <!-- FAQ CONTENT -->
@@ -275,7 +324,7 @@
     <div class="faq-category-title">📋 Registration</div>
 
     <div class="faq-item" data-cat="registration" data-q="when can i register registration ongoing year">
-      <button class="faq-q" onclick="toggleFaq(this)">When can I register? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">When can I register? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>Registration is ongoing throughout the year, however it is subject to program availability.</p>
         <p>MIS offers 4 terms per year — Fall, Winter, Spring, and Summer. Registration start dates are posted at the top of our programs page. Current term dates:</p>
@@ -290,7 +339,7 @@
     </div>
 
     <div class="faq-item" data-cat="registration" data-q="what level program register how do i know">
-      <button class="faq-q" onclick="toggleFaq(this)">How do I know what level or program to register for? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">How do I know what level or program to register for? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>Our programs are designed to be accessible for all ages and abilities. Here's a quick guide:</p>
         <ul>
@@ -310,7 +359,7 @@
     <div class="faq-category-title">🏊 Lessons & Classes</div>
 
     <div class="faq-item" data-cat="lessons" data-q="parents required pool in the water confidence">
-      <button class="faq-q" onclick="toggleFaq(this)">Are parents required to go in the pool? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">Are parents required to go in the pool? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>Parents are required to participate from within the pool for our <strong>Confidence level programs</strong>, which include:</p>
         <ul>
@@ -322,7 +371,7 @@
     </div>
 
     <div class="faq-item" data-cat="lessons" data-q="instructor at pool where is my instructor late">
-      <button class="faq-q" onclick="toggleFaq(this)">I'm at the pool — where is my instructor? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">I'm at the pool — where is my instructor? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>If your instructor hasn't arrived within 10 minutes of your scheduled lesson start time, please contact them directly via their contact details provided during registration.</p>
         <p>If you cannot reach your instructor, please contact our admin team at <a href="mailto:info@swim-montreal.com">info@swim-montreal.com</a> or call <a href="tel:5142948259">(514) 294-8259</a> and we'll resolve the situation immediately.</p>
@@ -331,7 +380,7 @@
     </div>
 
     <div class="faq-item" data-cat="lessons" data-q="contact instructor how reach communicate message">
-      <button class="faq-q" onclick="toggleFaq(this)">How can I contact my instructor? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">How can I contact my instructor? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>Your instructor's contact details are shared with you during the registration and onboarding process. You can reach them directly for scheduling questions, make-up lesson requests, or lesson-specific queries.</p>
         <p>For general enquiries, registration changes, or anything administrative, please contact our team at <a href="mailto:info@swim-montreal.com">info@swim-montreal.com</a> or call <a href="tel:5142948259">(514) 294-8259</a>.</p>
@@ -339,7 +388,7 @@
     </div>
 
     <div class="faq-item" data-cat="lessons" data-q="miss class missed lesson absence absent">
-      <button class="faq-q" onclick="toggleFaq(this)">What happens if I need to miss a class? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">What happens if I need to miss a class? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>If you need to miss a lesson, please contact your instructor as early as possible to let them know.</p>
         <p>Depending on the notice given and the circumstances, a make-up lesson may be arranged or a credit issued in accordance with our cancellation policy. Please review our full <a href="policies.html">Policies page</a> for details on what qualifies for a credit.</p>
@@ -354,7 +403,7 @@
     <div class="faq-category-title">📄 Policies & Credits</div>
 
     <div class="faq-item" data-cat="policies" data-q="when will i get credits credit cancelled lesson">
-      <button class="faq-q" onclick="toggleFaq(this)">When will I get my credit(s)? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">When will I get my credit(s)? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>Credits for eligible cancelled swimming lessons are calculated and applied to your account within a reasonable timeframe following the cancellation.</p>
         <p>Credits are issued based on the applicable cancellation policy at the time of the cancellation. Please review our <a href="policies.html">Policies page</a> for the full breakdown of what qualifies for a credit and under what conditions.</p>
@@ -363,7 +412,7 @@
     </div>
 
     <div class="faq-item" data-cat="policies" data-q="how do i use lesson credits apply redeem">
-      <button class="faq-q" onclick="toggleFaq(this)">How do I use my lesson credits? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">How do I use my lesson credits? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>Lesson credits are applied to your MIS account and can be used toward future lesson bookings or renewals.</p>
         <p>When registering for your next session or booking a make-up lesson, your instructor or our admin team can apply available credits to your balance. Please contact us if you need assistance applying your credits.</p>
@@ -371,7 +420,7 @@
     </div>
 
     <div class="faq-item" data-cat="policies" data-q="cancellation policy cancel refund">
-      <button class="faq-q" onclick="toggleFaq(this)">What is the cancellation policy? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">What is the cancellation policy? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>Our cancellation policy outlines the conditions under which lessons may be cancelled and what compensation (credit or make-up lesson) applies. Key points:</p>
         <ul>
@@ -390,7 +439,7 @@
     <div class="faq-category-title">📍 Pools & Locations</div>
 
     <div class="faq-item" data-cat="pools" data-q="water temperature pool warm how hot degrees">
-      <button class="faq-q" onclick="toggleFaq(this)">What is the water temperature at your pool partner locations? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">What is the water temperature at your pool partner locations? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>Our partner pools maintain a water temperature between <strong>80°F and 85°F (27°C–29°C)</strong>.</p>
         <p>This range provides a comfortable environment for swimmers of all ages while supporting effective learning and technique development. This is particularly well-suited for our youngest swimmers in the Confidence programs.</p>
@@ -398,7 +447,7 @@
     </div>
 
     <div class="faq-item" data-cat="pools" data-q="reserved exclusively swimming lessons other people public">
-      <button class="faq-q" onclick="toggleFaq(this)">Are MIS pools reserved exclusively for swimming lessons? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">Are MIS pools reserved exclusively for swimming lessons? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>This varies by location. Some of our pool partner locations have dedicated lane time or areas reserved exclusively for MIS lessons, while others may share the pool with other users or activities.</p>
         <p>Your instructor will always ensure a safe and focused lesson environment regardless of the pool setup. If you have concerns about a specific location, please contact us and we can provide details for your pool.</p>
@@ -412,7 +461,7 @@
     <div class="faq-category-title">🏡 At-Home Lessons</div>
 
     <div class="faq-item" data-cat="athome" data-q="at home lessons weather bad rain canceled outdoor">
-      <button class="faq-q" onclick="toggleFaq(this)">For at-home lessons, are lessons canceled due to bad weather? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">For at-home lessons, are lessons canceled due to bad weather? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p><strong>Lessons are always on, rain or shine.</strong> The only exception is if there is thunder or lightning within 30 minutes of the start of the lesson, at which point your instructor will confirm if the lesson is cancelled.</p>
         <p>Any lesson cancelled due to thunder or lightning will either be made up or credited to your account.</p>
@@ -421,7 +470,7 @@
     </div>
 
     <div class="faq-item" data-cat="athome" data-q="at home lesson how does it work private pool house">
-      <button class="faq-q" onclick="toggleFaq(this)">How do at-home private lessons work? <span class="faq-icon">+</span></button>
+      <button type="button" class="faq-q" onclick="toggleFaq(this)">How do at-home private lessons work? <span class="faq-icon">+</span></button>
       <div class="faq-a">
         <p>At-home lessons are available for swimmers with access to a private or apartment pool. One of our certified instructors comes directly to your location and delivers a fully personalized lesson in your own pool.</p>
         <p>Every lesson is adapted to the individual swimmer. There is no better way to learn than in a familiar, comfortable environment with one-on-one attention.</p>
@@ -526,7 +575,7 @@
         <div class="chat-header-name">MIS Assistant</div>
         <div class="chat-header-status">Online now</div>
       </div>
-      <button class="chat-close" onclick="toggleChat()">×</button>
+      <button type="button" class="chat-close" onclick="toggleChat()">×</button>
     </div>
     <div class="chat-messages" id="chatMessages">
       <div class="chat-msg bot">
@@ -536,10 +585,10 @@
     </div>
     <div class="chat-input-area">
       <textarea id="chatInput" placeholder="Ask a question…" rows="1" onkeydown="handleKey(event)"></textarea>
-      <button class="chat-send" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+      <button type="button" class="chat-send" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
     </div>
   </div>
-  <button class="chat-toggle" onclick="toggleChat()">
+  <button type="button" class="chat-toggle" onclick="toggleChat()">
     <div class="chat-pulse">?</div>
     <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
   </button>
@@ -635,7 +684,7 @@
   /* CANVAS */
   function initWater(id, cfg) {
     const canvas = document.getElementById(id); if (!canvas) return;
-    const ctx = canvas.getContext('2d'); let W, H, t = 0, raf;
+    const ctx = canvas.getContext('2d', { willReadFrequently: false }); let W, H, t = 0, raf;
     function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
     resize(); window.addEventListener('resize', resize);
     const bubbles = Array.from({length: cfg.bubbles}, () => ({ x: Math.random(), y: Math.random(), r: 1.5 + Math.random()*5, speed: 0.0004 + Math.random()*0.0006, wobble: Math.random()*Math.PI*2, wobbleSpeed: 0.015 + Math.random()*0.02, alpha: 0.06 + Math.random()*0.12 }));

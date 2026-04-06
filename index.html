@@ -36,7 +36,9 @@
     "https://www.instagram.com/swimmontreal/"
   ]
 }
-  </script>
+    // Safari RAF fallback
+  window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(cb){ return setTimeout(cb, 1000/60); };
+</script>
 <meta charset="UTF-8">
   <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABxklEQVR4nMWXZW8DMQyG/avHzAwaM5ZpzB0z0//xnNNVmuqzL53aJVK+RImfp+17vhRAGplPhDTN1AdC8h0h8YYQf0WIvSBEaUaeEdafENYeEVYfEFbuEZbvEJZoLt4iLNwgzF8jzF0hzF4izNAMHblvhOwXVgQ+fYEwdY4weYYwcRog85/w8TzCWB7dwkdPEEaOfQlX8OEjrFzgbOBDh+gWPnhAAgq8eNjAg4YIH9gnAeWTBxYrEe6dkeD9RkD52sWCJcC9/RK8b48ElN9cLWoJ9/ZK8N5dElACF1rYAu7tk+A9OySgpL1cQ4R3b5OA8qiVTUCCd22RgPKcl01AgncaAaXJsEKWgWNrErxjkwSUDscKUYcLg5vAsXUJ3r5BAkp7ZYWovaoCftrZugRvy5GA0l5ZIertqoCfdrYuwVuzJKD0dlYo7MXip52dk+AtGRIoobfbwE3g2DkJ3pwmAeWVygpZwE3g2DkJ3mQElPc5K2QBN4Fj5yR4Y4oElMsEK2QBN4Fj5yR4Q5IElJsMK2QBN4Fj5yR4fYIE/nKN0nq7FrhieF2cBFzCa2P+rdgVvKYg4ApeHfUFXMGrIr/+njmFF4YD+A9SEW1drX/aHgAAAABJRU5ErkJggg==">
   <link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADQklEQVR4nOWbZ1MVMRSG86dRigoIqIAF7L0Clw52BbH3Xn9P3HcTQ8YRTvbd3Dsr58y83+5s8jzA3bMnizFVa+m7LbOIfLNmAflqzTzyxZo5n9nPLq1PLjPIR2umkQ/WTCHvrblR5DryzppryFtrriJvrLnic/m1y6VXLheRl9ZcQF5Ycx55bs05n2y18tOWWf7h8j/An33mcuapy+knLqrhTyGPEyWs/rI7Ev4ksmHNiY1tRGiAR44/2kKCFvjJfwnQBD+5bs3EutUNP7FmzbE1uylAI3wQoBX+6MNIgEb4IEAr/JEHVjd8EKAV/vD9QgAJL1VueHE9Bt4J4H7yKdUp+HItBn4cAshf+9TqBHy5DgM/fg8CuL/5KtVueCeAgB+DAPILr2q1E768PgM/dhcCuG97ptoF7wQQ8KMQQN7q2GoHfHldBn70jhdA3OfrVG74IKAq/CEIIJucupUTvrweAx8EEB1ejsoFX16LgT94uxBAtrdNKwo+CCB6+6YVBX/gViGAfLBpWlHwTgD3VNe0ouBHIIB8pG1aUfAjNyGAe55vWlHwwxBADjPEDRX3+WxwRZMjfoaBH16FAG6SI27INzk54HGPlwUQ8EMQQI6xkgT4MVZd+CQBDPzQSiGAnOGJG4pmeLSAqL2VBRDw+0sB3AAzSYAfYNYS4Ds88bMM/CAEkNNbcUPR9JYWELW3SQKqwg8uQwA3vU0S4EfXtQT4Dk/8LAM/AAHk6FrcUDS3pwVE7W2SgKrwA0sQwI2uZQGbhxa1BPgOT/wsA98PAeTcXtxQ3RObv3r7JAFV4fsXvQBibi8LyAePJkdcj4HfBwHkoYW4oYzwaHJkAQR8ENCks7otnurE9Rj4vQuFAPKUVtxQRnjc42UBBHwQQBxRixvKCJ8kgIHfM18IIM/nZQH54HGPlwUQ8E4A93KCuKGM8EkCGPg+CCDfzJAF5IPHPV5cj4Hvm4MA7rUUcUMZ4dMEEPC9EEC+k5MkIBM8mhxxPQa+dxYCOvhCEju6ZpscCb4HAjTD97S8AK3w3S3/pqhW+CBAK/zumUiARvggQCv8rulIgEb4IAClGv5PqYZHaYHvmtrmnydVw8e1E+ErlwL43+9+0w+BCcqHAAAAAElFTkSuQmCC">
@@ -59,7 +61,7 @@
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    background: rgba(10,22,40,0.97); backdrop-filter: blur(16px);
+    background: rgba(10,22,40,0.97); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
     padding: 0 40px; height: 72px;
     display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -406,6 +408,53 @@
     footer{padding:48px 24px 24px}
     .footer-bottom{flex-direction:column;gap:12px;text-align:center}
   }
+
+  /* ── Safari / Cross-Browser Compatibility ── */
+  /* Flex gap fallback for Safari < 14.1 */
+  @supports not (gap: 1px) {
+    .nav-links { gap: 0; }
+    .nav-links a { margin-right: 28px; }
+    .hero-btns { gap: 0; }
+    .hero-btns a + a { margin-left: 16px; }
+    .filter-chips { gap: 0; }
+    .filter-chips > * + * { margin-left: 8px; }
+    .footer-social { gap: 0; }
+    .footer-social a + a { margin-left: 12px; }
+    .cta-banner-btns { gap: 0; }
+    .cta-banner-btns > * + * { margin-left: 16px; }
+    .hero-pills { gap: 0; }
+    .hero-pills > * + * { margin-left: 12px; }
+    .social-row { gap: 0; }
+    .social-row > * + * { margin-left: 12px; }
+    .newsletter-form { gap: 0; }
+    .newsletter-form > * + * { margin-left: 12px; }
+    .contact-details { gap: 0; }
+    .contact-details > * + * { margin-top: 20px; }
+    .book-cta-contact { gap: 0; }
+    .book-cta-contact > * + * { margin-top: 10px; }
+    .advantage-points { gap: 0; }
+    .advantage-points > * + * { margin-top: 20px; }
+    .duty-list { gap: 0; }
+    .duty-list li + li { margin-top: 12px; }
+    .join-perks { gap: 0; }
+    .join-perks > * + * { margin-top: 16px; }
+    .cred-list { gap: 0; }
+    .cred-list > * + * { margin-top: 10px; }
+    .timeline-item + .timeline-item { margin-top: 20px; }
+    .footer-grid { gap: 0; }
+    .footer-col + .footer-col { margin-left: 40px; }
+  }
+  /* -webkit-appearance for form inputs */
+  input, textarea, select, button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  select { -webkit-appearance: menulist; }
+  /* Smooth scrolling for Safari */
+  @media (prefers-reduced-motion: no-preference) {
+    html { -webkit-overflow-scrolling: touch; }
+  }
+
 </style>
 </head>
 <body>
@@ -702,12 +751,12 @@
   <div class="section-label">FAQ</div>
   <h2 class="section-title">Questions about working at MIS?</h2>
   <div class="faq-grid">
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do I need a certification to apply? <span class="faq-arrow">+</span></button><div class="faq-a">Yes — a valid lifeguard or swim instructor certification is required (NLS, RLSS, or equivalent). If you're in the process of getting certified, feel free to reach out and we can discuss your timeline.</div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How many hours can I work per week? <span class="faq-arrow">+</span></button><div class="faq-a">It's completely flexible. Some instructors work 4–6 hours a week, others 20+. You submit your availability and we match you with swimmers accordingly. There's no minimum hour requirement.</div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Which pools can I work at? <span class="faq-arrow">+</span></button><div class="faq-a">We operate at 25+ pools across Montréal and surrounding areas. During onboarding, you'll let us know which locations work best for you and we'll match you accordingly.</div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is training provided? <span class="faq-arrow">+</span></button><div class="faq-a">Yes. Every new instructor goes through personalized onboarding in the #MISway teaching approach. You'll be fully prepared before your first lesson with a swimmer.</div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I teach adults as well as children? <span class="faq-arrow">+</span></button><div class="faq-a">Absolutely. MIS teaches swimmers of all ages — from babies to seniors. During your application you can indicate your preferences and experience level with different age groups.</div></div>
-    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How quickly will I hear back after applying? <span class="faq-arrow">+</span></button><div class="faq-a">We review applications continuously and aim to respond within 3–5 business days. If you haven't heard back within a week, feel free to follow up at <a href="mailto:info@swim-montreal.com" style="color:var(--ocean);">info@swim-montreal.com</a>.</div></div>
+    <div class="faq-item"><button type="button" class="faq-q" onclick="toggleFaq(this)">Do I need a certification to apply? <span class="faq-arrow">+</span></button><div class="faq-a">Yes — a valid lifeguard or swim instructor certification is required (NLS, RLSS, or equivalent). If you're in the process of getting certified, feel free to reach out and we can discuss your timeline.</div></div>
+    <div class="faq-item"><button type="button" class="faq-q" onclick="toggleFaq(this)">How many hours can I work per week? <span class="faq-arrow">+</span></button><div class="faq-a">It's completely flexible. Some instructors work 4–6 hours a week, others 20+. You submit your availability and we match you with swimmers accordingly. There's no minimum hour requirement.</div></div>
+    <div class="faq-item"><button type="button" class="faq-q" onclick="toggleFaq(this)">Which pools can I work at? <span class="faq-arrow">+</span></button><div class="faq-a">We operate at 25+ pools across Montréal and surrounding areas. During onboarding, you'll let us know which locations work best for you and we'll match you accordingly.</div></div>
+    <div class="faq-item"><button type="button" class="faq-q" onclick="toggleFaq(this)">Is training provided? <span class="faq-arrow">+</span></button><div class="faq-a">Yes. Every new instructor goes through personalized onboarding in the #MISway teaching approach. You'll be fully prepared before your first lesson with a swimmer.</div></div>
+    <div class="faq-item"><button type="button" class="faq-q" onclick="toggleFaq(this)">Can I teach adults as well as children? <span class="faq-arrow">+</span></button><div class="faq-a">Absolutely. MIS teaches swimmers of all ages — from babies to seniors. During your application you can indicate your preferences and experience level with different age groups.</div></div>
+    <div class="faq-item"><button type="button" class="faq-q" onclick="toggleFaq(this)">How quickly will I hear back after applying? <span class="faq-arrow">+</span></button><div class="faq-a">We review applications continuously and aim to respond within 3–5 business days. If you haven't heard back within a week, feel free to follow up at <a href="mailto:info@swim-montreal.com" style="color:var(--ocean);">info@swim-montreal.com</a>.</div></div>
   </div>
 </section>
 
@@ -767,7 +816,7 @@
         <div class="chat-header-status">Online now</div>
         <div class="chat-header-channels"><span>Website</span><span>Facebook</span><span>WhatsApp</span><span>Instagram</span></div>
       </div>
-      <button class="chat-close" onclick="toggleChat()">×</button>
+      <button type="button" class="chat-close" onclick="toggleChat()">×</button>
     </div>
     <div class="chat-channels-bar">
       <a href="https://m.me/SwimMontreal" target="_blank" class="channel-btn fb"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"/></svg> Messenger</a>
@@ -780,20 +829,20 @@
         <div>
           <div class="chat-bubble">👋 Hi! I'm the MIS assistant. I can help with programs, registration, jobs, locations, and more. What can I help you with?</div>
           <div class="chat-quick-replies" style="margin-top:8px;">
-            <button class="chat-quick-btn" onclick="sendQuick('What programs do you offer?')">Programs</button>
-            <button class="chat-quick-btn" onclick="sendQuick('How do I register for Spring 2026?')">Register</button>
-            <button class="chat-quick-btn" onclick="sendQuick('How do I apply for a job at MIS?')">Jobs</button>
-            <button class="chat-quick-btn" onclick="sendQuick('Where are your pool locations?')">Locations</button>
+            <button type="button" class="chat-quick-btn" onclick="sendQuick('What programs do you offer?')">Programs</button>
+            <button type="button" class="chat-quick-btn" onclick="sendQuick('How do I register for Spring 2026?')">Register</button>
+            <button type="button" class="chat-quick-btn" onclick="sendQuick('How do I apply for a job at MIS?')">Jobs</button>
+            <button type="button" class="chat-quick-btn" onclick="sendQuick('Where are your pool locations?')">Locations</button>
           </div>
         </div>
       </div>
     </div>
     <div class="chat-input-area">
       <textarea id="chatInput" placeholder="Ask anything about MIS..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-      <button class="chat-send" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+      <button type="button" class="chat-send" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
     </div>
   </div>
-  <button class="chat-toggle" onclick="toggleChat()">
+  <button type="button" class="chat-toggle" onclick="toggleChat()">
     <div class="chat-pulse">?</div>
     <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
   </button>
@@ -883,7 +932,7 @@ Be warm, helpful, concise. Answer in English or French based on user's language.
   function initWater(canvasId, cfg) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { willReadFrequently: false });
     let W, H, t = 0, raf;
     function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
     resize(); window.addEventListener('resize', resize);
