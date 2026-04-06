@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://swim-montreal.com/sitemap.xml
