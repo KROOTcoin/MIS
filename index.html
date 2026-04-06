@@ -51,7 +51,9 @@
     padding: 96px 80px 160px; background: var(--navy); position: relative; overflow: hidden;
   }
   #hero-canvas-home { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-  .home-hero > *:not(#hero-canvas-home) { position: relative; z-index: 1; }
+  .home-hero > *:not(#hero-canvas-home) { position: relative; z-index: 2; }
+  .hero-btns { position: relative; z-index: 10; }
+  .hero-btns a { position: relative; z-index: 10; }
   .hero-waves { position: absolute; bottom: 0; left: 0; right: 0; height: 220px; overflow: hidden; }
   .hero-waves svg { width: 100%; height: 100%; }
   .hero-circles { position: absolute; right: -100px; top: 50%; transform: translateY(-50%); width: 600px; height: 600px; pointer-events: none; }
@@ -69,7 +71,7 @@
   .btn-primary:hover { background: white; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,180,216,0.3); }
   .btn-outline { border: 1.5px solid rgba(255,255,255,0.3); color: white; padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
   .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
-  .hero-stats { display: flex; gap: 48px; position: absolute; bottom: 40px; left: 80px; right: 80px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; }
+  .hero-stats { display: flex; gap: 48px; position: absolute; bottom: 40px; left: 80px; right: 80px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; z-index: 2; pointer-events: none; }
   .hero-stat-num { font-size: 36px; font-weight: 700; color: white; font-family: 'Playfair Display', serif; }
   .hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; }
 
@@ -381,7 +383,7 @@
     <a href="about.html">About</a>
     <a href="#locations">Locations</a>
     <a href="jobs.html" class="jobs-link">🏊 We're Hiring</a>
-    <a href="https://swim-montreal.com/contact" target="_blank">Contact</a>
+    <a href="contact.html">Contact</a>
   </div>
   <div style="display:flex;align-items:center;gap:20px;">
     <div class="nav-social">
@@ -493,7 +495,7 @@
     <div class="location-pill"><div class="location-dot"></div>South Shore</div>
     <div class="location-pill"><div class="location-dot"></div>+ many more</div>
   </div>
-  <div style="margin-top:40px;"><a href="https://swim-montreal.com/contact" target="_blank" class="btn-primary" style="display:inline-flex;">View all locations & map →</a></div>
+  <div style="margin-top:40px;"><a href="contact.html" class="btn-primary" style="display:inline-flex;">View all locations & map →</a></div>
 </section>
 
 <section id="partners" style="padding-top:60px;padding-bottom:60px;">
@@ -707,7 +709,7 @@
       <a href="faq.html" target="_blank">FAQ</a>
       <a href="policies.html" target="_blank">Policies</a>
       <a href="contact.html" target="_blank">Locations & Contact</a>
-      <a href="https://swim-montreal.com/blog/privacy-policy/" target="_blank">Privacy Policy</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
       <a href="https://swim-montreal.com/fr" target="_blank">Français 🇫🇷</a>
     </div>
   </div>
